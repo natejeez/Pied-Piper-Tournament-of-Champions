@@ -1,0 +1,9 @@
+submission_id,tournament_id,participant_id,submission_slot,submitted_at,status,artist,title,source_url,source_type,spotify_track_id,rationale,recording_id,song_id,metadata_status,review_flags
+SUB26-065,HMPP-2026,P26-09,1,2026-08-21T17:50:42,pending_review,Midge Ure,The Man Who Sold The World,https://www.youtube.com/watch?v=IU2wBKoDOzg,youtube,,igiyli,REC26-065,SONG26-065,complete,
+SUB26-066,HMPP-2026,P26-09,2,2026-08-21T17:50:42,pending_review,The Roman,The Great Unknown,https://open.spotify.com/track/5BDHLhoxp4kTIN36Y5w8ND,spotify,5BDHLhoxp4kTIN36Y5w8ND,igiyli,REC26-066,SONG26-066,complete,
+SUB26-067,HMPP-2026,P26-09,3,2026-08-21T17:50:42,pending_review,Garrett Kato,Moon,https://www.youtube.com/watch?v=ZuaHhRQUq8Y,youtube,,igiyli,REC26-067,SONG26-067,complete,
+SUB26-068,HMPP-2026,P26-09,4,2026-08-21T17:50:42,pending_review,Young Decades,No Sleep,https://www.youtube.com/watch?v=bgrGSZ6TTk4,youtube,,igiyli,REC26-068,SONG26-068,complete,
+SUB26-069,HMPP-2026,P26-09,5,2026-08-21T17:50:42,pending_review,Nite Tides,Your Window,https://www.youtube.com/watch?v=8ec_k_gDyrk,youtube,,igiyli,REC26-069,SONG26-069,complete,
+SUB26-070,HMPP-2026,P26-09,6,2026-08-21T17:50:42,pending_review,Still Corners,Heavy Days,https://www.youtube.com/watch?v=1JaRLTd0KC4,youtube,,igiyli,REC26-070,SONG26-070,complete,
+SUB26-071,HMPP-2026,P26-09,7,2026-08-21T17:50:42,pending_review,Darren Korb & Ashley Barrett,Paper Boats,https://www.youtube.com/watch?v=K8OTg92mHaQ,youtube,,igiyli,REC26-071,SONG26-071,complete,
+SUB26-072,HMPP-2026,P26-09,8,2026-08-21T17:50:42,pending_review,Fantastic Negrito,When Everything Went Wrong,https://www.youtube.com/watch?v=JdZed_S0RHo,youtube,,igiyli,REC26-072,SONG26-072,complete,
