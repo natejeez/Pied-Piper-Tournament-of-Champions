@@ -1,0 +1,9 @@
+playin_id,slot_a_submission_id,slot_a_participant_id,slot_b_submission_id,slot_b_participant_id,status
+PI01,SUB26-019,P26-03,SUB26-016,P26-02,scheduled
+PI02,SUB26-042,P26-06,SUB26-001,P26-01,scheduled
+PI03,SUB26-052,P26-07,SUB26-031,P26-04,scheduled
+PI04,SUB26-051,P26-07,SUB26-057,P26-08,scheduled
+PI05,SUB26-069,P26-09,SUB26-034,P26-05,scheduled
+PI06,SUB26-028,P26-04,SUB26-062,P26-08,scheduled
+PI07,SUB26-044,P26-06,SUB26-020,P26-03,scheduled
+PI08,SUB26-066,P26-09,SUB26-003,P26-01,scheduled
