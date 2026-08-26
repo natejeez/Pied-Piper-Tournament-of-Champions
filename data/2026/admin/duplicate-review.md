@@ -3,27 +3,41 @@
 ## Intake snapshot
 
 - 9 participant records
-- 72 submission records
+- 72 raw submission records
 - 8 slots per participant
 - Submission IDs `SUB26-001` through `SUB26-072`
 - All records initially marked `pending_review`
 - Submission order is chronological by the supplied form timestamps; this order is the basis for first-valid-submission precedence under the 2026 ruleset.
 
+## Current readiness status
+
+**NOT READY FOR PLAY-IN SEEDING YET.**
+
+The raw intake contains 72 slots, but one known duplicate-recording issue means we do not yet have 72 validated tournament entries.
+
 ## Initial automated checks
 
 ### Exact Spotify track ID duplicates
 
-**No exact duplicate Spotify track IDs were found among the supplied Spotify links.**
+A duplicate has now been identified in Danny McGees' supplied links:
+
+- `SUB26-057` — blink-182 — `All the Small Things`
+- `SUB26-058` — blink-182 — `I Miss You`
+- Both were supplied with Spotify track ID `2m1hi0nfMR9vdGC8UcrnwU`.
+
+Because two submissions reference the exact same external recording identifier, this must be treated as a duplicate-recording review issue. The differing submitted titles do not override the recording identity.
+
+`SUB26-058` should therefore remain `pending_review` until the administrator confirms whether the link was entered incorrectly. If the intended `I Miss You` recording is confirmed to have a different track ID, the record can be corrected. If the supplied link is confirmed as the intended recording, the later submission must be handled under the duplicate rules and receive a replacement window.
 
 ### Exact normalized artist/title duplicates
 
-**No exact artist/title duplicates were found among submissions with supplied titles.**
+No other exact artist/title duplicates have been identified from the supplied titles in the initial intake.
 
 This is an intake check, not the final duplicate decision, because the ruleset distinguishes the underlying composition from the specific recording/version.
 
 ### Composition/version review
 
-No obvious same-composition conflict was identified from the submitted artist/title information.
+No additional obvious same-composition conflict has been identified from the submitted artist/title information.
 
 Known cover/version entries that should remain explicitly represented as recordings:
 
@@ -32,24 +46,34 @@ Known cover/version entries that should remain explicitly represented as recordi
 
 These are not rejected merely because the underlying composition is a cover. The 2026 rules require the submitted recording/version to be evaluated.
 
-## Items requiring administrator review
+## Resolved intake items
 
 ### `SUB26-019` — Jack O Connell
 
-The participant supplied an artist and Spotify URL but **no song title**. The supplied Spotify URL could not be resolved by the external lookup used during intake. This record is therefore explicitly flagged `missing_title;unresolved_spotify_link` and should not be treated as validated until the title/recording is recovered.
+The participant has now supplied the missing title as **The Rocky Road to Dublin** and supplied the Spotify URL:
+
+`https://open.spotify.com/track/1esmJ8t2PRbYt2yMx2aSEW`
+
+The record is now complete from the participant-supplied intake perspective. The title was added after the original form intake and is therefore recorded as a metadata correction rather than being represented as if it existed in the original row.
 
 ### `SUB26-057` through `SUB26-064` — Danny McGees
 
-All eight entries have artist/title information but **no link** in the submitted data. They remain in the administrative record and are flagged `missing_link`. The missing link does not by itself establish a duplicate, but the actual recording/version still needs to be identified before final validation and Spotify embedding.
+All eight entries now have participant-supplied Spotify links. They should proceed through metadata validation using those links.
 
-## External metadata note
+The important exception is the identical track ID on `SUB26-057` and `SUB26-058`, described above.
 
-The Spotify track ID supplied for Olivia Rodrigo's `Stupid Song` is independently associated with that title in current web results. citeturn0search1turn0search3
+## Required action before play-in seeding
 
-The supplied Spotify URL for `SUB26-019` returned a not-found response during lookup, so its metadata should not be guessed. citeturn1search0
+We need **72 valid tournament entries** before generating play-in matchups.
 
-## Decision policy
+The next administrative action is therefore:
 
-Until review is complete, **do not mark all 72 entries as valid**. The correct state is that the 72 raw submissions have been imported and normalized, with duplicate/version review pending.
+1. Verify whether `SUB26-058`'s Spotify link is a data-entry mistake.
+2. If it is a mistake, replace it with the correct `I Miss You` recording ID/link and retain the correction in the audit trail.
+3. If it is not a mistake and both submissions intentionally point to the same recording, reject the later duplicate under the 2026 rules and open the replacement window for that participant.
+4. Validate all remaining recording/version relationships.
+5. Only then mark the final 72 entries `valid` and generate play-in/main-bracket seeding.
 
-If a later submission is determined to duplicate an earlier valid composition/recording under the 2026 rules, the later `submission_id` remains in this dataset, receives `status=rejected_duplicate`, and gets `duplicate_of_submission_id` populated. Any replacement gets a new submission ID and `replacement_for_submission_id` pointing to the rejected record.
+## Important data principle
+
+The 72 raw submission slots should never be reduced by deletion. Even if one becomes a rejected duplicate, its `submission_id` remains permanently associated with the participant's historical submission record. A replacement receives a new submission ID and links back to the rejected submission.
