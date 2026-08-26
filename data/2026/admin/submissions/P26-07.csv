@@ -1,0 +1,9 @@
+submission_id,tournament_id,participant_id,submission_slot,submitted_at,status,artist,title,source_url,source_type,spotify_track_id,rationale,recording_id,song_id,metadata_status,review_flags
+SUB26-049,HMPP-2026,P26-07,1,2026-08-20T08:51:51,pending_review,Parcels,Tieduprightnow,https://open.spotify.com/track/66tkDkPsznE5zIHNt4QkXB,spotify,66tkDkPsznE5zIHNt4QkXB,,REC26-049,SONG26-049,complete,
+SUB26-050,HMPP-2026,P26-07,2,2026-08-20T08:51:51,pending_review,The Spinners,The Rubberband Man,https://open.spotify.com/track/13Mzsb8VzRSZ5w3pM48cn6,spotify,13Mzsb8VzRSZ5w3pM48cn6,,REC26-050,SONG26-050,complete,
+SUB26-051,HMPP-2026,P26-07,3,2026-08-20T08:51:51,pending_review,Jon Bellion,Overwhelming,https://open.spotify.com/track/48LwbDH7u5UMrsY3sjfjhe,spotify,48LwbDH7u5UMrsY3sjfjhe,,REC26-051,SONG26-051,complete,
+SUB26-052,HMPP-2026,P26-07,4,2026-08-20T08:51:51,pending_review,Brooks and Dunn,My Maria,https://open.spotify.com/track/09qzRI951OVkXGCc33gzcT,spotify,09qzRI951OVkXGCc33gzcT,,REC26-052,SONG26-052,complete,
+SUB26-053,HMPP-2026,P26-07,5,2026-08-20T08:51:51,pending_review,Sam Barber,Man of the Year,https://open.spotify.com/track/2xlsLf7aPOZlk1p3dvwpeH,spotify,2xlsLf7aPOZlk1p3dvwpeH,,REC26-053,SONG26-053,complete,
+SUB26-054,HMPP-2026,P26-07,6,2026-08-20T08:51:51,pending_review,CHVRCHES,The Mother We Share,https://open.spotify.com/track/1OVypFlcraAhyvPqIMWDor,spotify,1OVypFlcraAhyvPqIMWDor,,REC26-054,SONG26-054,complete,
+SUB26-055,HMPP-2026,P26-07,7,2026-08-20T08:51:51,pending_review,3 Doors Down,It’s Not My Time,https://open.spotify.com/track/0uybt73QFXaLCoxuVf6fhm,spotify,0uybt73QFXaLCoxuVf6fhm,,REC26-055,SONG26-055,complete,
+SUB26-056,HMPP-2026,P26-07,8,2026-08-20T08:51:51,pending_review,Tommy Richman,MILLION DOLLAR BABY,https://open.spotify.com/track/5AJ9hqTS2wcFQCELCFRO7A,spotify,5AJ9hqTS2wcFQCELCFRO7A,,REC26-056,SONG26-056,complete,
