@@ -31,7 +31,12 @@ def to_public_media(row: dict[str, str]) -> dict[str, str]:
     provider = row["source_type"].strip().lower()
     recording_id, song_id = stable_ids(row["submission_id"])
     if provider == "spotify":
-        media_id = row["spotify_track_id"].strip()
+        source_match = re.search(r"/track/([^?]+)", row["source_url"])
+        source_track_id = source_match.group(1) if source_match else ""
+        submitted_track_id = row["spotify_track_id"].strip()
+        # Prefer the canonical track ID embedded in the submitted Spotify URL.
+        # This also catches truncated/shifted legacy spotify_track_id values.
+        media_id = source_track_id or submitted_track_id
         embed_url = f"https://open.spotify.com/embed/track/{media_id}?utm_source=generator"
     elif provider == "youtube":
         media_id = youtube_id(row["source_url"])
@@ -58,6 +63,11 @@ def main() -> None:
         raise ValueError(f"Media manifest ID mismatch. Missing={sorted(expected-actual)} Extra={sorted(actual-expected)}")
     if any(not item["embed_url"] for item in media):
         raise ValueError("At least one media record is missing an embed URL")
+    for item in media:
+        if item["provider"] == "spotify":
+            match = re.search(r"/track/([^?]+)", item["source_url"])
+            if not match or match.group(1) != item["media_id"]:
+                raise ValueError(f"Spotify source/embed ID mismatch for {item['song_id']}")
     payload = {
         "tournament_id":"HMPP-2026",
         "generated_from":"data/2026/admin/submissions/P26-01.csv ... P26-09.csv",
