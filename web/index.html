@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HMPP '26 — Tournament Bracket</title>
+<style>
+:root{--black:#000;--gold:#CFB991;--aged:#8E6F3E;--bg:#F6F5F2;--card:#fff;--line:#DED9D0;--muted:#686B71;--ink:#111;--shadow:0 8px 24px rgba(0,0,0,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Arial,Helvetica,sans-serif}
+button,input{font:inherit}button:focus-visible,input:focus-visible{outline:3px solid rgba(142,111,62,.35);outline-offset:2px}
+header{position:sticky;top:0;z-index:10;background:var(--black);color:#fff;border-bottom:4px solid var(--gold);padding:15px 22px;display:flex;align-items:center;gap:16px}
+.brand{font-size:19px;font-weight:900}.brand span{color:var(--gold)}.status{margin-left:auto;color:#ccc;font-size:12px}
+main{max-width:1180px;margin:auto;padding:26px 18px 48px}
+.topline{display:flex;gap:14px;align-items:end;justify-content:space-between;margin-bottom:18px}.topline h1{font-size:30px;line-height:1;margin:0 0 7px}.sub{color:var(--muted)}
+.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button,.search{border:1px solid #c9c1b4;border-radius:9px;background:#fff;padding:9px 12px}.controls button{font-weight:800;cursor:pointer}.controls button.active{background:#000;color:#fff;border-color:#000}.search{min-width:220px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.match{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:12px;padding:11px;box-shadow:var(--shadow)}
+.matchhead{display:flex;justify-content:space-between;padding:0 3px 8px;font-size:10px;font-weight:900;letter-spacing:.09em;color:var(--muted)}.matchhead b{color:var(--aged)}
+.song{border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:#fff}.song.pending{background:#faf8f3;border-style:dashed}.songrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.sid{font-size:9px;font-weight:900;letter-spacing:.05em;color:var(--aged)}.title{font-weight:900;font-size:15px;line-height:1.2;margin-top:3px}.artist{color:var(--muted);margin-top:2px}
+.listen{border:1px solid #c9c1b4;background:#faf9f7;border-radius:8px;padding:8px 10px;font-weight:800;cursor:pointer;white-space:nowrap}.listen[aria-expanded="true"]{background:#000;color:#fff;border-color:#000}
+.player{display:none;margin-top:10px}.player.open{display:block}.player iframe{display:block;width:100%;border:0;border-radius:10px}.vs{text-align:center;height:24px;line-height:24px;color:var(--aged);font-size:9px;font-weight:900;letter-spacing:.14em}
+.empty{display:none;grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)}
+.help{margin-top:18px;padding:12px 14px;border-left:3px solid var(--gold);background:#fff;color:var(--muted);border-radius:0 9px 9px 0}.help strong{color:var(--ink)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.topline{align-items:stretch;flex-direction:column}.search{width:100%;min-width:0}.controls{display:grid;grid-template-columns:1fr 1fr}.controls .search{grid-column:1/-1}.songrow{grid-template-columns:1fr}.listen{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="brand">HMPP <span>'26</span></div><div>Blind song tournament</div><div class="status">72 songs · 8 play-ins · 64 bracket</div></header>
+<main>
+  <div class="topline">
+    <div><h1>Bracket</h1><div class="sub">Pick a matchup, tap Listen, and compare one song at a time.</div></div>
+    <div class="controls">
+      <button id="playinBtn" class="active">Play-ins</button>
+      <button id="r64Btn">Round of 64</button>
+      <input id="search" class="search" type="search" placeholder="Search song or artist…" aria-label="Search songs or artists">
+    </div>
+  </div>
+  <section id="grid" class="grid" aria-live="polite"></section>
+  <div id="empty" class="empty">No matchups match your search.</div>
+  <div class="help"><strong>Listening stays lightweight.</strong> Players load only after you tap Listen, and opening another song closes the previous player so the bracket stays easy to scan—especially on phones.</div>
+</main>
+<script type="module">
+import { loadMediaManifest, mountMediaPlayer } from "./js/media-embed.js";
+
+const [mediaBySong, bracket] = await Promise.all([
+  loadMediaManifest("../data/2026/public/media.json"),
+  fetch("../data/2026/public/bracket.json").then(r => { if(!r.ok) throw new Error("Bracket data failed"); return r.json(); })
+]);
+
+let round = "playin";
+let activeButton = null;
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const playinBtn = document.getElementById("playinBtn");
+const r64Btn = document.getElementById("r64Btn");
+
+function esc(v=""){return v.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function songMarkup(slot, side, matchId){
+  if(slot.type !== "song") return `<div class="song pending"><div class="sid">${esc(slot.source_match_id)} WINNER</div><div class="title">Advancing song</div><div class="artist">Available after the play-in closes</div></div>`;
+  const item = mediaBySong.get(slot.song_id);
+  return `<div class="song" data-search="${esc((item.title+" "+item.artist).toLowerCase())}">
+    <div class="songrow"><div><div class="sid">${esc(item.song_id)}</div><div class="title">${esc(item.title)}</div><div class="artist">${esc(item.artist)}</div></div>
+    <button class="listen" data-song="${esc(item.song_id)}" data-target="${matchId}-${side}" aria-expanded="false">▶ Listen</button></div>
+    <div class="player" id="${matchId}-${side}"></div>
+  </div>`;
+}
+function render(){
+  const q=search.value.trim().toLowerCase();
+  const matches=bracket.rounds[round];
+  const html=matches.map(m=>{
+    const a=m.slot_a.type==="song"?mediaBySong.get(m.slot_a.song_id):null;
+    const b=m.slot_b.type==="song"?mediaBySong.get(m.slot_b.song_id):null;
+    const hay=((a?.title||"")+" "+(a?.artist||"")+" "+(b?.title||"")+" "+(b?.artist||"")).toLowerCase();
+    if(q && !hay.includes(q)) return "";
+    return `<article class="match"><div class="matchhead"><b>${esc(m.match_id)}</b><span>${round==="playin"?"PLAY-IN":"ROUND OF 64"}</span></div>
+      ${songMarkup(m.slot_a,"a",m.match_id)}<div class="vs">VS</div>${songMarkup(m.slot_b,"b",m.match_id)}</article>`;
+  }).join("");
+  grid.innerHTML=html;
+  document.getElementById("empty").style.display=html?"none":"block";
+  activeButton=null;
+}
+function setRound(next){
+  round=next; playinBtn.classList.toggle("active",next==="playin"); r64Btn.classList.toggle("active",next==="r64"); render();
+}
+grid.addEventListener("click",e=>{
+  const btn=e.target.closest(".listen"); if(!btn)return;
+  const target=document.getElementById(btn.dataset.target);
+  if(activeButton===btn){
+    target.classList.remove("open"); target.replaceChildren(); btn.setAttribute("aria-expanded","false"); btn.textContent="▶ Listen"; activeButton=null; return;
+  }
+  if(activeButton){
+    const old=document.getElementById(activeButton.dataset.target); old?.classList.remove("open"); old?.replaceChildren();
+    activeButton.setAttribute("aria-expanded","false"); activeButton.textContent="▶ Listen";
+  }
+  const item=mediaBySong.get(btn.dataset.song);
+  mountMediaPlayer(target,item,{spotifyHeight:152,youtubeHeight:200});
+  target.classList.add("open"); btn.setAttribute("aria-expanded","true"); btn.textContent="■ Close player"; activeButton=btn;
+});
+playinBtn.addEventListener("click",()=>setRound("playin"));
+r64Btn.addEventListener("click",()=>setRound("r64"));
+search.addEventListener("input",render);
+render();
+</script>
+</body>
+</html>
