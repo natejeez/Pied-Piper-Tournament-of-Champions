@@ -1,0 +1,529 @@
+{
+  "tournament_id": "HMPP-2026",
+  "rounds": {
+    "playin": [
+      {
+        "match_id": "PI01",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-019"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-016"
+        }
+      },
+      {
+        "match_id": "PI02",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-042"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-001"
+        }
+      },
+      {
+        "match_id": "PI03",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-052"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-031"
+        }
+      },
+      {
+        "match_id": "PI04",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-051"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-057"
+        }
+      },
+      {
+        "match_id": "PI05",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-069"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-034"
+        }
+      },
+      {
+        "match_id": "PI06",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-028"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-062"
+        }
+      },
+      {
+        "match_id": "PI07",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-044"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-020"
+        }
+      },
+      {
+        "match_id": "PI08",
+        "round": "PLAYIN",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-066"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-003"
+        }
+      }
+    ],
+    "r64": [
+      {
+        "match_id": "M001",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-046"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-061"
+        }
+      },
+      {
+        "match_id": "M002",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-004"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-050"
+        }
+      },
+      {
+        "match_id": "M003",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI01"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-055"
+        }
+      },
+      {
+        "match_id": "M004",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-068"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-021"
+        }
+      },
+      {
+        "match_id": "M005",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI03"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-072"
+        }
+      },
+      {
+        "match_id": "M006",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-022"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-029"
+        }
+      },
+      {
+        "match_id": "M007",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-007"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-032"
+        }
+      },
+      {
+        "match_id": "M008",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-065"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-010"
+        }
+      },
+      {
+        "match_id": "M009",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-071"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-013"
+        }
+      },
+      {
+        "match_id": "M010",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-009"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-059"
+        }
+      },
+      {
+        "match_id": "M011",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-011"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-056"
+        }
+      },
+      {
+        "match_id": "M012",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-067"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-008"
+        }
+      },
+      {
+        "match_id": "M013",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI02"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-033"
+        }
+      },
+      {
+        "match_id": "M014",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI06"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-037"
+        }
+      },
+      {
+        "match_id": "M015",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-025"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-045"
+        }
+      },
+      {
+        "match_id": "M016",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-027"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-039"
+        }
+      },
+      {
+        "match_id": "M017",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-012"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-058"
+        }
+      },
+      {
+        "match_id": "M018",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-018"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-040"
+        }
+      },
+      {
+        "match_id": "M019",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI07"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-038"
+        }
+      },
+      {
+        "match_id": "M020",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-070"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-048"
+        }
+      },
+      {
+        "match_id": "M021",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-053"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-005"
+        }
+      },
+      {
+        "match_id": "M022",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-036"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-041"
+        }
+      },
+      {
+        "match_id": "M023",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-060"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-023"
+        }
+      },
+      {
+        "match_id": "M024",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI08"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-017"
+        }
+      },
+      {
+        "match_id": "M025",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-043"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-024"
+        }
+      },
+      {
+        "match_id": "M026",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI04"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-006"
+        }
+      },
+      {
+        "match_id": "M027",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-047"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-015"
+        }
+      },
+      {
+        "match_id": "M028",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-054"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-002"
+        }
+      },
+      {
+        "match_id": "M029",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-026"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-035"
+        }
+      },
+      {
+        "match_id": "M030",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-063"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-049"
+        }
+      },
+      {
+        "match_id": "M031",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "song",
+          "song_id": "SONG26-014"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-030"
+        }
+      },
+      {
+        "match_id": "M032",
+        "round": "R64",
+        "status": "scheduled",
+        "slot_a": {
+          "type": "playin_winner",
+          "source_match_id": "PI05"
+        },
+        "slot_b": {
+          "type": "song",
+          "song_id": "SONG26-064"
+        }
+      }
+    ]
+  }
+}

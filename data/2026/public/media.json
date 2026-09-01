@@ -1,0 +1,727 @@
+{
+  "tournament_id": "HMPP-2026",
+  "generated_from": "data/2026/admin/submissions/P26-01.csv ... P26-09.csv",
+  "count": 72,
+  "media": [
+    {
+      "song_id": "SONG26-001",
+      "recording_id": "REC26-001",
+      "artist": "Bob Dylan",
+      "title": "Desolation Row",
+      "provider": "spotify",
+      "media_id": "4n1ZGm3TxYmoYe1YR8cMus",
+      "source_url": "https://open.spotify.com/track/4n1ZGm3TxYmoYe1YR8cMus",
+      "embed_url": "https://open.spotify.com/embed/track/4n1ZGm3TxYmoYe1YR8cMus?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-002",
+      "recording_id": "REC26-002",
+      "artist": "Simon and Garfunkel",
+      "title": "The Boxer",
+      "provider": "spotify",
+      "media_id": "0Fj8qJmcmec4IOvBmGISnF",
+      "source_url": "https://open.spotify.com/track/0Fj8qJmcmec4IOvBmGISnF",
+      "embed_url": "https://open.spotify.com/embed/track/0Fj8qJmcmec4IOvBmGISnF?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-003",
+      "recording_id": "REC26-003",
+      "artist": "Barenaked Ladies",
+      "title": "When I Fall",
+      "provider": "spotify",
+      "media_id": "1leKfYdMN5AW6ib52UK4qs",
+      "source_url": "https://open.spotify.com/track/1leKfYdMN5AW6ib52UK4qs",
+      "embed_url": "https://open.spotify.com/embed/track/1leKfYdMN5AW6ib52UK4qs?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-004",
+      "recording_id": "REC26-004",
+      "artist": "Counting Crows",
+      "title": "Recovering the Satellites",
+      "provider": "spotify",
+      "media_id": "2Nx5Nlo9JYsdHelzXIflSW",
+      "source_url": "https://open.spotify.com/track/2Nx5Nlo9JYsdHelzXIflSW",
+      "embed_url": "https://open.spotify.com/embed/track/2Nx5Nlo9JYsdHelzXIflSW?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-005",
+      "recording_id": "REC26-005",
+      "artist": "Radiohead",
+      "title": "Let Down",
+      "provider": "spotify",
+      "media_id": "2fuYa3Lx06QQJAm0MjztKr",
+      "source_url": "https://open.spotify.com/track/2fuYa3Lx06QQJAm0MjztKr",
+      "embed_url": "https://open.spotify.com/embed/track/2fuYa3Lx06QQJAm0MjztKr?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-006",
+      "recording_id": "REC26-006",
+      "artist": "Ben Folds Five",
+      "title": "Brick",
+      "provider": "spotify",
+      "media_id": "4jKq1e80xAYixkIwt6YyV1",
+      "source_url": "https://open.spotify.com/track/4jKq1e80xAYixkIwt6YyV1",
+      "embed_url": "https://open.spotify.com/embed/track/4jKq1e80xAYixkIwt6YyV1?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-007",
+      "recording_id": "REC26-007",
+      "artist": "Imogen Heap",
+      "title": "Hide and Seek",
+      "provider": "spotify",
+      "media_id": "2tej1KSqNuxwywIpY1rDRc",
+      "source_url": "https://open.spotify.com/track/2tej1KSqNuxwywIpY1rDRc",
+      "embed_url": "https://open.spotify.com/embed/track/2tej1KSqNuxwywIpY1rDRc?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-008",
+      "recording_id": "REC26-008",
+      "artist": "Freeway",
+      "title": "What We Do",
+      "provider": "spotify",
+      "media_id": "5kDkWHFx0AEvJ1Pfm2i0ac",
+      "source_url": "https://open.spotify.com/track/5kDkWHFx0AEvJ1Pfm2i0ac",
+      "embed_url": "https://open.spotify.com/embed/track/5kDkWHFx0AEvJ1Pfm2i0ac?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-009",
+      "recording_id": "REC26-009",
+      "artist": "The Head and the Heart",
+      "title": "Virginia",
+      "provider": "youtube",
+      "media_id": "FwRCq0COdMo",
+      "source_url": "https://youtu.be/FwRCq0COdMo",
+      "embed_url": "https://www.youtube-nocookie.com/embed/FwRCq0COdMo"
+    },
+    {
+      "song_id": "SONG26-010",
+      "recording_id": "REC26-010",
+      "artist": "The Band CAMINO",
+      "title": "Daphne Blue",
+      "provider": "youtube",
+      "media_id": "V-U1ji1bjXM",
+      "source_url": "https://youtu.be/V-U1ji1bjXM",
+      "embed_url": "https://www.youtube-nocookie.com/embed/V-U1ji1bjXM"
+    },
+    {
+      "song_id": "SONG26-011",
+      "recording_id": "REC26-011",
+      "artist": "Kenny Loggins",
+      "title": "Danger Zone",
+      "provider": "youtube",
+      "media_id": "yK0P1Bk8Cx4",
+      "source_url": "https://youtu.be/yK0P1Bk8Cx4",
+      "embed_url": "https://www.youtube-nocookie.com/embed/yK0P1Bk8Cx4"
+    },
+    {
+      "song_id": "SONG26-012",
+      "recording_id": "REC26-012",
+      "artist": "Royal Blood",
+      "title": "Typhoons",
+      "provider": "youtube",
+      "media_id": "nm_sYSzkydY",
+      "source_url": "https://youtu.be/nm_sYSzkydY",
+      "embed_url": "https://www.youtube-nocookie.com/embed/nm_sYSzkydY"
+    },
+    {
+      "song_id": "SONG26-013",
+      "recording_id": "REC26-013",
+      "artist": "NEEDTOBREATHE",
+      "title": "Brother",
+      "provider": "youtube",
+      "media_id": "61Wm_qlVD4Q",
+      "source_url": "https://youtu.be/61Wm_qlVD4Q",
+      "embed_url": "https://www.youtube-nocookie.com/embed/61Wm_qlVD4Q"
+    },
+    {
+      "song_id": "SONG26-014",
+      "recording_id": "REC26-014",
+      "artist": "Eric Prydz",
+      "title": "Call On Me",
+      "provider": "youtube",
+      "media_id": "7kVEm1B1yNU",
+      "source_url": "https://youtu.be/7kVEm1B1yNU",
+      "embed_url": "https://www.youtube-nocookie.com/embed/7kVEm1B1yNU"
+    },
+    {
+      "song_id": "SONG26-015",
+      "recording_id": "REC26-015",
+      "artist": "Maroon 5",
+      "title": "Harder to Breathe",
+      "provider": "youtube",
+      "media_id": "rV8NHsmVMPE",
+      "source_url": "https://youtu.be/rV8NHsmVMPE",
+      "embed_url": "https://www.youtube-nocookie.com/embed/rV8NHsmVMPE"
+    },
+    {
+      "song_id": "SONG26-016",
+      "recording_id": "REC26-016",
+      "artist": "Pat Benatar",
+      "title": "Shadows of the Night",
+      "provider": "youtube",
+      "media_id": "ZInRE-KryGA",
+      "source_url": "https://youtu.be/ZInRE-KryGA",
+      "embed_url": "https://www.youtube-nocookie.com/embed/ZInRE-KryGA"
+    },
+    {
+      "song_id": "SONG26-017",
+      "recording_id": "REC26-017",
+      "artist": "Pink Floyd",
+      "title": "Dogs",
+      "provider": "spotify",
+      "media_id": "2jvuMDqBK04WvCYYz5qjvG",
+      "source_url": "https://open.spotify.com/track/2jvuMDqBK04WvCYYz5qjvG",
+      "embed_url": "https://open.spotify.com/embed/track/2jvuMDqBK04WvCYYz5qjvG?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-018",
+      "recording_id": "REC26-018",
+      "artist": "Vampire Weekend",
+      "title": "Step",
+      "provider": "spotify",
+      "media_id": "607EA1HsuzrqqaPuxyNqpD",
+      "source_url": "https://open.spotify.com/track/607EA1HsuzrqqaPuxyNqpD",
+      "embed_url": "https://open.spotify.com/embed/track/607EA1HsuzrqqaPuxyNqpD?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-019",
+      "recording_id": "REC26-019",
+      "artist": "Jack O Connell",
+      "title": "The Rocky Road to Dublin",
+      "provider": "spotify",
+      "media_id": "1esmJ8t2PRbYt2yMx2aSEW",
+      "source_url": "https://open.spotify.com/track/1esmJ8t2PRbYt2yMx2aSEW",
+      "embed_url": "https://open.spotify.com/embed/track/1esmJ8t2PRbYt2yMx2aSEW?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-020",
+      "recording_id": "REC26-020",
+      "artist": "Olivia Rodrigo",
+      "title": "Stupid Song",
+      "provider": "spotify",
+      "media_id": "4LfCY65LvojKjWEnU7fNN4",
+      "source_url": "https://open.spotify.com/track/4LfCY65LvojKjWEnU7fNN4",
+      "embed_url": "https://open.spotify.com/embed/track/4LfCY65LvojKjWEnU7fNN4?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-021",
+      "recording_id": "REC26-021",
+      "artist": "Cameron Winter",
+      "title": "Love Takes Miles",
+      "provider": "spotify",
+      "media_id": "2zf1izCOz2F22PF27uhxRF",
+      "source_url": "https://open.spotify.com/track/2zf1izCOz2F22PF27uhxRF",
+      "embed_url": "https://open.spotify.com/embed/track/2zf1izCOz2F22PF27uhxRF?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-022",
+      "recording_id": "REC26-022",
+      "artist": "Zach Bryan",
+      "title": "Revival",
+      "provider": "spotify",
+      "media_id": "2QfX9Pdz3q66fN3kCXl0Js",
+      "source_url": "https://open.spotify.com/track/2QfX9Pdz3q66fN3kCXl0Js",
+      "embed_url": "https://open.spotify.com/embed/track/2QfX9Pdz3q66fN3kCXl0Js?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-023",
+      "recording_id": "REC26-023",
+      "artist": "Simon & Garfunkel",
+      "title": "Scarborough Fair/Canticle",
+      "provider": "spotify",
+      "media_id": "3g2fYZW5v2od8KIF7VktT0",
+      "source_url": "https://open.spotify.com/track/3g2fYZW5v2od8KIF7VktT0",
+      "embed_url": "https://open.spotify.com/embed/track/3g2fYZW5v2od8KIF7VktT0?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-024",
+      "recording_id": "REC26-024",
+      "artist": "Thundercat",
+      "title": "Them Changes",
+      "provider": "spotify",
+      "media_id": "7CH99b2i1TXS5P8UUyWtnM",
+      "source_url": "https://open.spotify.com/track/7CH99b2i1TXS5P8UUyWtnM",
+      "embed_url": "https://open.spotify.com/embed/track/7CH99b2i1TXS5P8UUyWtnM?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-025",
+      "recording_id": "REC26-025",
+      "artist": "The Killers",
+      "title": "Mr. Brightside",
+      "provider": "spotify",
+      "media_id": "003vvx7Niy0yvhvHt4a68B",
+      "source_url": "https://open.spotify.com/track/003vvx7Niy0yvhvHt4a68B",
+      "embed_url": "https://open.spotify.com/embed/track/003vvx7Niy0yvhvHt4a68B?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-026",
+      "recording_id": "REC26-026",
+      "artist": "Crosby Stills and Nash",
+      "title": "Helplessly Hoping",
+      "provider": "spotify",
+      "media_id": "1UKobFsdqNXQb8OthimCKe",
+      "source_url": "https://open.spotify.com/track/1UKobFsdqNXQb8OthimCKe",
+      "embed_url": "https://open.spotify.com/embed/track/1UKobFsdqNXQb8OthimCKe?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-027",
+      "recording_id": "REC26-027",
+      "artist": "The Beatles",
+      "title": "Blackbird",
+      "provider": "spotify",
+      "media_id": "5jgFfDIR6FR0gvlA56Nakr",
+      "source_url": "https://open.spotify.com/track/5jgFfDIR6FR0gvlA56Nakr",
+      "embed_url": "https://open.spotify.com/embed/track/5jgFfDIR6FR0gvlA56Nakr?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-028",
+      "recording_id": "REC26-028",
+      "artist": "The Rolling Stones",
+      "title": "Gimme Shelter",
+      "provider": "spotify",
+      "media_id": "6H3kDe7CGoWYBabAeVWGiD",
+      "source_url": "https://open.spotify.com/track/6H3kDe7CGoWYBabAeVWGiD",
+      "embed_url": "https://open.spotify.com/embed/track/6H3kDe7CGoWYBabAeVWGiD?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-029",
+      "recording_id": "REC26-029",
+      "artist": "Tom Petty / Prince",
+      "title": "While My Guitar Gently Weeps (cover)",
+      "provider": "youtube",
+      "media_id": "6SFNW5F8K9Y",
+      "source_url": "https://youtu.be/6SFNW5F8K9Y",
+      "embed_url": "https://www.youtube-nocookie.com/embed/6SFNW5F8K9Y"
+    },
+    {
+      "song_id": "SONG26-030",
+      "recording_id": "REC26-030",
+      "artist": "John Williams",
+      "title": "Anakin’s Betrayal",
+      "provider": "spotify",
+      "media_id": "5uXXHbXfoebEI6qqiIqOdl",
+      "source_url": "https://open.spotify.com/track/5uXXHbXfoebEI6qqiIqOdl",
+      "embed_url": "https://open.spotify.com/embed/track/5uXXHbXfoebEI6qqiIqOdl?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-031",
+      "recording_id": "REC26-031",
+      "artist": "Dolly Parton and Chet Atkins",
+      "title": "Do I Ever Cross Your Mind?",
+      "provider": "spotify",
+      "media_id": "31xqbaSu7ozgcK8desDuMK",
+      "source_url": "https://open.spotify.com/track/31xqbaSu7ozgcK8desDuMK",
+      "embed_url": "https://open.spotify.com/embed/track/31xqbaSu7ozgcK8desDuMK?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-032",
+      "recording_id": "REC26-032",
+      "artist": "Coldplay",
+      "title": "Viva La Vida",
+      "provider": "spotify",
+      "media_id": "1mea3bSkSGXuIRvnydlB5b",
+      "source_url": "https://open.spotify.com/track/1mea3bSkSGXuIRvnydlB5b",
+      "embed_url": "https://open.spotify.com/embed/track/1mea3bSkSGXuIRvnydlB5b?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-033",
+      "recording_id": "REC26-033",
+      "artist": "Joe Hisaishi",
+      "title": "Merry-Go-Round of Life",
+      "provider": "youtube",
+      "media_id": "UwxatzcYf9Q",
+      "source_url": "https://youtu.be/UwxatzcYf9Q",
+      "embed_url": "https://www.youtube-nocookie.com/embed/UwxatzcYf9Q"
+    },
+    {
+      "song_id": "SONG26-034",
+      "recording_id": "REC26-034",
+      "artist": "Relient K",
+      "title": "Deathbed",
+      "provider": "spotify",
+      "media_id": "2Tc1G0aJmPDccmCVrdfuDP",
+      "source_url": "https://open.spotify.com/track/2Tc1G0aJmPDccmCVrdfuDP",
+      "embed_url": "https://open.spotify.com/embed/track/2Tc1G0aJmPDccmCVrdfuDP?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-035",
+      "recording_id": "REC26-035",
+      "artist": "Journey",
+      "title": "Don't Stop Believin'",
+      "provider": "spotify",
+      "media_id": "5RKQ5NdjSh2QzD4MaunT91",
+      "source_url": "https://open.spotify.com/track/5RKQ5NdjSh2QzD4MaunT91",
+      "embed_url": "https://open.spotify.com/embed/track/5RKQ5NdjSh2QzD4MaunT91?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-036",
+      "recording_id": "REC26-036",
+      "artist": "a-ha",
+      "title": "Take On Me",
+      "provider": "spotify",
+      "media_id": "2WfaOiMkCvy7F5fcp2zZ8L",
+      "source_url": "https://open.spotify.com/track/2WfaOiMkCvy7F5fcp2zZ8L",
+      "embed_url": "https://open.spotify.com/embed/track/2WfaOiMkCvy7F5fcp2zZ8L?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-037",
+      "recording_id": "REC26-037",
+      "artist": "Stevie Wonder",
+      "title": "Superstition",
+      "provider": "spotify",
+      "media_id": "4N0TP4Rmj6QQezWV88ARNJ",
+      "source_url": "https://open.spotify.com/track/4N0TP4Rmj6QQezWV88ARNJ",
+      "embed_url": "https://open.spotify.com/embed/track/4N0TP4Rmj6QQezWV88ARNJ?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-038",
+      "recording_id": "REC26-038",
+      "artist": "Bill Withers",
+      "title": "Ain't No Sunshine",
+      "provider": "spotify",
+      "media_id": "1k1Bqnv2R0uJXQN4u6LKYt",
+      "source_url": "https://open.spotify.com/track/1k1Bqnv2R0uJXQN4u6LKYt",
+      "embed_url": "https://open.spotify.com/embed/track/1k1Bqnv2R0uJXQN4u6LKYt?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-039",
+      "recording_id": "REC26-039",
+      "artist": "The Beatles",
+      "title": "Here Comes the Sun",
+      "provider": "spotify",
+      "media_id": "6dGnYIeXmHdcikdzNNDMm2",
+      "source_url": "https://open.spotify.com/track/6dGnYIeXmHdcikdzNNDMm2",
+      "embed_url": "https://open.spotify.com/embed/track/6dGnYIeXmHdcikdzNNDMm2?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-040",
+      "recording_id": "REC26-040",
+      "artist": "Train",
+      "title": "Drops of Jupiter",
+      "provider": "spotify",
+      "media_id": "2hKdd3qO7cWr2Jo0Bcs0MA",
+      "source_url": "https://open.spotify.com/track/2hKdd3qO7cWr2Jo0Bcs0MA",
+      "embed_url": "https://open.spotify.com/embed/track/2hKdd3qO7cWr2Jo0Bcs0MA?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-041",
+      "recording_id": "REC26-041",
+      "artist": "Mark Ronson, RAYE",
+      "title": "Suzanne (At the Church)",
+      "provider": "spotify",
+      "media_id": "12wx44H3c9VSkfpZtoD9mB",
+      "source_url": "https://open.spotify.com/track/12wx44H3c9VSkfpZtoD9mB",
+      "embed_url": "https://open.spotify.com/embed/track/12wx44H3c9VSkfpZtoD9mB?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-042",
+      "recording_id": "REC26-042",
+      "artist": "John Williams, London Symphony Orchestra",
+      "title": "Yoda and the Force",
+      "provider": "spotify",
+      "media_id": "2BinLD35GaTzdedSskSDaS",
+      "source_url": "https://open.spotify.com/track/2BinLD35GaTzdedSskSDaS",
+      "embed_url": "https://open.spotify.com/embed/track/2BinLD35GaTzdedSskSDaS?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-043",
+      "recording_id": "REC26-043",
+      "artist": "Remi Wolf",
+      "title": "Soup",
+      "provider": "spotify",
+      "media_id": "1Wi1XpdZzGVIdRTzlTrIEF",
+      "source_url": "https://open.spotify.com/track/1Wi1XpdZzGVIdRTzlTrIEF",
+      "embed_url": "https://open.spotify.com/embed/track/1Wi1XpdZzGVIdRTzlTrIEF?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-044",
+      "recording_id": "REC26-044",
+      "artist": "Kishi Bashi",
+      "title": "Honeybody",
+      "provider": "spotify",
+      "media_id": "6fbQ0UYHQS2CFQ85hOyXVM",
+      "source_url": "https://open.spotify.com/track/6fbQ0UYHQS2CFQ85hOyXVM",
+      "embed_url": "https://open.spotify.com/embed/track/6fbQ0UYHQS2CFQ85hOyXVM?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-045",
+      "recording_id": "REC26-045",
+      "artist": "AJR, Blue Man Group",
+      "title": "Ordinaryish People - feat. Blue Man Group",
+      "provider": "spotify",
+      "media_id": "2NhdaHdguorjUfDBV8INhX",
+      "source_url": "https://open.spotify.com/track/2NhdaHdguorjUfDBV8INhX",
+      "embed_url": "https://open.spotify.com/embed/track/2NhdaHdguorjUfDBV8INhX?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-046",
+      "recording_id": "REC26-046",
+      "artist": "Foster The People",
+      "title": "Sit Next to Me",
+      "provider": "spotify",
+      "media_id": "4BdGO1CaObRD4La9l5Zanz",
+      "source_url": "https://open.spotify.com/track/4BdGO1CaObRD4La9l5Zanz",
+      "embed_url": "https://open.spotify.com/embed/track/4BdGO1CaObRD4La9l5Zanz?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-047",
+      "recording_id": "REC26-047",
+      "artist": "Marianas Trench",
+      "title": "No Place Like Home",
+      "provider": "spotify",
+      "media_id": "6xJx4qmhYxKaqMDEXTuCBP",
+      "source_url": "https://open.spotify.com/track/6xJx4qmhYxKaqMDEXTuCBP",
+      "embed_url": "https://open.spotify.com/embed/track/6xJx4qmhYxKaqMDEXTuCBP?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-048",
+      "recording_id": "REC26-048",
+      "artist": "TWICE",
+      "title": "Strategy",
+      "provider": "spotify",
+      "media_id": "22fSzde77hjB052Vo155LF",
+      "source_url": "https://open.spotify.com/track/22fSzde77hjB052Vo155LF",
+      "embed_url": "https://open.spotify.com/embed/track/22fSzde77hjB052Vo155LF?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-049",
+      "recording_id": "REC26-049",
+      "artist": "Parcels",
+      "title": "Tieduprightnow",
+      "provider": "spotify",
+      "media_id": "66tkDkPsznE5zIHNt4QkXB",
+      "source_url": "https://open.spotify.com/track/66tkDkPsznE5zIHNt4QkXB",
+      "embed_url": "https://open.spotify.com/embed/track/66tkDkPsznE5zIHNt4QkXB?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-050",
+      "recording_id": "REC26-050",
+      "artist": "The Spinners",
+      "title": "The Rubberband Man",
+      "provider": "spotify",
+      "media_id": "13Mzsb8VzRSZ5w3pM48cn6",
+      "source_url": "https://open.spotify.com/track/13Mzsb8VzRSZ5w3pM48cn6",
+      "embed_url": "https://open.spotify.com/embed/track/13Mzsb8VzRSZ5w3pM48cn6?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-051",
+      "recording_id": "REC26-051",
+      "artist": "Jon Bellion",
+      "title": "Overwhelming",
+      "provider": "spotify",
+      "media_id": "48LwbDH7u5UMrsY3sjfjhe",
+      "source_url": "https://open.spotify.com/track/48LwbDH7u5UMrsY3sjfjhe",
+      "embed_url": "https://open.spotify.com/embed/track/48LwbDH7u5UMrsY3sjfjhe?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-052",
+      "recording_id": "REC26-052",
+      "artist": "Brooks and Dunn",
+      "title": "My Maria",
+      "provider": "spotify",
+      "media_id": "09qzRI951OVkXGCc33gzcT",
+      "source_url": "https://open.spotify.com/track/09qzRI951OVkXGCc33gzcT",
+      "embed_url": "https://open.spotify.com/embed/track/09qzRI951OVkXGCc33gzcT?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-053",
+      "recording_id": "REC26-053",
+      "artist": "Sam Barber",
+      "title": "Man of the Year",
+      "provider": "spotify",
+      "media_id": "2xlsLf7aPOZlk1p3dvwpeH",
+      "source_url": "https://open.spotify.com/track/2xlsLf7aPOZlk1p3dvwpeH",
+      "embed_url": "https://open.spotify.com/embed/track/2xlsLf7aPOZlk1p3dvwpeH?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-054",
+      "recording_id": "REC26-054",
+      "artist": "CHVRCHES",
+      "title": "The Mother We Share",
+      "provider": "spotify",
+      "media_id": "1OVypFlcraAhyvPqIMWDor",
+      "source_url": "https://open.spotify.com/track/1OVypFlcraAhyvPqIMWDor",
+      "embed_url": "https://open.spotify.com/embed/track/1OVypFlcraAhyvPqIMWDor?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-055",
+      "recording_id": "REC26-055",
+      "artist": "3 Doors Down",
+      "title": "It’s Not My Time",
+      "provider": "spotify",
+      "media_id": "0uybt73QFXaLCoxuVf6fhm",
+      "source_url": "https://open.spotify.com/track/0uybt73QFXaLCoxuVf6fhm",
+      "embed_url": "https://open.spotify.com/embed/track/0uybt73QFXaLCoxuVf6fhm?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-056",
+      "recording_id": "REC26-056",
+      "artist": "Tommy Richman",
+      "title": "MILLION DOLLAR BABY",
+      "provider": "spotify",
+      "media_id": "5AJ9hqTS2wcFQCELCFRO7A",
+      "source_url": "https://open.spotify.com/track/5AJ9hqTS2wcFQCELCFRO7A",
+      "embed_url": "https://open.spotify.com/embed/track/5AJ9hqTS2wcFQCELCFRO7A?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-057",
+      "recording_id": "REC26-057",
+      "artist": "blink-182",
+      "title": "All the Small Things",
+      "provider": "spotify",
+      "media_id": "2m1hi0nfMR9vdGC8UcrnwU",
+      "source_url": "https://open.spotify.com/track/2m1hi0nfMR9vdGC8UcrnwU",
+      "embed_url": "https://open.spotify.com/embed/track/2m1hi0nfMR9vdGC8UcrnwU?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-058",
+      "recording_id": "REC26-058",
+      "artist": "blink-182",
+      "title": "I Miss You",
+      "provider": "spotify",
+      "media_id": "1oTo3ijRbaDAtrjJrGAPSw",
+      "source_url": "https://open.spotify.com/track/1oTo3ijRbaDAtrjJrGAPSw",
+      "embed_url": "https://open.spotify.com/embed/track/1oTo3ijRbaDAtrjJrGAPSw?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-059",
+      "recording_id": "REC26-059",
+      "artist": "blink-182",
+      "title": "What's My Age Again?",
+      "provider": "spotify",
+      "media_id": "4LJhJ6DQS7NwE7UKtvcM52",
+      "source_url": "https://open.spotify.com/track/4LJhJ6DQS7NwE7UKtvcM52",
+      "embed_url": "https://open.spotify.com/embed/track/4LJhJ6DQS7NwE7UKtvcM52?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-060",
+      "recording_id": "REC26-060",
+      "artist": "Green Day",
+      "title": "Basket Case",
+      "provider": "spotify",
+      "media_id": "6L89mwZXSOwYl76YXfX13s",
+      "source_url": "https://open.spotify.com/track/6L89mwZXSOwYl76YXfX13s",
+      "embed_url": "https://open.spotify.com/embed/track/6L89mwZXSOwYl76YXfX13s?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-061",
+      "recording_id": "REC26-061",
+      "artist": "Good Charlotte",
+      "title": "The Anthem",
+      "provider": "spotify",
+      "media_id": "0BRHnOFm6sjxN1i9LJrUDu",
+      "source_url": "https://open.spotify.com/track/0BRHnOFm6sjxN1i9LJrUDu",
+      "embed_url": "https://open.spotify.com/embed/track/0BRHnOFm6sjxN1i9LJrUDu?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-062",
+      "recording_id": "REC26-062",
+      "artist": "blink-182",
+      "title": "Dammit",
+      "provider": "spotify",
+      "media_id": "6WkSUgo1VdpzgtiXKlFPcY",
+      "source_url": "https://open.spotify.com/track/6WkSUgo1VdpzgtiXKlFPcY",
+      "embed_url": "https://open.spotify.com/embed/track/6WkSUgo1VdpzgtiXKlFPcY?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-063",
+      "recording_id": "REC26-063",
+      "artist": "Linkin Park",
+      "title": "In the End",
+      "provider": "spotify",
+      "media_id": "60a0Rd6pjrkxjPbaKzXjfq",
+      "source_url": "https://open.spotify.com/track/60a0Rd6pjrkxjPbaKzXjfq",
+      "embed_url": "https://open.spotify.com/embed/track/60a0Rd6pjrkxjPbaKzXjfq?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-064",
+      "recording_id": "REC26-064",
+      "artist": "Linkin Park",
+      "title": "One More Light",
+      "provider": "spotify",
+      "media_id": "3xXBsjrbG1xQIm1xv1cKOt",
+      "source_url": "https://open.spotify.com/track/3xXBsjrbG1xQIm1xv1cKOt",
+      "embed_url": "https://open.spotify.com/embed/track/3xXBsjrbG1xQIm1xv1cKOt?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-065",
+      "recording_id": "REC26-065",
+      "artist": "Midge Ure",
+      "title": "The Man Who Sold The World",
+      "provider": "youtube",
+      "media_id": "IU2wBKoDOzg",
+      "source_url": "https://www.youtube.com/watch?v=IU2wBKoDOzg",
+      "embed_url": "https://www.youtube-nocookie.com/embed/IU2wBKoDOzg"
+    },
+    {
+      "song_id": "SONG26-066",
+      "recording_id": "REC26-066",
+      "artist": "The Roman",
+      "title": "The Great Unknown",
+      "provider": "spotify",
+      "media_id": "5BDHLhoxp4kTIN36Y5w8ND",
+      "source_url": "https://open.spotify.com/track/5BDHLhoxp4kTIN36Y5w8ND",
+      "embed_url": "https://open.spotify.com/embed/track/5BDHLhoxp4kTIN36Y5w8ND?utm_source=generator"
+    },
+    {
+      "song_id": "SONG26-067",
+      "recording_id": "REC26-067",
+      "artist": "Garrett Kato",
+      "title": "Moon",
+      "provider": "youtube",
+      "media_id": "ZuaHhRQUq8Y",
+      "source_url": "https://www.youtube.com/watch?v=ZuaHhRQUq8Y",
+      "embed_url": "https://www.youtube-nocookie.com/embed/ZuaHhRQUq8Y"
+    },
+    {
+      "song_id": "SONG26-068",
+      "recording_id": "REC26-068",
+      "artist": "Young Decades",
+      "title": "No Sleep",
+      "provider": "youtube",
+      "media_id": "bgrGSZ6TTk4",
+      "source_url": "https://www.youtube.com/watch?v=bgrGSZ6TTk4",
+      "embed_url": "https://www.youtube-nocookie.com/embed/bgrGSZ6TTk4"
+    },
+    {
+      "song_id": "SONG26-069",
+      "recording_id": "REC26-069",
+      "artist": "Nite Tides",
+      "title": "Your Window",
+      "provider": "youtube",
+      "media_id": "8ec_k_gDyrk",
+      "source_url": "https://www.youtube.com/watch?v=8ec_k_gDyrk",
+      "embed_url": "https://www.youtube-nocookie.com/embed/8ec_k_gDyrk"
+    },
+    {
+      "song_id": "SONG26-070",
+      "recording_id": "REC26-070",
+      "artist": "Still Corners",
+      "title": "Heavy Days",
+      "provider": "youtube",
+      "media_id": "1JaRLTd0KC4",
+      "source_url": "https://www.youtube.com/watch?v=1JaRLTd0KC4",
+      "embed_url": "https://www.youtube-nocookie.com/embed/1JaRLTd0KC4"
+    },
+    {
+      "song_id": "SONG26-071",
+      "recording_id": "REC26-071",
+      "artist": "Darren Korb & Ashley Barrett",
+      "title": "Paper Boats",
+      "provider": "youtube",
+      "media_id": "K8OTg92mHaQ",
+      "source_url": "https://www.youtube.com/watch?v=K8OTg92mHaQ",
+      "embed_url": "https://www.youtube-nocookie.com/embed/K8OTg92mHaQ"
+    },
+    {
+      "song_id": "SONG26-072",
+      "recording_id": "REC26-072",
+      "artist": "Fantastic Negrito",
+      "title": "When Everything Went Wrong",
+      "provider": "youtube",
+      "media_id": "JdZed_S0RHo",
+      "source_url": "https://www.youtube.com/watch?v=JdZed_S0RHo",
+      "embed_url": "https://www.youtube-nocookie.com/embed/JdZed_S0RHo"
+    }
+  ]
+}

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>HMPP 2026 — Purdue Gold Tournament Bracket</title>
+<style>
+:root{
+  --black:#000000;
+  --gold:#CFB991;
+  --aged:#8E6F3E;
+  --rush:#DAAA00;
+  --field:#DDB945;
+  --dust:#EBD99F;
+  --steel:#555960;
+  --cool-gray:#6F727B;
+  --railway:#9D9795;
+  --steam:#C4BFC0;
+  --white:#FFFFFF;
+
+  --bg:#F6F5F2;
+  --surface:#FFFFFF;
+  --surface-muted:#FAF9F7;
+  --ink:#111111;
+  --muted:#60646B;
+  --line:#DED9D0;
+  --line-strong:#C9C1B4;
+  --focus:#8E6F3E;
+  --shadow:0 8px 24px rgba(0,0,0,.07);
+  --shadow-hover:0 14px 32px rgba(0,0,0,.11);
+  --radius:12px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:14px/1.45 Arial, Helvetica, sans-serif;
+}
+button,input{font:inherit}
+button:focus-visible,input:focus-visible{
+  outline:3px solid rgba(142,111,62,.35);
+  outline-offset:2px;
+}
+
+header{
+  height:68px;
+  background:var(--black);
+  color:var(--white);
+  border-bottom:4px solid var(--gold);
+  display:flex;
+  align-items:center;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.brand{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.03em;
+  white-space:nowrap;
+}
+.brand i{
+  color:var(--gold);
+  font-style:normal;
+}
+nav{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-left:40px;
+  color:#D8D8D8;
+}
+nav span,nav b{
+  padding:22px 0 19px;
+  border-bottom:3px solid transparent;
+}
+nav b{
+  color:var(--white);
+  border-color:var(--gold);
+}
+.account{
+  margin-left:auto;
+  color:#D7D7D7;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.hero{
+  background:
+    linear-gradient(115deg, rgba(207,185,145,.14), transparent 40%),
+    var(--black);
+  color:var(--white);
+  border-bottom:1px solid #262626;
+}
+.heroin{
+  max-width:1440px;
+  margin:auto;
+  padding:48px 28px 38px;
+}
+.eyebrow{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  color:var(--gold);
+}
+h1{
+  font-size:44px;
+  line-height:1.02;
+  margin:10px 0 13px;
+  letter-spacing:-.05em;
+}
+.desc{
+  max-width:700px;
+  color:#E4E4E4;
+  line-height:1.65;
+  font-size:15px;
+}
+.metrics{
+  display:flex;
+  gap:10px;
+  margin-top:28px;
+  flex-wrap:wrap;
+}
+.metric{
+  min-width:104px;
+  padding:10px 14px;
+  border:1px solid #3A3A3A;
+  border-top:3px solid var(--gold);
+  border-radius:8px;
+  background:#151515;
+}
+.metric strong{
+  font-size:19px;
+  display:block;
+  color:var(--white);
+}
+.metric small{color:#CFCFCF}
+
+.progress-wrap{
+  max-width:1440px;
+  margin:0 auto;
+  padding:18px 28px 0;
+}
+.progress-rail{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding-bottom:4px;
+}
+.round-chip{
+  flex:0 0 auto;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--muted);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.03em;
+}
+.round-chip.current{
+  background:var(--black);
+  color:var(--white);
+  border-color:var(--black);
+}
+.round-chip.current::before{
+  content:"";
+  display:inline-block;
+  width:7px;height:7px;
+  margin-right:7px;
+  border-radius:50%;
+  background:var(--gold);
+}
+
+.toolbar{
+  max-width:1440px;
+  margin:auto;
+  padding:24px 28px 14px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px;
+  align-items:end;
+}
+h2{
+  margin:0;
+  font-size:23px;
+  letter-spacing:-.03em;
+}
+.caption{
+  color:var(--muted);
+  margin-top:5px;
+}
+.controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.search{
+  min-width:250px;
+  border:1px solid var(--line-strong);
+  background:var(--surface);
+  border-radius:8px;
+  padding:9px 11px;
+  color:var(--ink);
+}
+.search::placeholder{color:#8A8D92}
+.tabs{
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  overflow:hidden;
+  background:var(--surface);
+  display:flex;
+}
+.tabs button{
+  border:0;
+  border-right:1px solid var(--line);
+  padding:9px 14px;
+  background:var(--surface);
+  color:var(--muted);
+  font-weight:700;
+  cursor:pointer;
+}
+.tabs button:last-child{border-right:0}
+.tabs button:hover{background:#F2EFEA}
+.tabs button.active{
+  background:var(--black);
+  color:var(--white);
+}
+
+.section{
+  max-width:1440px;
+  margin:auto;
+  padding:0 28px 44px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(280px,1fr));
+  gap:18px;
+}
+.match{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-top:4px solid var(--gold);
+  border-radius:var(--radius);
+  padding:12px;
+  box-shadow:var(--shadow);
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.match:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+  border-color:var(--line-strong);
+}
+.matchhead{
+  min-height:28px;
+  padding:1px 3px 9px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--cool-gray);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+.matchhead b{
+  color:var(--aged);
+  font-size:11px;
+}
+.song{
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:14px;
+  min-height:132px;
+  background:var(--white);
+  position:relative;
+}
+.song.placeholder{
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #FAF9F7,
+      #FAF9F7 8px,
+      #F4F1EB 8px,
+      #F4F1EB 16px
+    );
+  border-style:dashed;
+}
+.meta{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:var(--cool-gray);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.04em;
+}
+.meta span:last-child{
+  color:var(--aged);
+}
+.title{
+  font-weight:800;
+  font-size:16px;
+  margin-top:8px;
+  line-height:1.25;
+  letter-spacing:-.01em;
+}
+.artist{
+  color:var(--muted);
+  margin-top:4px;
+  min-height:20px;
+}
+.song button{
+  margin-top:11px;
+  width:100%;
+  text-align:left;
+  border:1px solid var(--line-strong);
+  background:var(--surface-muted);
+  color:#777B80;
+  border-radius:7px;
+  padding:7px 9px;
+  font-weight:700;
+}
+.song button small{
+  float:right;
+  font-weight:500;
+}
+.vs{
+  height:30px;
+  display:grid;
+  place-items:center;
+  color:var(--aged);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.16em;
+}
+.sectionlabel{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:11px;
+  font-weight:850;
+  color:var(--steel);
+  letter-spacing:.11em;
+  margin:0 0 12px;
+}
+.sectionlabel::after{
+  content:"";
+  height:1px;
+  background:var(--line);
+  flex:1;
+}
+.empty{
+  display:none;
+  grid-column:1/-1;
+  padding:30px;
+  text-align:center;
+  border:1px dashed var(--line-strong);
+  border-radius:var(--radius);
+  color:var(--muted);
+  background:var(--surface);
+}
+.note{
+  max-width:1440px;
+  margin:auto;
+  padding:0 28px 30px;
+  color:var(--muted);
+  font-size:12px;
+}
+.note strong{color:var(--ink)}
+
+@media(max-width:1120px){
+  .grid{grid-template-columns:repeat(2,minmax(270px,1fr))}
+  .toolbar{grid-template-columns:1fr}
+  .controls{justify-content:flex-start}
+}
+@media(max-width:720px){
+  header{padding:0 16px}
+  nav{display:none}
+  .account{font-size:11px}
+  .heroin,.progress-wrap,.toolbar,.section,.note{
+    padding-left:16px;
+    padding-right:16px
+  }
+  h1{font-size:34px}
+  .controls{display:grid;grid-template-columns:1fr}
+  .search{min-width:0;width:100%}
+  .tabs{width:100%}
+  .tabs button{flex:1}
+  .grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
+
+nav a.navlink{
+  color:#D8D8D8;
+  text-decoration:none;
+  padding:22px 0 19px;
+  border-bottom:3px solid transparent;
+  font-weight:700;
+}
+nav a.navlink:hover,nav a.navlink:focus-visible{color:var(--white)}
+nav a.navlink.active{color:var(--white);border-color:var(--gold)}
+.song .listen-btn{
+  cursor:pointer;
+  color:var(--ink);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.song .listen-btn:hover{background:#F2EFEA;border-color:var(--aged)}
+.song .listen-btn[aria-expanded="true"]{background:var(--black);color:var(--white);border-color:var(--black)}
+.player-slot{display:none;margin-top:10px}
+.player-slot.open{display:block}
+.player-slot iframe{display:block;width:100%;border:0;border-radius:10px;background:#111}
+.info-section{
+  max-width:1440px;
+  margin:0 auto 34px;
+  padding:0 28px;
+  scroll-margin-top:88px;
+}
+.info-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-top:4px solid var(--gold);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+.info-card h2{margin-bottom:8px}
+.info-card p{color:var(--muted);max-width:900px}
+.rule-grid,.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:16px;
+}
+.mini{
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:14px;
+  background:var(--surface-muted);
+}
+.mini strong{display:block;margin-bottom:4px}
+.stat-grid .mini strong{font-size:22px;color:var(--aged)}
+@media(max-width:820px){
+  .rule-grid,.stat-grid{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  nav{display:flex;gap:14px;margin-left:18px;overflow-x:auto}
+  nav a.navlink{padding:22px 0 19px}
+}
+
+
+.player-shell{
+  margin-top:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  background:#FAF9F7;
+}
+.player-status{
+  font-size:11px;
+  line-height:1.4;
+  padding:8px 10px;
+  border-radius:7px;
+  margin-bottom:8px;
+  background:#F0EEE8;
+  color:var(--muted);
+}
+.player-status.connecting::before{content:"● ";color:var(--aged)}
+.player-status.loaded{background:#F2F5EE;color:#35402E}
+.player-status.loaded::before{content:"✓ ";font-weight:900}
+.player-status.blocked{background:#FFF6E7;color:#674C1E}
+.player-status.blocked::before{content:"! ";font-weight:900}
+.frame-wrap iframe{display:block;width:100%;border:0;border-radius:10px;background:#111}
+.player-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
+.provider-link,.copy-link{
+  border:1px solid var(--line-strong);
+  border-radius:7px;
+  padding:8px 10px;
+  font-weight:800;
+  text-decoration:none;
+  cursor:pointer;
+}
+.provider-link{
+  background:var(--black);
+  color:var(--white);
+}
+.copy-link{
+  background:var(--white);
+  color:var(--ink);
+}
+.preview-note{
+  max-width:1440px;
+  margin:0 auto 16px;
+  padding:0 28px;
+}
+.preview-note > div{
+  border:1px solid var(--line);
+  border-left:4px solid var(--gold);
+  background:var(--surface);
+  padding:11px 13px;
+  border-radius:0 8px 8px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.preview-note strong{color:var(--ink)}
+@media(max-width:720px){
+  .preview-note{padding-left:16px;padding-right:16px}
+  .player-actions>*{flex:1;text-align:center}
+}
+
+</style></head>
+<body><header><div class="brand">HMPP <i>'26</i></div><nav aria-label="Primary"><a class="navlink active" href="#bracket">Bracket</a><a class="navlink" href="#rules">Rules</a><a class="navlink" href="#stats">Stats</a><a class="navlink" href="#about">About</a></nav><div class="account">2026 · 72 entries</div></header>
+<section class="hero" id="bracket">
+<div class="heroin">
+<div class="eyebrow">HARRY MEN PIED PIPER · TOURNAMENT OF SONGS</div>
+<h1>Only the songs get a name.</h1>
+<div class="desc">Seventy-two songs enter a blind, song-first bracket. Eight play-ins cut the field to sixty-four. From there, every matchup is decided one song at a time.</div>
+<div aria-label="Tournament summary" class="metrics">
+<div class="metric"><strong>72</strong><small>Entries</small></div>
+<div class="metric"><strong>8</strong><small>Play-ins</small></div>
+<div class="metric"><strong>64</strong><small>Main bracket</small></div>
+<div class="metric"><strong>0</strong><small>Results posted</small></div>
+</div>
+</div>
+</section>
+<div aria-label="Tournament rounds" class="progress-wrap">
+<div class="progress-rail">
+<span class="round-chip current">Play-in</span>
+<span class="round-chip">Round of 64</span>
+<span class="round-chip">Round of 32</span>
+<span class="round-chip">Sweet 16</span>
+<span class="round-chip">Elite 8</span>
+<span class="round-chip">Final Four</span>
+<span class="round-chip">Championship</span>
+</div>
+</div>
+
+
+<div class="preview-note"><div><strong>Listening test:</strong> tap Listen to request the embedded player. Chat previews may ask for network permission. If the provider still cannot play inside Preview, use the direct provider button shown beneath the player—there is no silent failure state in this build.</div></div>
+
+<div class="toolbar">
+<div>
+<h2>2026 Bracket</h2>
+<div class="caption">Browse the locked field by round. Search filters the visible matchups by song or artist.</div>
+</div>
+<div class="controls">
+<label>
+<span style="position:absolute;left:-9999px">Search songs or artists</span>
+<input autocomplete="off" class="search" id="matchSearch" placeholder="Search song or artist…" type="search"/>
+</label>
+<div aria-label="Bracket round" class="tabs" role="tablist">
+<button aria-controls="p" aria-selected="true" class="active" id="pbtn" onclick="tab('p')" role="tab">Play-ins</button>
+<button aria-controls="r" aria-selected="false" id="rbtn" onclick="tab('r')" role="tab">Round 1</button>
+</div>
+</div>
+</div>
+<section aria-labelledby="pbtn" class="section" id="p"><div class="sectionlabel">ROUND 0 · PLAY-IN</div><div class="grid"><article class="match"><div class="matchhead"><b>PI01</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-019</span><span>READY</span></div><div class="title">The Rocky Road to Dublin</div><div class="artist">Jack O Connell</div><button class="listen-btn" type="button" data-song-id="SONG26-019" aria-expanded="false" aria-controls="player-SONG26-019">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-019"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-016</span><span>READY</span></div><div class="title">Shadows of the Night</div><div class="artist">Pat Benatar</div><button class="listen-btn" type="button" data-song-id="SONG26-016" aria-expanded="false" aria-controls="player-SONG26-016">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-016"></div></div></article><article class="match"><div class="matchhead"><b>PI02</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-042</span><span>READY</span></div><div class="title">Yoda and the Force</div><div class="artist">John Williams, London Symphony Orchestra</div><button class="listen-btn" type="button" data-song-id="SONG26-042" aria-expanded="false" aria-controls="player-SONG26-042">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-042"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-001</span><span>READY</span></div><div class="title">Desolation Row</div><div class="artist">Bob Dylan</div><button class="listen-btn" type="button" data-song-id="SONG26-001" aria-expanded="false" aria-controls="player-SONG26-001">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-001"></div></div></article><article class="match"><div class="matchhead"><b>PI03</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-052</span><span>READY</span></div><div class="title">My Maria</div><div class="artist">Brooks and Dunn</div><button class="listen-btn" type="button" data-song-id="SONG26-052" aria-expanded="false" aria-controls="player-SONG26-052">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-052"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-031</span><span>READY</span></div><div class="title">Do I Ever Cross Your Mind?</div><div class="artist">Dolly Parton and Chet Atkins</div><button class="listen-btn" type="button" data-song-id="SONG26-031" aria-expanded="false" aria-controls="player-SONG26-031">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-031"></div></div></article><article class="match"><div class="matchhead"><b>PI04</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-051</span><span>READY</span></div><div class="title">Overwhelming</div><div class="artist">Jon Bellion</div><button class="listen-btn" type="button" data-song-id="SONG26-051" aria-expanded="false" aria-controls="player-SONG26-051">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-051"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-057</span><span>READY</span></div><div class="title">All the Small Things</div><div class="artist">blink-182</div><button class="listen-btn" type="button" data-song-id="SONG26-057" aria-expanded="false" aria-controls="player-SONG26-057">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-057"></div></div></article><article class="match"><div class="matchhead"><b>PI05</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-069</span><span>READY</span></div><div class="title">Your Window</div><div class="artist">Nite Tides</div><button class="listen-btn" type="button" data-song-id="SONG26-069" aria-expanded="false" aria-controls="player-SONG26-069">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-069"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-034</span><span>READY</span></div><div class="title">Deathbed</div><div class="artist">Relient K</div><button class="listen-btn" type="button" data-song-id="SONG26-034" aria-expanded="false" aria-controls="player-SONG26-034">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-034"></div></div></article><article class="match"><div class="matchhead"><b>PI06</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-028</span><span>READY</span></div><div class="title">Gimme Shelter</div><div class="artist">The Rolling Stones</div><button class="listen-btn" type="button" data-song-id="SONG26-028" aria-expanded="false" aria-controls="player-SONG26-028">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-028"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-062</span><span>READY</span></div><div class="title">Dammit</div><div class="artist">blink-182</div><button class="listen-btn" type="button" data-song-id="SONG26-062" aria-expanded="false" aria-controls="player-SONG26-062">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-062"></div></div></article><article class="match"><div class="matchhead"><b>PI07</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-044</span><span>READY</span></div><div class="title">Honeybody</div><div class="artist">Kishi Bashi</div><button class="listen-btn" type="button" data-song-id="SONG26-044" aria-expanded="false" aria-controls="player-SONG26-044">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-044"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-020</span><span>READY</span></div><div class="title">Stupid Song</div><div class="artist">Olivia Rodrigo</div><button class="listen-btn" type="button" data-song-id="SONG26-020" aria-expanded="false" aria-controls="player-SONG26-020">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-020"></div></div></article><article class="match"><div class="matchhead"><b>PI08</b><span>PLAY-IN</span></div><div class="song"><div class="meta"><span>SONG26-066</span><span>READY</span></div><div class="title">The Great Unknown</div><div class="artist">The Roman</div><button class="listen-btn" type="button" data-song-id="SONG26-066" aria-expanded="false" aria-controls="player-SONG26-066">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-066"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-003</span><span>READY</span></div><div class="title">When I Fall</div><div class="artist">Barenaked Ladies</div><button class="listen-btn" type="button" data-song-id="SONG26-003" aria-expanded="false" aria-controls="player-SONG26-003">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-003"></div></div></article><div class="empty">No visible matchups match your search.</div></div></section>
+<section aria-labelledby="rbtn" class="section" id="r" style="display:none"><div class="sectionlabel">ROUND 1 · ROUND OF 64</div><div class="grid"><article class="match"><div class="matchhead"><b>M001</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-046</span><span>READY</span></div><div class="title">Sit Next to Me</div><div class="artist">Foster The People</div><button class="listen-btn" type="button" data-song-id="SONG26-046" aria-expanded="false" aria-controls="player-SONG26-046">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-046"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-061</span><span>READY</span></div><div class="title">The Anthem</div><div class="artist">Good Charlotte</div><button class="listen-btn" type="button" data-song-id="SONG26-061" aria-expanded="false" aria-controls="player-SONG26-061">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-061"></div></div></article><article class="match"><div class="matchhead"><b>M002</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-004</span><span>READY</span></div><div class="title">Recovering the Satellites</div><div class="artist">Counting Crows</div><button class="listen-btn" type="button" data-song-id="SONG26-004" aria-expanded="false" aria-controls="player-SONG26-004">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-004"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-050</span><span>READY</span></div><div class="title">The Rubberband Man</div><div class="artist">The Spinners</div><button class="listen-btn" type="button" data-song-id="SONG26-050" aria-expanded="false" aria-controls="player-SONG26-050">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-050"></div></div></article><article class="match"><div class="matchhead"><b>M003</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI01-WINNER</span><span>PENDING</span></div><div class="title">PI01 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-055</span><span>READY</span></div><div class="title">It's Not My Time</div><div class="artist">3 Doors Down</div><button class="listen-btn" type="button" data-song-id="SONG26-055" aria-expanded="false" aria-controls="player-SONG26-055">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-055"></div></div></article><article class="match"><div class="matchhead"><b>M004</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-068</span><span>READY</span></div><div class="title">No Sleep</div><div class="artist">Young Decades</div><button class="listen-btn" type="button" data-song-id="SONG26-068" aria-expanded="false" aria-controls="player-SONG26-068">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-068"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-021</span><span>READY</span></div><div class="title">Love Takes Miles</div><div class="artist">Cameron Winter</div><button class="listen-btn" type="button" data-song-id="SONG26-021" aria-expanded="false" aria-controls="player-SONG26-021">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-021"></div></div></article><article class="match"><div class="matchhead"><b>M005</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI03-WINNER</span><span>PENDING</span></div><div class="title">PI03 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-072</span><span>READY</span></div><div class="title">When Everything Went Wrong</div><div class="artist">Fantastic Negrito</div><button class="listen-btn" type="button" data-song-id="SONG26-072" aria-expanded="false" aria-controls="player-SONG26-072">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-072"></div></div></article><article class="match"><div class="matchhead"><b>M006</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-022</span><span>READY</span></div><div class="title">Revival</div><div class="artist">Zach Bryan</div><button class="listen-btn" type="button" data-song-id="SONG26-022" aria-expanded="false" aria-controls="player-SONG26-022">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-022"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-029</span><span>READY</span></div><div class="title">While My Guitar Gently Weeps (cover)</div><div class="artist">Tom Petty / Prince</div><button class="listen-btn" type="button" data-song-id="SONG26-029" aria-expanded="false" aria-controls="player-SONG26-029">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-029"></div></div></article><article class="match"><div class="matchhead"><b>M007</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-007</span><span>READY</span></div><div class="title">Hide and Seek</div><div class="artist">Imogen Heap</div><button class="listen-btn" type="button" data-song-id="SONG26-007" aria-expanded="false" aria-controls="player-SONG26-007">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-007"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-032</span><span>READY</span></div><div class="title">Viva La Vida</div><div class="artist">Coldplay</div><button class="listen-btn" type="button" data-song-id="SONG26-032" aria-expanded="false" aria-controls="player-SONG26-032">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-032"></div></div></article><article class="match"><div class="matchhead"><b>M008</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-065</span><span>READY</span></div><div class="title">The Man Who Sold The World</div><div class="artist">Midge Ure</div><button class="listen-btn" type="button" data-song-id="SONG26-065" aria-expanded="false" aria-controls="player-SONG26-065">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-065"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-010</span><span>READY</span></div><div class="title">Daphne Blue</div><div class="artist">The Band CAMINO</div><button class="listen-btn" type="button" data-song-id="SONG26-010" aria-expanded="false" aria-controls="player-SONG26-010">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-010"></div></div></article><article class="match"><div class="matchhead"><b>M009</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-071</span><span>READY</span></div><div class="title">Paper Boats</div><div class="artist">Darren Korb &amp; Ashley Barrett</div><button class="listen-btn" type="button" data-song-id="SONG26-071" aria-expanded="false" aria-controls="player-SONG26-071">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-071"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-013</span><span>READY</span></div><div class="title">Brother</div><div class="artist">NEEDTOBREATHE</div><button class="listen-btn" type="button" data-song-id="SONG26-013" aria-expanded="false" aria-controls="player-SONG26-013">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-013"></div></div></article><article class="match"><div class="matchhead"><b>M010</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-009</span><span>READY</span></div><div class="title">Virginia</div><div class="artist">The Head and the Heart</div><button class="listen-btn" type="button" data-song-id="SONG26-009" aria-expanded="false" aria-controls="player-SONG26-009">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-009"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-059</span><span>READY</span></div><div class="title">What's My Age Again?</div><div class="artist">blink-182</div><button class="listen-btn" type="button" data-song-id="SONG26-059" aria-expanded="false" aria-controls="player-SONG26-059">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-059"></div></div></article><article class="match"><div class="matchhead"><b>M011</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-011</span><span>READY</span></div><div class="title">Danger Zone</div><div class="artist">Kenny Loggins</div><button class="listen-btn" type="button" data-song-id="SONG26-011" aria-expanded="false" aria-controls="player-SONG26-011">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-011"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-056</span><span>READY</span></div><div class="title">MILLION DOLLAR BABY</div><div class="artist">Tommy Richman</div><button class="listen-btn" type="button" data-song-id="SONG26-056" aria-expanded="false" aria-controls="player-SONG26-056">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-056"></div></div></article><article class="match"><div class="matchhead"><b>M012</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-067</span><span>READY</span></div><div class="title">Moon</div><div class="artist">Garrett Kato</div><button class="listen-btn" type="button" data-song-id="SONG26-067" aria-expanded="false" aria-controls="player-SONG26-067">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-067"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-008</span><span>READY</span></div><div class="title">What We Do</div><div class="artist">Freeway</div><button class="listen-btn" type="button" data-song-id="SONG26-008" aria-expanded="false" aria-controls="player-SONG26-008">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-008"></div></div></article><article class="match"><div class="matchhead"><b>M013</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI02-WINNER</span><span>PENDING</span></div><div class="title">PI02 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-033</span><span>READY</span></div><div class="title">Merry-Go-Round of Life</div><div class="artist">Joe Hisaishi</div><button class="listen-btn" type="button" data-song-id="SONG26-033" aria-expanded="false" aria-controls="player-SONG26-033">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-033"></div></div></article><article class="match"><div class="matchhead"><b>M014</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI06-WINNER</span><span>PENDING</span></div><div class="title">PI06 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-037</span><span>READY</span></div><div class="title">Superstition</div><div class="artist">Stevie Wonder</div><button class="listen-btn" type="button" data-song-id="SONG26-037" aria-expanded="false" aria-controls="player-SONG26-037">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-037"></div></div></article><article class="match"><div class="matchhead"><b>M015</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-025</span><span>READY</span></div><div class="title">Mr. Brightside</div><div class="artist">The Killers</div><button class="listen-btn" type="button" data-song-id="SONG26-025" aria-expanded="false" aria-controls="player-SONG26-025">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-025"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-045</span><span>READY</span></div><div class="title">Ordinaryish People - feat. Blue Man Group</div><div class="artist">AJR, Blue Man Group</div><button class="listen-btn" type="button" data-song-id="SONG26-045" aria-expanded="false" aria-controls="player-SONG26-045">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-045"></div></div></article><article class="match"><div class="matchhead"><b>M016</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-027</span><span>READY</span></div><div class="title">Blackbird</div><div class="artist">The Beatles</div><button class="listen-btn" type="button" data-song-id="SONG26-027" aria-expanded="false" aria-controls="player-SONG26-027">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-027"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-039</span><span>READY</span></div><div class="title">Here Comes the Sun</div><div class="artist">The Beatles</div><button class="listen-btn" type="button" data-song-id="SONG26-039" aria-expanded="false" aria-controls="player-SONG26-039">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-039"></div></div></article><article class="match"><div class="matchhead"><b>M017</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-012</span><span>READY</span></div><div class="title">Typhoons</div><div class="artist">Royal Blood</div><button class="listen-btn" type="button" data-song-id="SONG26-012" aria-expanded="false" aria-controls="player-SONG26-012">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-012"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-058</span><span>READY</span></div><div class="title">I Miss You</div><div class="artist">blink-182</div><button class="listen-btn" type="button" data-song-id="SONG26-058" aria-expanded="false" aria-controls="player-SONG26-058">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-058"></div></div></article><article class="match"><div class="matchhead"><b>M018</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-018</span><span>READY</span></div><div class="title">Step</div><div class="artist">Vampire Weekend</div><button class="listen-btn" type="button" data-song-id="SONG26-018" aria-expanded="false" aria-controls="player-SONG26-018">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-018"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-040</span><span>READY</span></div><div class="title">Drops of Jupiter</div><div class="artist">Train</div><button class="listen-btn" type="button" data-song-id="SONG26-040" aria-expanded="false" aria-controls="player-SONG26-040">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-040"></div></div></article><article class="match"><div class="matchhead"><b>M019</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI07-WINNER</span><span>PENDING</span></div><div class="title">PI07 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-038</span><span>READY</span></div><div class="title">Ain't No Sunshine</div><div class="artist">Bill Withers</div><button class="listen-btn" type="button" data-song-id="SONG26-038" aria-expanded="false" aria-controls="player-SONG26-038">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-038"></div></div></article><article class="match"><div class="matchhead"><b>M020</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-070</span><span>READY</span></div><div class="title">Heavy Days</div><div class="artist">Still Corners</div><button class="listen-btn" type="button" data-song-id="SONG26-070" aria-expanded="false" aria-controls="player-SONG26-070">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-070"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-048</span><span>READY</span></div><div class="title">Strategy</div><div class="artist">TWICE</div><button class="listen-btn" type="button" data-song-id="SONG26-048" aria-expanded="false" aria-controls="player-SONG26-048">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-048"></div></div></article><article class="match"><div class="matchhead"><b>M021</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-053</span><span>READY</span></div><div class="title">Man of the Year</div><div class="artist">Sam Barber</div><button class="listen-btn" type="button" data-song-id="SONG26-053" aria-expanded="false" aria-controls="player-SONG26-053">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-053"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-005</span><span>READY</span></div><div class="title">Let Down</div><div class="artist">Radiohead</div><button class="listen-btn" type="button" data-song-id="SONG26-005" aria-expanded="false" aria-controls="player-SONG26-005">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-005"></div></div></article><article class="match"><div class="matchhead"><b>M022</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-036</span><span>READY</span></div><div class="title">Take On Me</div><div class="artist">a-ha</div><button class="listen-btn" type="button" data-song-id="SONG26-036" aria-expanded="false" aria-controls="player-SONG26-036">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-036"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-041</span><span>READY</span></div><div class="title">Suzanne (At the Church)</div><div class="artist">Mark Ronson, RAYE</div><button class="listen-btn" type="button" data-song-id="SONG26-041" aria-expanded="false" aria-controls="player-SONG26-041">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-041"></div></div></article><article class="match"><div class="matchhead"><b>M023</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-060</span><span>READY</span></div><div class="title">Basket Case</div><div class="artist">Green Day</div><button class="listen-btn" type="button" data-song-id="SONG26-060" aria-expanded="false" aria-controls="player-SONG26-060">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-060"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-023</span><span>READY</span></div><div class="title">Scarborough Fair/Canticle</div><div class="artist">Simon &amp; Garfunkel</div><button class="listen-btn" type="button" data-song-id="SONG26-023" aria-expanded="false" aria-controls="player-SONG26-023">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-023"></div></div></article><article class="match"><div class="matchhead"><b>M024</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI08-WINNER</span><span>PENDING</span></div><div class="title">PI08 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-017</span><span>READY</span></div><div class="title">Dogs</div><div class="artist">Pink Floyd</div><button class="listen-btn" type="button" data-song-id="SONG26-017" aria-expanded="false" aria-controls="player-SONG26-017">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-017"></div></div></article><article class="match"><div class="matchhead"><b>M025</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-043</span><span>READY</span></div><div class="title">Soup</div><div class="artist">Remi Wolf</div><button class="listen-btn" type="button" data-song-id="SONG26-043" aria-expanded="false" aria-controls="player-SONG26-043">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-043"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-024</span><span>READY</span></div><div class="title">Them Changes</div><div class="artist">Thundercat</div><button class="listen-btn" type="button" data-song-id="SONG26-024" aria-expanded="false" aria-controls="player-SONG26-024">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-024"></div></div></article><article class="match"><div class="matchhead"><b>M026</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI04-WINNER</span><span>PENDING</span></div><div class="title">PI04 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-006</span><span>READY</span></div><div class="title">Brick</div><div class="artist">Ben Folds Five</div><button class="listen-btn" type="button" data-song-id="SONG26-006" aria-expanded="false" aria-controls="player-SONG26-006">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-006"></div></div></article><article class="match"><div class="matchhead"><b>M027</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-047</span><span>READY</span></div><div class="title">No Place Like Home</div><div class="artist">Marianas Trench</div><button class="listen-btn" type="button" data-song-id="SONG26-047" aria-expanded="false" aria-controls="player-SONG26-047">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-047"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-015</span><span>READY</span></div><div class="title">Harder to Breathe</div><div class="artist">Maroon 5</div><button class="listen-btn" type="button" data-song-id="SONG26-015" aria-expanded="false" aria-controls="player-SONG26-015">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-015"></div></div></article><article class="match"><div class="matchhead"><b>M028</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-054</span><span>READY</span></div><div class="title">The Mother We Share</div><div class="artist">CHVRCHES</div><button class="listen-btn" type="button" data-song-id="SONG26-054" aria-expanded="false" aria-controls="player-SONG26-054">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-054"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-002</span><span>READY</span></div><div class="title">The Boxer</div><div class="artist">Simon and Garfunkel</div><button class="listen-btn" type="button" data-song-id="SONG26-002" aria-expanded="false" aria-controls="player-SONG26-002">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-002"></div></div></article><article class="match"><div class="matchhead"><b>M029</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-026</span><span>READY</span></div><div class="title">Helplessly Hoping</div><div class="artist">Crosby Stills and Nash</div><button class="listen-btn" type="button" data-song-id="SONG26-026" aria-expanded="false" aria-controls="player-SONG26-026">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-026"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-035</span><span>READY</span></div><div class="title">Don't Stop Believin'</div><div class="artist">Journey</div><button class="listen-btn" type="button" data-song-id="SONG26-035" aria-expanded="false" aria-controls="player-SONG26-035">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-035"></div></div></article><article class="match"><div class="matchhead"><b>M030</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-063</span><span>READY</span></div><div class="title">In the End</div><div class="artist">Linkin Park</div><button class="listen-btn" type="button" data-song-id="SONG26-063" aria-expanded="false" aria-controls="player-SONG26-063">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-063"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-049</span><span>READY</span></div><div class="title">Tieduprightnow</div><div class="artist">Parcels</div><button class="listen-btn" type="button" data-song-id="SONG26-049" aria-expanded="false" aria-controls="player-SONG26-049">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-049"></div></div></article><article class="match"><div class="matchhead"><b>M031</b><span>ROUND 1</span></div><div class="song"><div class="meta"><span>SONG26-014</span><span>READY</span></div><div class="title">Call On Me</div><div class="artist">Eric Prydz</div><button class="listen-btn" type="button" data-song-id="SONG26-014" aria-expanded="false" aria-controls="player-SONG26-014">▶ Listen <small>Youtube</small></button><div class="player-slot" id="player-SONG26-014"></div></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-030</span><span>READY</span></div><div class="title">Anakin's Betrayal</div><div class="artist">John Williams</div><button class="listen-btn" type="button" data-song-id="SONG26-030" aria-expanded="false" aria-controls="player-SONG26-030">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-030"></div></div></article><article class="match"><div class="matchhead"><b>M032</b><span>ROUND 1</span></div><div class="song placeholder"><div class="meta"><span>PI05-WINNER</span><span>PENDING</span></div><div class="title">PI05 Winner</div><div class="artist">Advancing song</div><button disabled="">▶ Listen <small>coming soon</small></button></div><div class="vs">VS</div><div class="song"><div class="meta"><span>SONG26-064</span><span>READY</span></div><div class="title">One More Light</div><div class="artist">Linkin Park</div><button class="listen-btn" type="button" data-song-id="SONG26-064" aria-expanded="false" aria-controls="player-SONG26-064">▶ Listen <small>Spotify</small></button><div class="player-slot" id="player-SONG26-064"></div></div></article><div class="empty">No visible matchups match your search.</div></div></section>
+
+<section class="info-section" id="rules">
+  <div class="info-card">
+    <h2>2026 Rules</h2>
+    <p>The public view stays song-first. The field contains 72 songs, with eight play-ins reducing the tournament to a 64-song single-elimination bracket.</p>
+    <div class="rule-grid">
+      <div class="mini"><strong>Blind submissions</strong>Participant ownership remains hidden from the public matchup view.</div>
+      <div class="mini"><strong>Duplicate control</strong>Only one copy of the same song/composition may enter unless the recordings are substantially different.</div>
+      <div class="mini"><strong>Protected seeding</strong>Songs from the same participant cannot face each other in the first main-bracket round.</div>
+      <div class="mini"><strong>Head-to-head</strong>Every matchup advances one song and permanently eliminates the other.</div>
+      <div class="mini"><strong>Eight play-ins</strong>Sixteen songs contest eight spots before the 64-song bracket begins.</div>
+      <div class="mini"><strong>Auditable results</strong>Match IDs and advancement remain reconstructable from the tournament record.</div>
+    </div>
+  </div>
+</section>
+<section class="info-section" id="stats">
+  <div class="info-card">
+    <h2>Stats</h2>
+    <p>The tournament has not posted results yet. This section is ready to grow into live tournament statistics once voting and advancement are implemented.</p>
+    <div class="stat-grid">
+      <div class="mini"><strong>72</strong>songs entered</div>
+      <div class="mini"><strong>8</strong>play-in matchups</div>
+      <div class="mini"><strong>32</strong>Round-of-64 matchups</div>
+      <div class="mini"><strong>0</strong>results posted</div>
+      <div class="mini"><strong>55</strong>Spotify entries</div>
+      <div class="mini"><strong>17</strong>YouTube entries</div>
+    </div>
+  </div>
+</section>
+<section class="info-section" id="about">
+  <div class="info-card">
+    <h2>About HMPP '26</h2>
+    <p>Harry Men Pied Piper is a blind tournament of songs. The site is intentionally designed around the music rather than the people who submitted it. Listening, voting, results, rationale reveals, participant accounts, and historical statistics can be layered onto the same song-first foundation.</p>
+  </div>
+</section>
+
+<div class="note"><strong>Public bracket prototype.</strong> Participant identities remain intentionally excluded. The cards display song IDs, artist, and title; listening, voting, rationale, and results can be layered in later without changing the bracket's public identity model.</div>
+<script>
+
+const MEDIA = {"SONG26-001":{"provider":"spotify","provider_label":"Spotify","media_id":"4n1ZGm3TxYmoYe1YR8cMus","source_url":"https://open.spotify.com/track/4n1ZGm3TxYmoYe1YR8cMus","embed_url":"https://open.spotify.com/embed/track/4n1ZGm3TxYmoYe1YR8cMus?utm_source=generator"},"SONG26-002":{"provider":"spotify","provider_label":"Spotify","media_id":"0Fj8qJmcmec4IOvBmGISnF","source_url":"https://open.spotify.com/track/0Fj8qJmcmec4IOvBmGISnF","embed_url":"https://open.spotify.com/embed/track/0Fj8qJmcmec4IOvBmGISnF?utm_source=generator"},"SONG26-003":{"provider":"spotify","provider_label":"Spotify","media_id":"1leKfYdMN5AW6ib52UK4qs","source_url":"https://open.spotify.com/track/1leKfYdMN5AW6ib52UK4qs","embed_url":"https://open.spotify.com/embed/track/1leKfYdMN5AW6ib52UK4qs?utm_source=generator"},"SONG26-004":{"provider":"spotify","provider_label":"Spotify","media_id":"2Nx5Nlo9JYsdHelzXIflSW","source_url":"https://open.spotify.com/track/2Nx5Nlo9JYsdHelzXIflSW","embed_url":"https://open.spotify.com/embed/track/2Nx5Nlo9JYsdHelzXIflSW?utm_source=generator"},"SONG26-005":{"provider":"spotify","provider_label":"Spotify","media_id":"2fuYa3Lx06QQJAm0MjztKr","source_url":"https://open.spotify.com/track/2fuYa3Lx06QQJAm0MjztKr","embed_url":"https://open.spotify.com/embed/track/2fuYa3Lx06QQJAm0MjztKr?utm_source=generator"},"SONG26-006":{"provider":"spotify","provider_label":"Spotify","media_id":"4jKq1e80xAYixkIwt6YyV1","source_url":"https://open.spotify.com/track/4jKq1e80xAYixkIwt6YyV1","embed_url":"https://open.spotify.com/embed/track/4jKq1e80xAYixkIwt6YyV1?utm_source=generator"},"SONG26-007":{"provider":"spotify","provider_label":"Spotify","media_id":"2tej1KSqNuxwywIpY1rDRc","source_url":"https://open.spotify.com/track/2tej1KSqNuxwywIpY1rDRc","embed_url":"https://open.spotify.com/embed/track/2tej1KSqNuxwywIpY1rDRc?utm_source=generator"},"SONG26-008":{"provider":"spotify","provider_label":"Spotify","media_id":"5kDkWHFx0AEvJ1Pfm2i0ac","source_url":"https://open.spotify.com/track/5kDkWHFx0AEvJ1Pfm2i0ac","embed_url":"https://open.spotify.com/embed/track/5kDkWHFx0AEvJ1Pfm2i0ac?utm_source=generator"},"SONG26-009":{"provider":"youtube","provider_label":"YouTube","media_id":"FwRCq0COdMo","source_url":"https://www.youtube.com/watch?v=FwRCq0COdMo","embed_url":"https://www.youtube.com/embed/FwRCq0COdMo?playsinline=1&rel=0"},"SONG26-010":{"provider":"youtube","provider_label":"YouTube","media_id":"V-U1ji1bjXM","source_url":"https://www.youtube.com/watch?v=V-U1ji1bjXM","embed_url":"https://www.youtube.com/embed/V-U1ji1bjXM?playsinline=1&rel=0"},"SONG26-011":{"provider":"youtube","provider_label":"YouTube","media_id":"yK0P1Bk8Cx4","source_url":"https://www.youtube.com/watch?v=yK0P1Bk8Cx4","embed_url":"https://www.youtube.com/embed/yK0P1Bk8Cx4?playsinline=1&rel=0"},"SONG26-012":{"provider":"youtube","provider_label":"YouTube","media_id":"nm_sYSzkydY","source_url":"https://www.youtube.com/watch?v=nm_sYSzkydY","embed_url":"https://www.youtube.com/embed/nm_sYSzkydY?playsinline=1&rel=0"},"SONG26-013":{"provider":"youtube","provider_label":"YouTube","media_id":"61Wm_qlVD4Q","source_url":"https://www.youtube.com/watch?v=61Wm_qlVD4Q","embed_url":"https://www.youtube.com/embed/61Wm_qlVD4Q?playsinline=1&rel=0"},"SONG26-014":{"provider":"youtube","provider_label":"YouTube","media_id":"7kVEm1B1yNU","source_url":"https://www.youtube.com/watch?v=7kVEm1B1yNU","embed_url":"https://www.youtube.com/embed/7kVEm1B1yNU?playsinline=1&rel=0"},"SONG26-015":{"provider":"youtube","provider_label":"YouTube","media_id":"rV8NHsmVMPE","source_url":"https://www.youtube.com/watch?v=rV8NHsmVMPE","embed_url":"https://www.youtube.com/embed/rV8NHsmVMPE?playsinline=1&rel=0"},"SONG26-016":{"provider":"youtube","provider_label":"YouTube","media_id":"ZInRE-KryGA","source_url":"https://www.youtube.com/watch?v=ZInRE-KryGA","embed_url":"https://www.youtube.com/embed/ZInRE-KryGA?playsinline=1&rel=0"},"SONG26-017":{"provider":"spotify","provider_label":"Spotify","media_id":"2jvuMDqBK04WvCYYz5qjvG","source_url":"https://open.spotify.com/track/2jvuMDqBK04WvCYYz5qjvG","embed_url":"https://open.spotify.com/embed/track/2jvuMDqBK04WvCYYz5qjvG?utm_source=generator"},"SONG26-018":{"provider":"spotify","provider_label":"Spotify","media_id":"607EA1HsuzrqqaPuxyNqpD","source_url":"https://open.spotify.com/track/607EA1HsuzrqqaPuxyNqpD","embed_url":"https://open.spotify.com/embed/track/607EA1HsuzrqqaPuxyNqpD?utm_source=generator"},"SONG26-019":{"provider":"spotify","provider_label":"Spotify","media_id":"1esmJ8t2PRbYt2yMx2aSEW","source_url":"https://open.spotify.com/track/1esmJ8t2PRbYt2yMx2aSEW","embed_url":"https://open.spotify.com/embed/track/1esmJ8t2PRbYt2yMx2aSEW?utm_source=generator"},"SONG26-020":{"provider":"spotify","provider_label":"Spotify","media_id":"4LfCY65LvojKjWEnU7fNN4","source_url":"https://open.spotify.com/track/4LfCY65LvojKjWEnU7fNN4","embed_url":"https://open.spotify.com/embed/track/4LfCY65LvojKjWEnU7fNN4?utm_source=generator"},"SONG26-021":{"provider":"spotify","provider_label":"Spotify","media_id":"2zf1izCOz2F22PF27uhxRF","source_url":"https://open.spotify.com/track/2zf1izCOz2F22PF27uhxRF","embed_url":"https://open.spotify.com/embed/track/2zf1izCOz2F22PF27uhxRF?utm_source=generator"},"SONG26-022":{"provider":"spotify","provider_label":"Spotify","media_id":"2QfX9Pdz3q66fN3kCXl0Js","source_url":"https://open.spotify.com/track/2QfX9Pdz3q66fN3kCXl0Js","embed_url":"https://open.spotify.com/embed/track/2QfX9Pdz3q66fN3kCXl0Js?utm_source=generator"},"SONG26-023":{"provider":"spotify","provider_label":"Spotify","media_id":"3g2fYZW5v2od8KIF7VktT0","source_url":"https://open.spotify.com/track/3g2fYZW5v2od8KIF7VktT0","embed_url":"https://open.spotify.com/embed/track/3g2fYZW5v2od8KIF7VktT0?utm_source=generator"},"SONG26-024":{"provider":"spotify","provider_label":"Spotify","media_id":"7CH99b2i1TXS5P8UUyWtnM","source_url":"https://open.spotify.com/track/7CH99b2i1TXS5P8UUyWtnM","embed_url":"https://open.spotify.com/embed/track/7CH99b2i1TXS5P8UUyWtnM?utm_source=generator"},"SONG26-025":{"provider":"spotify","provider_label":"Spotify","media_id":"003vvx7Niy0yvhvHt4a68B","source_url":"https://open.spotify.com/track/003vvx7Niy0yvhvHt4a68B","embed_url":"https://open.spotify.com/embed/track/003vvx7Niy0yvhvHt4a68B?utm_source=generator"},"SONG26-026":{"provider":"spotify","provider_label":"Spotify","media_id":"1UKobFsdqNXQb8OthimCKe","source_url":"https://open.spotify.com/track/1UKobFsdqNXQb8OthimCKe","embed_url":"https://open.spotify.com/embed/track/1UKobFsdqNXQb8OthimCKe?utm_source=generator"},"SONG26-027":{"provider":"spotify","provider_label":"Spotify","media_id":"5jgFfDIR6FR0gvlA56Nakr","source_url":"https://open.spotify.com/track/5jgFfDIR6FR0gvlA56Nakr","embed_url":"https://open.spotify.com/embed/track/5jgFfDIR6FR0gvlA56Nakr?utm_source=generator"},"SONG26-028":{"provider":"spotify","provider_label":"Spotify","media_id":"6H3kDe7CGoWYBabAeVWGiD","source_url":"https://open.spotify.com/track/6H3kDe7CGoWYBabAeVWGiD","embed_url":"https://open.spotify.com/embed/track/6H3kDe7CGoWYBabAeVWGiD?utm_source=generator"},"SONG26-029":{"provider":"youtube","provider_label":"YouTube","media_id":"6SFNW5F8K9Y","source_url":"https://www.youtube.com/watch?v=6SFNW5F8K9Y","embed_url":"https://www.youtube.com/embed/6SFNW5F8K9Y?playsinline=1&rel=0"},"SONG26-030":{"provider":"spotify","provider_label":"Spotify","media_id":"5uXXHbXfoebEI6qqiIqOdl","source_url":"https://open.spotify.com/track/5uXXHbXfoebEI6qqiIqOdl","embed_url":"https://open.spotify.com/embed/track/5uXXHbXfoebEI6qqiIqOdl?utm_source=generator"},"SONG26-031":{"provider":"spotify","provider_label":"Spotify","media_id":"31xqbaSu7ozgcK8desDuMK","source_url":"https://open.spotify.com/track/31xqbaSu7ozgcK8desDuMK","embed_url":"https://open.spotify.com/embed/track/31xqbaSu7ozgcK8desDuMK?utm_source=generator"},"SONG26-032":{"provider":"spotify","provider_label":"Spotify","media_id":"1mea3bSkSGXuIRvnydlB5b","source_url":"https://open.spotify.com/track/1mea3bSkSGXuIRvnydlB5b","embed_url":"https://open.spotify.com/embed/track/1mea3bSkSGXuIRvnydlB5b?utm_source=generator"},"SONG26-033":{"provider":"youtube","provider_label":"YouTube","media_id":"UwxatzcYf9Q","source_url":"https://www.youtube.com/watch?v=UwxatzcYf9Q","embed_url":"https://www.youtube.com/embed/UwxatzcYf9Q?playsinline=1&rel=0"},"SONG26-034":{"provider":"spotify","provider_label":"Spotify","media_id":"2Tc1G0aJmPDccmCVrdfuDP","source_url":"https://open.spotify.com/track/2Tc1G0aJmPDccmCVrdfuDP","embed_url":"https://open.spotify.com/embed/track/2Tc1G0aJmPDccmCVrdfuDP?utm_source=generator"},"SONG26-035":{"provider":"spotify","provider_label":"Spotify","media_id":"5RKQ5NdjSh2QzD4MaunT91","source_url":"https://open.spotify.com/track/5RKQ5NdjSh2QzD4MaunT91","embed_url":"https://open.spotify.com/embed/track/5RKQ5NdjSh2QzD4MaunT91?utm_source=generator"},"SONG26-036":{"provider":"spotify","provider_label":"Spotify","media_id":"2WfaOiMkCvy7F5fcp2zZ8L","source_url":"https://open.spotify.com/track/2WfaOiMkCvy7F5fcp2zZ8L","embed_url":"https://open.spotify.com/embed/track/2WfaOiMkCvy7F5fcp2zZ8L?utm_source=generator"},"SONG26-037":{"provider":"spotify","provider_label":"Spotify","media_id":"4N0TP4Rmj6QQezWV88ARNJ","source_url":"https://open.spotify.com/track/4N0TP4Rmj6QQezWV88ARNJ","embed_url":"https://open.spotify.com/embed/track/4N0TP4Rmj6QQezWV88ARNJ?utm_source=generator"},"SONG26-038":{"provider":"spotify","provider_label":"Spotify","media_id":"1k1Bqnv2R0uJXQN4u6LKYt","source_url":"https://open.spotify.com/track/1k1Bqnv2R0uJXQN4u6LKYt","embed_url":"https://open.spotify.com/embed/track/1k1Bqnv2R0uJXQN4u6LKYt?utm_source=generator"},"SONG26-039":{"provider":"spotify","provider_label":"Spotify","media_id":"6dGnYIeXmHdcikdzNNDMm2","source_url":"https://open.spotify.com/track/6dGnYIeXmHdcikdzNNDMm2","embed_url":"https://open.spotify.com/embed/track/6dGnYIeXmHdcikdzNNDMm2?utm_source=generator"},"SONG26-040":{"provider":"spotify","provider_label":"Spotify","media_id":"2hKdd3qO7cWr2Jo0Bcs0MA","source_url":"https://open.spotify.com/track/2hKdd3qO7cWr2Jo0Bcs0MA","embed_url":"https://open.spotify.com/embed/track/2hKdd3qO7cWr2Jo0Bcs0MA?utm_source=generator"},"SONG26-041":{"provider":"spotify","provider_label":"Spotify","media_id":"12wx44H3c9VSkfpZtoD9mB","source_url":"https://open.spotify.com/track/12wx44H3c9VSkfpZtoD9mB","embed_url":"https://open.spotify.com/embed/track/12wx44H3c9VSkfpZtoD9mB?utm_source=generator"},"SONG26-042":{"provider":"spotify","provider_label":"Spotify","media_id":"2BinLD35GaTzdedSskSDaS","source_url":"https://open.spotify.com/track/2BinLD35GaTzdedSskSDaS","embed_url":"https://open.spotify.com/embed/track/2BinLD35GaTzdedSskSDaS?utm_source=generator"},"SONG26-043":{"provider":"spotify","provider_label":"Spotify","media_id":"1Wi1XpdZzGVIdRTzlTrIEF","source_url":"https://open.spotify.com/track/1Wi1XpdZzGVIdRTzlTrIEF","embed_url":"https://open.spotify.com/embed/track/1Wi1XpdZzGVIdRTzlTrIEF?utm_source=generator"},"SONG26-044":{"provider":"spotify","provider_label":"Spotify","media_id":"6fbQ0UYHQS2CFQ85hOyXVM","source_url":"https://open.spotify.com/track/6fbQ0UYHQS2CFQ85hOyXVM","embed_url":"https://open.spotify.com/embed/track/6fbQ0UYHQS2CFQ85hOyXVM?utm_source=generator"},"SONG26-045":{"provider":"spotify","provider_label":"Spotify","media_id":"2NhdaHdguorjUfDBV8INhX","source_url":"https://open.spotify.com/track/2NhdaHdguorjUfDBV8INhX","embed_url":"https://open.spotify.com/embed/track/2NhdaHdguorjUfDBV8INhX?utm_source=generator"},"SONG26-046":{"provider":"spotify","provider_label":"Spotify","media_id":"4BdGO1CaObRD4La9l5Zanz","source_url":"https://open.spotify.com/track/4BdGO1CaObRD4La9l5Zanz","embed_url":"https://open.spotify.com/embed/track/4BdGO1CaObRD4La9l5Zanz?utm_source=generator"},"SONG26-047":{"provider":"spotify","provider_label":"Spotify","media_id":"6xJx4qmhYxKaqMDEXTuCBP","source_url":"https://open.spotify.com/track/6xJx4qmhYxKaqMDEXTuCBP","embed_url":"https://open.spotify.com/embed/track/6xJx4qmhYxKaqMDEXTuCBP?utm_source=generator"},"SONG26-048":{"provider":"spotify","provider_label":"Spotify","media_id":"22fSzde77hjB052Vo155LF","source_url":"https://open.spotify.com/track/22fSzde77hjB052Vo155LF","embed_url":"https://open.spotify.com/embed/track/22fSzde77hjB052Vo155LF?utm_source=generator"},"SONG26-049":{"provider":"spotify","provider_label":"Spotify","media_id":"66tkDkPsznE5zIHNt4QkXB","source_url":"https://open.spotify.com/track/66tkDkPsznE5zIHNt4QkXB","embed_url":"https://open.spotify.com/embed/track/66tkDkPsznE5zIHNt4QkXB?utm_source=generator"},"SONG26-050":{"provider":"spotify","provider_label":"Spotify","media_id":"13Mzsb8VzRSZ5w3pM48cn6","source_url":"https://open.spotify.com/track/13Mzsb8VzRSZ5w3pM48cn6","embed_url":"https://open.spotify.com/embed/track/13Mzsb8VzRSZ5w3pM48cn6?utm_source=generator"},"SONG26-051":{"provider":"spotify","provider_label":"Spotify","media_id":"48LwbDH7u5UMrsY3sjfjhe","source_url":"https://open.spotify.com/track/48LwbDH7u5UMrsY3sjfjhe","embed_url":"https://open.spotify.com/embed/track/48LwbDH7u5UMrsY3sjfjhe?utm_source=generator"},"SONG26-052":{"provider":"spotify","provider_label":"Spotify","media_id":"09qzRI951OVkXGCc33gzcT","source_url":"https://open.spotify.com/track/09qzRI951OVkXGCc33gzcT","embed_url":"https://open.spotify.com/embed/track/09qzRI951OVkXGCc33gzcT?utm_source=generator"},"SONG26-053":{"provider":"spotify","provider_label":"Spotify","media_id":"2xlsLf7aPOZlk1p3dvwpeH","source_url":"https://open.spotify.com/track/2xlsLf7aPOZlk1p3dvwpeH","embed_url":"https://open.spotify.com/embed/track/2xlsLf7aPOZlk1p3dvwpeH?utm_source=generator"},"SONG26-054":{"provider":"spotify","provider_label":"Spotify","media_id":"1OVypFlcraAhyvPqIMWDor","source_url":"https://open.spotify.com/track/1OVypFlcraAhyvPqIMWDor","embed_url":"https://open.spotify.com/embed/track/1OVypFlcraAhyvPqIMWDor?utm_source=generator"},"SONG26-055":{"provider":"spotify","provider_label":"Spotify","media_id":"0uybt73QFXaLCoxuVf6fhm","source_url":"https://open.spotify.com/track/0uybt73QFXaLCoxuVf6fhm","embed_url":"https://open.spotify.com/embed/track/0uybt73QFXaLCoxuVf6fhm?utm_source=generator"},"SONG26-056":{"provider":"spotify","provider_label":"Spotify","media_id":"5AJ9hqTS2wcFQCELCFRO7A","source_url":"https://open.spotify.com/track/5AJ9hqTS2wcFQCELCFRO7A","embed_url":"https://open.spotify.com/embed/track/5AJ9hqTS2wcFQCELCFRO7A?utm_source=generator"},"SONG26-057":{"provider":"spotify","provider_label":"Spotify","media_id":"2m1hi0nfMR9vdGC8UcrnwU","source_url":"https://open.spotify.com/track/2m1hi0nfMR9vdGC8UcrnwU","embed_url":"https://open.spotify.com/embed/track/2m1hi0nfMR9vdGC8UcrnwU?utm_source=generator"},"SONG26-058":{"provider":"spotify","provider_label":"Spotify","media_id":"1oTo3ijRbaDAtrjJrGAPSw","source_url":"https://open.spotify.com/track/1oTo3ijRbaDAtrjJrGAPSw","embed_url":"https://open.spotify.com/embed/track/1oTo3ijRbaDAtrjJrGAPSw?utm_source=generator"},"SONG26-059":{"provider":"spotify","provider_label":"Spotify","media_id":"4LJhJ6DQS7NwE7UKtvcM52","source_url":"https://open.spotify.com/track/4LJhJ6DQS7NwE7UKtvcM52","embed_url":"https://open.spotify.com/embed/track/4LJhJ6DQS7NwE7UKtvcM52?utm_source=generator"},"SONG26-060":{"provider":"spotify","provider_label":"Spotify","media_id":"6L89mwZXSOwYl76YXfX13s","source_url":"https://open.spotify.com/track/6L89mwZXSOwYl76YXfX13s","embed_url":"https://open.spotify.com/embed/track/6L89mwZXSOwYl76YXfX13s?utm_source=generator"},"SONG26-061":{"provider":"spotify","provider_label":"Spotify","media_id":"0BRHnOFm6sjxN1i9LJrUDu","source_url":"https://open.spotify.com/track/0BRHnOFm6sjxN1i9LJrUDu","embed_url":"https://open.spotify.com/embed/track/0BRHnOFm6sjxN1i9LJrUDu?utm_source=generator"},"SONG26-062":{"provider":"spotify","provider_label":"Spotify","media_id":"6WkSUgo1VdpzgtiXKlFPcY","source_url":"https://open.spotify.com/track/6WkSUgo1VdpzgtiXKlFPcY","embed_url":"https://open.spotify.com/embed/track/6WkSUgo1VdpzgtiXKlFPcY?utm_source=generator"},"SONG26-063":{"provider":"spotify","provider_label":"Spotify","media_id":"60a0Rd6pjrkxjPbaKzXjfq","source_url":"https://open.spotify.com/track/60a0Rd6pjrkxjPbaKzXjfq","embed_url":"https://open.spotify.com/embed/track/60a0Rd6pjrkxjPbaKzXjfq?utm_source=generator"},"SONG26-064":{"provider":"spotify","provider_label":"Spotify","media_id":"3xXBsjrbG1xQIm1xv1cKOt","source_url":"https://open.spotify.com/track/3xXBsjrbG1xQIm1xv1cKOt","embed_url":"https://open.spotify.com/embed/track/3xXBsjrbG1xQIm1xv1cKOt?utm_source=generator"},"SONG26-065":{"provider":"youtube","provider_label":"YouTube","media_id":"IU2wBKoDOzg","source_url":"https://www.youtube.com/watch?v=IU2wBKoDOzg","embed_url":"https://www.youtube.com/embed/IU2wBKoDOzg?playsinline=1&rel=0"},"SONG26-066":{"provider":"spotify","provider_label":"Spotify","media_id":"5BDHLhoxp4kTIN36Y5w8ND","source_url":"https://open.spotify.com/track/5BDHLhoxp4kTIN36Y5w8ND","embed_url":"https://open.spotify.com/embed/track/5BDHLhoxp4kTIN36Y5w8ND?utm_source=generator"},"SONG26-067":{"provider":"youtube","provider_label":"YouTube","media_id":"ZuaHhRQUq8Y","source_url":"https://www.youtube.com/watch?v=ZuaHhRQUq8Y","embed_url":"https://www.youtube.com/embed/ZuaHhRQUq8Y?playsinline=1&rel=0"},"SONG26-068":{"provider":"youtube","provider_label":"YouTube","media_id":"bgrGSZ6TTk4","source_url":"https://www.youtube.com/watch?v=bgrGSZ6TTk4","embed_url":"https://www.youtube.com/embed/bgrGSZ6TTk4?playsinline=1&rel=0"},"SONG26-069":{"provider":"youtube","provider_label":"YouTube","media_id":"8ec_k_gDyrk","source_url":"https://www.youtube.com/watch?v=8ec_k_gDyrk","embed_url":"https://www.youtube.com/embed/8ec_k_gDyrk?playsinline=1&rel=0"},"SONG26-070":{"provider":"youtube","provider_label":"YouTube","media_id":"1JaRLTd0KC4","source_url":"https://www.youtube.com/watch?v=1JaRLTd0KC4","embed_url":"https://www.youtube.com/embed/1JaRLTd0KC4?playsinline=1&rel=0"},"SONG26-071":{"provider":"youtube","provider_label":"YouTube","media_id":"K8OTg92mHaQ","source_url":"https://www.youtube.com/watch?v=K8OTg92mHaQ","embed_url":"https://www.youtube.com/embed/K8OTg92mHaQ?playsinline=1&rel=0"},"SONG26-072":{"provider":"youtube","provider_label":"YouTube","media_id":"JdZed_S0RHo","source_url":"https://www.youtube.com/watch?v=JdZed_S0RHo","embed_url":"https://www.youtube.com/embed/JdZed_S0RHo?playsinline=1&rel=0"}};
+let activeListenButton = null;
+let activeLoadTimer = null;
+
+function providerName(item){
+  return item?.provider_label || 'Provider';
+}
+
+function closeActivePlayer(){
+  if(activeLoadTimer){ clearTimeout(activeLoadTimer); activeLoadTimer = null; }
+  if(!activeListenButton) return;
+  const targetId = activeListenButton.getAttribute('aria-controls');
+  const slot = document.getElementById(targetId);
+  if(slot){ slot.classList.remove('open'); slot.replaceChildren(); }
+  activeListenButton.setAttribute('aria-expanded','false');
+  const sid = activeListenButton.dataset.songId;
+  activeListenButton.innerHTML = '▶ Listen <small>' + providerName(MEDIA[sid]) + '</small>';
+  activeListenButton = null;
+}
+
+function playerShell(songId, item){
+  const shell = document.createElement('div');
+  shell.className = 'player-shell';
+
+  const status = document.createElement('div');
+  status.className = 'player-status connecting';
+  status.setAttribute('role','status');
+  status.textContent = 'Connecting to ' + providerName(item) + '…';
+
+  const frameWrap = document.createElement('div');
+  frameWrap.className = 'frame-wrap';
+
+  const actions = document.createElement('div');
+  actions.className = 'player-actions';
+
+  const external = document.createElement('a');
+  external.href = item.source_url;
+  external.target = '_blank';
+  external.rel = 'noopener noreferrer';
+  external.className = 'provider-link';
+  external.textContent = 'Open in ' + providerName(item) + ' ↗';
+
+  const copy = document.createElement('button');
+  copy.type = 'button';
+  copy.className = 'copy-link';
+  copy.textContent = 'Copy link';
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(item.source_url);
+      copy.textContent = 'Copied';
+      setTimeout(()=>copy.textContent='Copy link',1400);
+    } catch (e) {
+      copy.textContent = 'Copy unavailable';
+      setTimeout(()=>copy.textContent='Copy link',1800);
+    }
+  });
+
+  actions.append(external, copy);
+  shell.append(status, frameWrap, actions);
+  return {shell,status,frameWrap};
+}
+
+function mountProviderPlayer(btn){
+  const songId = btn.dataset.songId;
+  const item = MEDIA[songId];
+  const slot = document.getElementById(btn.getAttribute('aria-controls'));
+  if(!item || !slot) return;
+
+  const ui = playerShell(songId, item);
+  slot.replaceChildren(ui.shell);
+  slot.classList.add('open');
+
+  const iframe = document.createElement('iframe');
+  iframe.src = item.embed_url;
+  iframe.loading = 'eager';
+  iframe.title = songId + ' ' + providerName(item) + ' player';
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  iframe.setAttribute('frameborder','0');
+
+  if(item.provider === 'spotify'){
+    iframe.height = '152';
+    iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+  } else {
+    iframe.height = '240';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture';
+  }
+
+  let loaded = false;
+  iframe.addEventListener('load', () => {
+    loaded = true;
+    if(activeLoadTimer){ clearTimeout(activeLoadTimer); activeLoadTimer = null; }
+    ui.status.className = 'player-status loaded';
+    ui.status.textContent = providerName(item) + ' frame responded. If player controls appear, press play there. If Preview still blocks audio, use “Open in ' + providerName(item) + '”.';
+  });
+  iframe.addEventListener('error', () => {
+    if(activeLoadTimer){ clearTimeout(activeLoadTimer); activeLoadTimer = null; }
+    ui.status.className = 'player-status blocked';
+    ui.status.textContent = 'The embedded player was blocked here. Use “Open in ' + providerName(item) + '” below.';
+  });
+
+  ui.frameWrap.appendChild(iframe);
+
+  activeLoadTimer = setTimeout(() => {
+    if(!loaded){
+      ui.status.className = 'player-status blocked';
+      ui.status.textContent = 'Still waiting for ' + providerName(item) + '. This preview may be blocking third-party playback; the direct provider link below will still work.';
+    }
+  }, 5500);
+}
+
+document.addEventListener('click', event => {
+  const btn = event.target.closest('.listen-btn');
+  if(!btn) return;
+
+  if(activeListenButton === btn){
+    closeActivePlayer();
+    return;
+  }
+
+  closeActivePlayer();
+  mountProviderPlayer(btn);
+  btn.setAttribute('aria-expanded','true');
+  const sid = btn.dataset.songId;
+  btn.innerHTML = '■ Close player <small>' + providerName(MEDIA[sid]) + '</small>';
+  activeListenButton = btn;
+});
+
+document.querySelectorAll('nav .navlink').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('nav .navlink').forEach(x => x.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+const sections = {
+  p: document.getElementById('p'),
+  r: document.getElementById('r')
+};
+const buttons = {
+  p: document.getElementById('pbtn'),
+  r: document.getElementById('rbtn')
+};
+
+function tab(which){
+  closeActivePlayer();
+  Object.keys(sections).forEach(key => {
+    const active = key === which;
+    sections[key].style.display = active ? 'block' : 'none';
+    buttons[key].classList.toggle('active', active);
+    buttons[key].setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  filterMatches();
+}
+
+function filterMatches(){
+  closeActivePlayer();
+  const query = (document.getElementById('matchSearch').value || '').trim().toLowerCase();
+  const visibleSection = sections.p.style.display !== 'none' ? sections.p : sections.r;
+  const matches = [...visibleSection.querySelectorAll('.match')];
+  let shown = 0;
+
+  matches.forEach(match => {
+    const haystack = match.textContent.toLowerCase();
+    const visible = !query || haystack.includes(query);
+    match.style.display = visible ? '' : 'none';
+    if(visible) shown++;
+  });
+
+  const empty = visibleSection.querySelector('.empty');
+  if(empty) empty.style.display = shown === 0 ? 'block' : 'none';
+}
+
+document.getElementById('matchSearch').addEventListener('input', filterMatches);
+
+document.querySelector('.tabs').addEventListener('keydown', event => {
+  if(event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+  event.preventDefault();
+  const next = buttons.p.classList.contains('active') ? 'r' : 'p';
+  buttons[next].focus();
+  tab(next);
+});
+</script>
+</body></html>
