@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "tournament": "HMPP-2026",
+  "participant_id": "test-voter",
+  "vote_pool": "test",
+  "excluded_from_official_totals": true,
+  "updated_at": "2026-09-09T08:08:20.522Z",
+  "votes": {
+    "PI01": {
+      "vote_submission_id": "TESTVOTE-87665d0e-30e7-4c02-86a5-3f2891542566",
+      "match_id": "PI01",
+      "round": "play-in",
+      "song_id": "SONG26-019",
+      "submitted_at": "2026-09-09T07:47:48.857Z",
+      "vote_pool": "test",
+      "excluded_from_official_totals": true
+    },
+    "PI02": {
+      "vote_submission_id": "TESTVOTE-3e6ff0f5-f044-40ef-8819-c7322fe357ce",
+      "match_id": "PI02",
+      "round": "play-in",
+      "song_id": "SONG26-001",
+      "submitted_at": "2026-09-09T07:57:51.112Z",
+      "vote_pool": "test",
+      "excluded_from_official_totals": true
+    }
+  }
+}
