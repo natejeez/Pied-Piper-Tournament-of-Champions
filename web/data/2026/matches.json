@@ -1,0 +1,276 @@
+{
+  "matches": {
+    "PI01": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-019",
+        "SONG26-016"
+      ]
+    },
+    "PI02": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-042",
+        "SONG26-001"
+      ]
+    },
+    "PI03": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-052",
+        "SONG26-031"
+      ]
+    },
+    "PI04": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-051",
+        "SONG26-057"
+      ]
+    },
+    "PI05": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-069",
+        "SONG26-034"
+      ]
+    },
+    "PI06": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-028",
+        "SONG26-062"
+      ]
+    },
+    "PI07": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-044",
+        "SONG26-020"
+      ]
+    },
+    "PI08": {
+      "round": "play-in",
+      "songs": [
+        "SONG26-066",
+        "SONG26-003"
+      ]
+    },
+    "M001": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-046",
+        "SONG26-061"
+      ]
+    },
+    "M002": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-004",
+        "SONG26-050"
+      ]
+    },
+    "M003": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-055"
+      ]
+    },
+    "M004": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-068",
+        "SONG26-021"
+      ]
+    },
+    "M005": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-072"
+      ]
+    },
+    "M006": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-022",
+        "SONG26-029"
+      ]
+    },
+    "M007": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-007",
+        "SONG26-032"
+      ]
+    },
+    "M008": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-065",
+        "SONG26-010"
+      ]
+    },
+    "M009": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-071",
+        "SONG26-013"
+      ]
+    },
+    "M010": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-009",
+        "SONG26-059"
+      ]
+    },
+    "M011": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-011",
+        "SONG26-056"
+      ]
+    },
+    "M012": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-067",
+        "SONG26-008"
+      ]
+    },
+    "M013": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-033"
+      ]
+    },
+    "M014": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-037"
+      ]
+    },
+    "M015": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-025",
+        "SONG26-045"
+      ]
+    },
+    "M016": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-027",
+        "SONG26-039"
+      ]
+    },
+    "M017": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-012",
+        "SONG26-058"
+      ]
+    },
+    "M018": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-018",
+        "SONG26-040"
+      ]
+    },
+    "M019": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-038"
+      ]
+    },
+    "M020": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-070",
+        "SONG26-048"
+      ]
+    },
+    "M021": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-053",
+        "SONG26-005"
+      ]
+    },
+    "M022": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-036",
+        "SONG26-041"
+      ]
+    },
+    "M023": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-060",
+        "SONG26-023"
+      ]
+    },
+    "M024": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-017"
+      ]
+    },
+    "M025": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-043",
+        "SONG26-024"
+      ]
+    },
+    "M026": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-006"
+      ]
+    },
+    "M027": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-047",
+        "SONG26-015"
+      ]
+    },
+    "M028": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-054",
+        "SONG26-002"
+      ]
+    },
+    "M029": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-026",
+        "SONG26-035"
+      ]
+    },
+    "M030": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-063",
+        "SONG26-049"
+      ]
+    },
+    "M031": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-014",
+        "SONG26-030"
+      ]
+    },
+    "M032": {
+      "round": "round-of-64",
+      "songs": [
+        "SONG26-064"
+      ]
+    }
+  }
+}
