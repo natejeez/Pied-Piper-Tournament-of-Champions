@@ -32,3 +32,17 @@ GitHub remains the audit/export mirror. The Durable Object is authoritative at v
 
 ## Production caution
 Do not merge the test wrangler.jsonc into main unchanged. The test branch intentionally names the v2-test Worker and mirrors to the feature branch. Production release must restore the production Worker name and GITHUB_BRANCH=main on a release branch before merging to main.
+
+
+## Next-session reminder — one more build before production
+Do not deploy v2.1.1 to production yet. The tournament administrator intends to request one more build and will explicitly say when to begin it.
+
+That next build must address three areas:
+
+1. **Test-only developer mode** — Test Voter login exposes song numbers / song IDs for QA; normal participants never see them.
+2. **Administrator-controlled round publication** — completed round results stay private until the administrator explicitly publishes them; publication advances winners into the next round and makes that round live.
+3. **Previous-round submitter guessing** — after a new round is published, the prior round opens a separate guessing vote where participants guess who submitted each song.
+
+After those workflows are stable, build analytics around official votes, guessing accuracy, participant trends, song/artist performance, progression, and audit history.
+
+No implementation should begin until the administrator explicitly requests the next build.
