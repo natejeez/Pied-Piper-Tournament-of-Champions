@@ -4,7 +4,7 @@
   "participant_id": "test-voter",
   "vote_pool": "test",
   "excluded_from_official_totals": true,
-  "updated_at": "2026-09-09T08:08:20.522Z",
+  "updated_at": "2026-09-09T08:12:50.155Z",
   "votes": {
     "PI01": {
       "vote_submission_id": "TESTVOTE-87665d0e-30e7-4c02-86a5-3f2891542566",
@@ -21,6 +21,15 @@
       "round": "play-in",
       "song_id": "SONG26-001",
       "submitted_at": "2026-09-09T07:57:51.112Z",
+      "vote_pool": "test",
+      "excluded_from_official_totals": true
+    },
+    "PI03": {
+      "vote_submission_id": "TESTVOTE-115d5f85-0324-4d4a-a3e3-e1f6142c8db5",
+      "match_id": "PI03",
+      "round": "play-in",
+      "song_id": "SONG26-031",
+      "submitted_at": "2026-09-09T08:12:47.756Z",
       "vote_pool": "test",
       "excluded_from_official_totals": true
     }
