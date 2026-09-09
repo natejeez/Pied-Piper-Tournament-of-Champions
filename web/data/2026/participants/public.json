@@ -1,0 +1,45 @@
+{
+  "participants": [
+    {
+      "id": "doc",
+      "name": "Doc"
+    },
+    {
+      "id": "juh",
+      "name": "Juh"
+    },
+    {
+      "id": "troll",
+      "name": "The Troll (AFKA Joe Chamberlin)"
+    },
+    {
+      "id": "chuck",
+      "name": "Chuck"
+    },
+    {
+      "id": "jj",
+      "name": "JJ"
+    },
+    {
+      "id": "nate-gees",
+      "name": "Nate Gees"
+    },
+    {
+      "id": "egg",
+      "name": "Egg"
+    },
+    {
+      "id": "danny-mcgees",
+      "name": "Danny McGees"
+    },
+    {
+      "id": "patty-mayonnaise",
+      "name": "Patty Mayonnaise"
+    },
+    {
+      "id": "test-voter",
+      "name": "Test Voter",
+      "is_test": true
+    }
+  ]
+}
