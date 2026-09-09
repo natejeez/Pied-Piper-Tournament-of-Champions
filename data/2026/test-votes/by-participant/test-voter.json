@@ -4,7 +4,7 @@
   "participant_id": "test-voter",
   "vote_pool": "test",
   "excluded_from_official_totals": true,
-  "updated_at": "2026-09-09T08:12:50.155Z",
+  "updated_at": "2026-09-09T08:33:31.402Z",
   "votes": {
     "PI01": {
       "vote_submission_id": "TESTVOTE-87665d0e-30e7-4c02-86a5-3f2891542566",
