@@ -68,3 +68,36 @@ Design now; implement when voting/backend work begins.
 - session expiration and secure re-authentication
 - public bracket remains anonymous even when an authenticated participant is viewing it
 - administrative identity mappings remain separated from public frontend payloads
+
+
+## Phase 9 — Final pre-production build
+Status: PLANNED — do not implement until the tournament administrator explicitly says to begin the next build.
+
+This is the next build before production deployment.
+
+### Test-only developer mode
+- Logging in as `Test Voter` should enable a clearly labeled developer mode.
+- Developer mode may surface internal song numbers / song IDs on matchup cards for QA and troubleshooting.
+- Song numbers remain hidden for normal participants.
+- Developer-only diagnostics must not change official vote behavior or public anonymity.
+
+### Administrator-controlled round publication
+- Completing voting for a round must not automatically publish results to participants.
+- The tournament administrator explicitly decides when a round is published.
+- Until publication, results and next-round advancement remain hidden from participants.
+- Publishing a round should lock/finalize that round's result set and populate the appropriate winners into the next round.
+- The next round becomes live only when the administrator publishes it.
+- Preserve an auditable record of publication state and timing.
+
+### Post-round submitter guessing vote
+- After a new round is published, the immediately previous round opens a secondary guessing activity.
+- Participants guess who submitted each song from that completed round.
+- Guess records must be separate from tournament winner votes.
+- Guessing data should remain participant-linked so accuracy and trends can be analyzed later.
+- The reveal/close timing for submitter identities should be administrator-controlled and finalized during implementation.
+
+### Analytics foundation
+- Build the data outputs needed to showcase tournament organization and behavior.
+- Planned analytics include vote trends, participant voting patterns, submitter-guess accuracy, song/artist performance, round progression, and auditability.
+- Keep official match votes, test votes, and submitter guesses as separate data concepts/pools.
+- Analytics presentation will be designed after the publication and guessing workflows are validated.
