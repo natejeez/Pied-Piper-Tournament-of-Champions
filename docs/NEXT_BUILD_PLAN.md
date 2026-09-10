@@ -1,19 +1,31 @@
 # HMPP 2026 — NEXT BUILD REMINDER
 
-**Status:** Planned only. Do not implement until Nathan explicitly says to begin the next build.
+**Release intent:** One final pre-production build remains after the v2.2 submitter-guessing test.
 
-**Release intent:** One final build before production deployment.
+## Implemented in v2.2 test
+Submitter guessing is now available immediately after a participant submits a head-to-head matchup vote.
 
-## 1. Test-only developer mode
+Behavior under test:
+- each completed matchup exposes `Which Harry Man Submitted...` on both song cards;
+- each song gets a dropdown of the nine official participants;
+- Test Voter is excluded from guess choices;
+- guesses are separate from head-to-head match votes;
+- guesses are durable, participant-linked, song-linked, match-linked, and mirrored to Git;
+- `Submit your Guesses` becomes available after all currently available unsaved guesses in the selected round are completed;
+- test guesses remain excluded from official guessing analytics.
+
+This replaces the earlier idea that guessing only opens after the next round is published. The current product decision is: **guessing opens as soon as that participant has voted on the matchup.**
+
+## 1. Test-only developer mode — still planned
 When logged in as **Test Voter**, enable a clearly labeled developer mode that surfaces internal song numbers / song IDs on matchup cards for QA and troubleshooting.
 
 Requirements:
 - developer mode only for Test Voter;
 - normal participants never see song IDs;
-- test mode remains excluded from official totals;
+- test mode remains excluded from official totals and official guessing analytics;
 - developer display must not alter tournament behavior.
 
-## 2. Administrator-controlled round publication
+## 2. Administrator-controlled round publication — still planned
 Round completion and round publication are separate events.
 
 Required behavior:
@@ -23,32 +35,19 @@ Required behavior:
 - winners are populated into the next-round bracket;
 - the next round becomes visible/live only after administrator publication;
 - publication state and timestamp should be auditable;
-- do not let normal participants publish or alter a round.
+- normal participants cannot publish or alter a round.
 
-## 3. Secondary submitter-guess voting
-When a new round is published, the immediately previous round becomes available for a second, separate activity: participants guess who submitted each song in that completed round.
+## 3. Analytics foundation
+Maintain clean data for:
+- official head-to-head votes;
+- test head-to-head votes;
+- official submitter guesses;
+- test submitter guesses;
+- future round-publication events.
 
-Requirements:
-- guess records are separate from head-to-head match votes;
-- guesses remain linked to the authenticated participant;
-- one guess per participant per song unless an explicit edit policy is later chosen;
-- guessing/reveal/close timing is administrator-controlled;
-- preserve data for later guessing-accuracy analytics.
-
-## 4. Analytics foundation
-After publication and guessing are working, build analytics that demonstrate the structure and quality of the tournament system.
-
-Planned areas:
-- official voting trends;
-- participant voting patterns;
-- submitter-guess accuracy;
-- song and artist performance;
-- progression by round;
-- close matches / consensus / divergence;
-- audit and participation completeness;
-- clear separation of official votes, test votes, and guessing votes.
+See `docs/ANALYTICS_ROADMAP.md` for the running stats list.
 
 ## Next-session instruction
-If a future chat in this project starts without this conversation in view, read this file and the current v2.1 project context before proposing or building the next version.
+If a future chat starts without this conversation in view, read this file, `docs/frontend-feature-roadmap.md`, and `docs/ANALYTICS_ROADMAP.md` before proposing the final pre-production build.
 
-Do not start the build until Nathan explicitly says it is time.
+Do not start developer mode or publication controls until Nathan explicitly says it is time.

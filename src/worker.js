@@ -41,7 +41,13 @@ async function storeCall(env, participantId, action, payload={}) {
 export default {
   async fetch(request, env, ctx) {
     const url=new URL(request.url);
-    if(!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    if(!url.pathname.startsWith('/api/')) {
+      const response=await env.ASSETS.fetch(request);
+      if((url.pathname==='/'||url.pathname==='/index.html')&&response.ok&&(response.headers.get('content-type')||'').includes('text/html')){
+        return new HTMLRewriter().on('head',{element(el){el.append('<link rel="stylesheet" href="/guessing.css"><script src="/guessing.js" defer></script>',{html:true})}}).transform(response);
+      }
+      return response;
+    }
     try {
       if(url.pathname==='/api/participants' && request.method==='GET') {
         return jsonResponse({participants:await participantList(env)});
@@ -57,19 +63,36 @@ export default {
         const payload={sub:participant_id,name:p.name,is_test:isTestParticipant(p),exp:Date.now()+7*24*60*60*1000};
         const token=await makeSession(env.SESSION_SECRET,payload);
         const sr=await storeCall(env,participant_id,'state',{is_test:isTestParticipant(p)}); const state=await sr.json();
-        return jsonResponse({session:{participant_id,name:p.name,is_test:isTestParticipant(p),votes:state.votes||{}}},200,{'set-cookie':sessionCookie(token)});
+        return jsonResponse({session:{participant_id,name:p.name,is_test:isTestParticipant(p),votes:state.votes||{},guesses:state.guesses||{}}},200,{'set-cookie':sessionCookie(token)});
       }
       const session=await readSession(request,env);
       if(!session) return jsonResponse({error:'Authentication required.'},401);
       if(url.pathname==='/api/session' && request.method==='GET') {
         const sr=await storeCall(env,session.sub,'state',{is_test:session.is_test===true}); const state=await sr.json();
-        return jsonResponse({session:{participant_id:session.sub,name:session.name,is_test:session.is_test===true,votes:state.votes||{}}});
+        return jsonResponse({session:{participant_id:session.sub,name:session.name,is_test:session.is_test===true,votes:state.votes||{},guesses:state.guesses||{}}});
       }
       if(url.pathname==='/api/votes' && request.method==='POST') {
         const body=await request.json(); const allowed=MATCHES[body.match_id];
         if(!allowed || allowed.round!==body.round || allowed.songs.length!==2 || !allowed.songs.includes(body.song_id)) return jsonResponse({error:'This vote does not match an active tournament matchup.'},400);
         const sr=await storeCall(env,session.sub,'vote',{match_id:body.match_id,round:body.round,song_id:body.song_id,is_test:session.is_test===true});
         const data=await sr.json(); return jsonResponse(data,sr.status);
+      }
+      if(url.pathname==='/api/guesses' && request.method==='GET') {
+        const sr=await storeCall(env,session.sub,'state',{is_test:session.is_test===true}); const state=await sr.json();
+        return jsonResponse({guesses:state.guesses||{}});
+      }
+      if(url.pathname==='/api/guesses' && request.method==='POST') {
+        const body=await request.json(); const guesses=Array.isArray(body.guesses)?body.guesses:[];
+        if(!guesses.length || guesses.length>64) return jsonResponse({error:'Submit at least one valid guess.'},400);
+        const participants=(await participantList(env)).filter(p=>!p.is_test); const validParticipants=new Set(participants.map(p=>p.id));
+        const clean=[]; const seenSongs=new Set();
+        for(const g of guesses){ const allowed=MATCHES[g.match_id];
+          if(!allowed || allowed.round!==g.round || allowed.songs.length!==2 || !allowed.songs.includes(g.song_id)) return jsonResponse({error:'A guess does not match an active tournament song.'},400);
+          if(!validParticipants.has(g.guessed_participant_id)) return jsonResponse({error:'Choose a valid Harry Man for every guess.'},400);
+          if(seenSongs.has(g.song_id)) return jsonResponse({error:'Each song can only appear once in a guess submission.'},400);
+          seenSongs.add(g.song_id); clean.push({match_id:g.match_id,round:g.round,song_id:g.song_id,guessed_participant_id:g.guessed_participant_id});
+        }
+        const sr=await storeCall(env,session.sub,'guesses',{guesses:clean,is_test:session.is_test===true}); const data=await sr.json(); return jsonResponse(data,sr.status);
       }
       if(url.pathname==='/api/logout' && request.method==='POST') {
         const sr=await storeCall(env,session.sub,'flush',{is_test:session.is_test===true}); if(!sr.ok) return jsonResponse({error:'Vote sync failed. Logout was cancelled so no data is lost.'},503);
@@ -86,7 +109,7 @@ export class ParticipantVoteStore {
     const action=new URL(request.url).pathname.slice(1); const body=await request.json().catch(()=>({}));
     if(body.participant_id) await this.state.storage.put('participant_id',body.participant_id);
     if(typeof body.is_test==='boolean') await this.state.storage.put('is_test',body.is_test);
-    if(action==='state') { const votes=(await this.state.storage.get('votes'))||{}; return jsonResponse({votes}); }
+    if(action==='state') { const votes=(await this.state.storage.get('votes'))||{}; const guesses=(await this.state.storage.get('guesses'))||{}; return jsonResponse({votes,guesses}); }
     if(action==='vote') {
       const votes=(await this.state.storage.get('votes'))||{}; const existing=votes[body.match_id];
       if(existing) { if(existing.song_id===body.song_id) return jsonResponse({ok:true,idempotent:true,vote:existing}); return jsonResponse({error:'A vote has already been submitted for this matchup.'},409); }
@@ -95,14 +118,21 @@ export class ParticipantVoteStore {
       votes[body.match_id]=vote; await this.state.storage.put('votes',votes); await this.state.storage.setAlarm(Date.now()+FIVE_MINUTES);
       return jsonResponse({ok:true,vote});
     }
+    if(action==='guesses') {
+      const votes=(await this.state.storage.get('votes'))||{}; const guesses=(await this.state.storage.get('guesses'))||{}; const incoming=Array.isArray(body.guesses)?body.guesses:[];
+      for(const g of incoming){ if(!votes[g.match_id]) return jsonResponse({error:'Vote on the matchup before submitting Daddy guesses.'},409); const existing=guesses[g.song_id]; if(existing&&existing.guessed_participant_id!==g.guessed_participant_id)return jsonResponse({error:'A submitter guess has already been submitted for this song.'},409); }
+      const isTest=(await this.state.storage.get('is_test'))===true; const batchId=(isTest?'TESTGUESSBATCH-':'GUESSBATCH-')+crypto.randomUUID(); const submittedAt=new Date().toISOString(); const returned=[];
+      for(const g of incoming){ if(guesses[g.song_id]){returned.push(guesses[g.song_id]);continue} const vote=votes[g.match_id]; const record={guess_submission_id:(isTest?'TESTGUESS-':'GUESS-')+crypto.randomUUID(),guess_batch_id:batchId,match_id:g.match_id,round:g.round,song_id:g.song_id,guessed_participant_id:g.guessed_participant_id,match_vote_song_id_at_submission:vote.song_id,match_vote_submission_id:vote.vote_submission_id,submitted_at:submittedAt,guess_pool:isTest?'test':'official',excluded_from_official_guess_stats:isTest}; guesses[g.song_id]=record; returned.push(record); }
+      await this.state.storage.put('guesses',guesses); await this.state.storage.setAlarm(Date.now()+FIVE_MINUTES); return jsonResponse({ok:true,guess_batch_id:batchId,guesses:returned});
+    }
     if(action==='flush') { try { await this.flushGit(); await this.state.storage.deleteAlarm(); return jsonResponse({ok:true}); } catch(e) { console.error(e); return jsonResponse({error:'Git sync failed.'},503); } }
     return jsonResponse({error:'Not found.'},404);
   }
   async alarm() { await this.flushGit(); }
   async flushGit() {
-    const votes=(await this.state.storage.get('votes'))||{}; const participantId=(await this.state.storage.get('participant_id')) || 'participant';
+    const votes=(await this.state.storage.get('votes'))||{}; const guesses=(await this.state.storage.get('guesses'))||{}; const participantId=(await this.state.storage.get('participant_id')) || 'participant';
     const isTest=(await this.state.storage.get('is_test'))===true;
-    const payload={schema_version:2,tournament:'HMPP-2026',participant_id:participantId,vote_pool:isTest?'test':'official',excluded_from_official_totals:isTest,updated_at:new Date().toISOString(),votes};
+    const payload={schema_version:3,tournament:'HMPP-2026',participant_id:participantId,vote_pool:isTest?'test':'official',excluded_from_official_totals:isTest,guess_pool:isTest?'test':'official',excluded_from_official_guess_stats:isTest,updated_at:new Date().toISOString(),votes,guesses};
     const path=isTest?`data/2026/test-votes/by-participant/${participantId}.json`:`data/2026/votes/by-participant/${participantId}.json`;
     await writeGitJson(this.env,path,payload,`${isTest?'Sync HMPP TEST votes':'Sync HMPP votes'}: ${participantId}`);
   }

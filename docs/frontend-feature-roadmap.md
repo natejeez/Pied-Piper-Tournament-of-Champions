@@ -10,7 +10,7 @@ Status: implemented prototype
 - participant anonymity in public UI
 
 ## Phase 2 — Listening
-Status: implementation branch
+Status: implemented / hosted validated
 - Spotify embeds for Spotify entries
 - YouTube embeds for YouTube-only entries
 - compact collapsed player state
@@ -20,26 +20,47 @@ Status: implementation branch
 - provider-aware media helper and generated public media manifest
 
 ## Phase 3 — Voting
+Status: implemented / hosted validated
 - one vote per matchup per eligible voter
-- locked selection after submit unless rules allow editing
+- locked selection after Submit
 - totals hidden until voting closes
 - clear open / submitted / closed states
-- tie handling workflow
-- server-side vote persistence rather than browser-only storage
+- server-side vote persistence
+- Durable Object authoritative state
+- five-minute Git mirror plus logout flush
+- test-voter isolation from official totals
 
 ## Phase 4 — Results and advancement
+Status: planned for final pre-production build
+- administrator-controlled result publication
 - winner/loser styling
-- vote totals after close
-- automatic advancement to next bracket slot
+- vote totals after close/publication
+- advancement to next bracket slot only when administrator publishes
 - immutable result history
 - matchup detail view
+- auditable publication state and timestamp
 
-## Phase 5 — Submission rationale
+## Phase 5 — Submitter guessing
+Status: v2.2 test implementation
+- after a participant submits a head-to-head vote, both songs in that matchup become eligible for submitter guessing
+- each submitted song card asks `Which Harry Man Submitted...`
+- participant chooses from the nine official Harry Men; Test Voter is never a guess option
+- guesses are separate records from head-to-head match votes
+- guessing requires the participant to have already voted on that matchup
+- guesses are participant-linked and song-linked for later accuracy analytics
+- a round-level `Submit your Guesses` action appears when all currently available unsaved guess dropdowns in that round are complete
+- submitted guesses are immutable/idempotent like match votes
+- guess records are mirrored to the same participant audit JSON under a separate `guesses` object
+
+## Phase 6 — Submission rationale
 - “Why this song?” reveal
 - rationale remains anonymous until the rules permit participant reveal
 - rationale attached to the song card or matchup detail, not participant identity
 
-## Phase 6 — Statistics
+## Phase 7 — Statistics & analytics
+Running analytics context is maintained in `docs/ANALYTICS_ROADMAP.md`.
+
+Planned examples:
 - song wins / losses
 - round reached
 - artist performance
@@ -49,55 +70,45 @@ Status: implementation branch
 - participant submission performance in private/appropriate views
 - winner-pick accuracy leaderboard
 - prediction accuracy by round
+- submitter-guess accuracy overall and by round
+- which submitters were easiest / hardest to identify
+- confusion matrix: guessed Harry Man vs actual submitter
+- relationship between the song a voter picked and who they guessed submitted it
+- **Who was the best at guessing each entry's Daddy**
 
-## Phase 7 — Historical tournaments
+## Phase 8 — Historical tournaments
 - year selector
 - past champions
 - cross-year artist/song statistics
 - participant history
 - archived brackets
 
-## Phase 8 — Accounts & durable participant state
-Design now; implement when voting/backend work begins.
+## Phase 9 — Accounts & durable participant state
+Status: implemented for voting and guessing
 - participant login/authentication
 - stable account identity independent of browser cookies/cache
-- server-backed listening progress / matchup-seen state
-- server-backed voting records and submission confirmation
+- server-backed voting and guessing records
 - ability to resume on another device
-- cache/localStorage may improve responsiveness but must never be the authoritative record
+- browser cache/localStorage is never authoritative for submitted votes
 - session expiration and secure re-authentication
 - public bracket remains anonymous even when an authenticated participant is viewing it
 - administrative identity mappings remain separated from public frontend payloads
 
-
-## Phase 9 — Final pre-production build
-Status: PLANNED — do not implement until the tournament administrator explicitly says to begin the next build.
-
-This is the next build before production deployment.
+## Phase 10 — Final pre-production build
+Status: PLANNED — do not implement remaining items until the tournament administrator explicitly says to begin.
 
 ### Test-only developer mode
-- Logging in as `Test Voter` should enable a clearly labeled developer mode.
-- Developer mode may surface internal song numbers / song IDs on matchup cards for QA and troubleshooting.
+- Test Voter login enables a clearly labeled developer mode.
+- Developer mode surfaces internal song numbers / song IDs for QA and troubleshooting.
 - Song numbers remain hidden for normal participants.
-- Developer-only diagnostics must not change official vote behavior or public anonymity.
 
 ### Administrator-controlled round publication
-- Completing voting for a round must not automatically publish results to participants.
-- The tournament administrator explicitly decides when a round is published.
-- Until publication, results and next-round advancement remain hidden from participants.
-- Publishing a round should lock/finalize that round's result set and populate the appropriate winners into the next round.
-- The next round becomes live only when the administrator publishes it.
-- Preserve an auditable record of publication state and timing.
-
-### Post-round submitter guessing vote
-- After a new round is published, the immediately previous round opens a secondary guessing activity.
-- Participants guess who submitted each song from that completed round.
-- Guess records must be separate from tournament winner votes.
-- Guessing data should remain participant-linked so accuracy and trends can be analyzed later.
-- The reveal/close timing for submitter identities should be administrator-controlled and finalized during implementation.
+- completing voting does not automatically publish results
+- administrator explicitly publishes a round
+- results and advancement remain hidden until publication
+- publication populates winners into the next round and makes that round live
+- publication state and timing are auditable
 
 ### Analytics foundation
-- Build the data outputs needed to showcase tournament organization and behavior.
-- Planned analytics include vote trends, participant voting patterns, submitter-guess accuracy, song/artist performance, round progression, and auditability.
-- Keep official match votes, test votes, and submitter guesses as separate data concepts/pools.
-- Analytics presentation will be designed after the publication and guessing workflows are validated.
+- preserve clean data separation among official votes, test votes, official guesses, and test guesses
+- validate guessing workflow and publication workflow before building the public analytics presentation
