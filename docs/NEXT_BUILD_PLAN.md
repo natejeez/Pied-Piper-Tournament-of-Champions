@@ -1,53 +1,28 @@
-# HMPP 2026 — NEXT BUILD REMINDER
+# HMPP 2026 — CURRENT STAGING / NEXT STEP PLAN
 
-**Release intent:** One final pre-production build remains after the v2.2 submitter-guessing test.
+**Current candidate:** v2.3 on `feature/v2-auth-voting`.
 
-## Implemented in v2.2 test
-Submitter guessing is now available immediately after a participant submits a head-to-head matchup vote.
+## v2.3 under test
+- atomic matchup submission: one song vote + two submitter guesses submitted together;
+- no round-level Submit your Guesses workflow;
+- Test Voter developer mode with song IDs;
+- one-time Test Voter Round-1 (Round-of-64) reset;
+- official result aggregation excluding Test Voter;
+- Play-In result preview/publication;
+- Round-of-64 matchup preview/publication using the locked Play-In winner slot mapping;
+- publication state mirrored to `data/2026/admin/publication-state.json`.
 
-Behavior under test:
-- each completed matchup exposes `Which Harry Man Submitted...` on both song cards;
-- each song gets a dropdown of the nine official participants;
-- Test Voter is excluded from guess choices;
-- guesses are separate from head-to-head match votes;
-- guesses are durable, participant-linked, song-linked, match-linked, and mirrored to Git;
-- `Submit your Guesses` becomes available after all currently available unsaved guesses in the selected round are completed;
-- test guesses remain excluded from official guessing analytics.
+## Current admin controls
+On the Round-of-64 page, Test Voter receives four controls once Play-In results are complete:
+1. View results for previous round
+2. Show results for previous round
+3. View new matchups
+4. Publish New Matchups
 
-This replaces the earlier idea that guessing only opens after the next round is published. The current product decision is: **guessing opens as soon as that participant has voted on the matchup.**
+The controls remain disabled until all nine official participants have voted every Play-In matchup. New matchup preview/publication also requires no unresolved ties.
 
-## 1. Test-only developer mode — still planned
-When logged in as **Test Voter**, enable a clearly labeled developer mode that surfaces internal song numbers / song IDs on matchup cards for QA and troubleshooting.
+## Important source boundary
+The repository currently provides authoritative slot wiring through Round of 64 only. Do not invent Round-of-32 or later advancement mappings. Extend publication controls to later rounds only after those mappings are added to the tournament data.
 
-Requirements:
-- developer mode only for Test Voter;
-- normal participants never see song IDs;
-- test mode remains excluded from official totals and official guessing analytics;
-- developer display must not alter tournament behavior.
-
-## 2. Administrator-controlled round publication — still planned
-Round completion and round publication are separate events.
-
-Required behavior:
-- voting can close without immediately revealing results;
-- results remain hidden until the tournament administrator chooses **Publish Round**;
-- publishing finalizes the result set used for advancement;
-- winners are populated into the next-round bracket;
-- the next round becomes visible/live only after administrator publication;
-- publication state and timestamp should be auditable;
-- normal participants cannot publish or alter a round.
-
-## 3. Analytics foundation
-Maintain clean data for:
-- official head-to-head votes;
-- test head-to-head votes;
-- official submitter guesses;
-- test submitter guesses;
-- future round-publication events.
-
-See `docs/ANALYTICS_ROADMAP.md` for the running stats list.
-
-## Next-session instruction
-If a future chat starts without this conversation in view, read this file, `docs/frontend-feature-roadmap.md`, and `docs/ANALYTICS_ROADMAP.md` before proposing the final pre-production build.
-
-Do not start developer mode or publication controls until Nathan explicitly says it is time.
+## Production gate
+Do not deploy to production until v2.3 hosted acceptance passes. The test branch still targets the test Worker and feature Git branch.

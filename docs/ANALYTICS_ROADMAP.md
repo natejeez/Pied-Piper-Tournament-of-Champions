@@ -17,6 +17,7 @@ This is the running context for statistics and analytics we want the platform to
 - winner-pick accuracy leaderboard
 - prediction accuracy by round
 - how often a participant voted for or against songs they submitted, when identity reveal rules allow that analysis
+- time from first interaction to completed matchup, if interaction timing is added later
 
 ## Submitter-guess analytics
 - overall submitter-guess accuracy
@@ -30,22 +31,33 @@ This is the running context for statistics and analytics we want the platform to
 - self-recognition rate: how often someone correctly identifies their own submission
 - misdirection rate: which submitter's songs are most often attributed to someone else
 - relationship between the song a participant voted for and who they guessed submitted that song
-- guess confidence/trend opportunities if a confidence field is added later
+- whether the winning/losing choice was easier to attribute correctly
+- guess accuracy by artist, genre, round reached, and vote margin when those dimensions are available
 - **Who was the best at guessing each entry's Daddy** — leaderboard for total and percentage of correct submitter guesses
+
+## Matchup-level combined analytics
+v2.3 introduces a shared `matchup_submission_id` across one song vote and both submitter guesses. This supports:
+- comparing vote choice with both guesses from the exact same decision event
+- measuring whether voters attribute preferred songs differently from rejected songs
+- identifying participant-specific taste/attribution patterns
+- auditing that a completed matchup contains one vote plus two guesses
 
 ## Tournament operations analytics
 - votes submitted vs expected votes
 - guesses submitted vs expected guesses
+- complete matchup submissions vs expected matchup submissions
 - round completion timing
 - publication timing
+- time between official completion, result publication, and next-round publication
 - missing-vote / missing-guess audit
 - test activity clearly separated from official activity
+- publication-event audit trail
 - ability to reconstruct the complete tournament state from immutable records
 
 ## Data required for submitter-guess stats
-Every guess should preserve:
+Every new atomic guess should preserve:
 - guess submission ID
-- batch submission ID
+- matchup submission ID / guess batch ID
 - authenticated guessing participant via the enclosing participant record
 - tournament year
 - round
@@ -60,6 +72,15 @@ Every guess should preserve:
 
 The correct submitter should remain in the administrative ownership mapping, not in the public guessing payload. Analytics can join guesses to that private mapping after reveal/analysis is appropriate.
 
+## Results/publication analytics
+- official vote totals per song and matchup
+- result completeness across the nine official participants
+- ties requiring resolution
+- exact publication timestamp for each result set
+- exact publication timestamp for each new round
+- which results were visible before/after each publication event
+- audit of the winner IDs used to populate each downstream bracket slot
+
 ## Presentation ideas for later
 - leaderboard cards
 - round-by-round trend charts
@@ -68,3 +89,4 @@ The correct submitter should remain in the administrative ownership mapping, not
 - song attribution heatmap
 - matchup consensus vs attribution-confidence comparison
 - participation/audit dashboard for the tournament administrator
+- publication timeline
