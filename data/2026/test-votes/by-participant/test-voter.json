@@ -1,10 +1,12 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "tournament": "HMPP-2026",
   "participant_id": "test-voter",
   "vote_pool": "test",
   "excluded_from_official_totals": true,
-  "updated_at": "2026-09-10T07:17:09.375Z",
+  "guess_pool": "test",
+  "excluded_from_official_guess_stats": true,
+  "updated_at": "2026-09-10T07:53:05.132Z",
   "votes": {
     "PI01": {
       "vote_submission_id": "TESTVOTE-87665d0e-30e7-4c02-86a5-3f2891542566",
@@ -60,5 +62,6 @@
       "vote_pool": "test",
       "excluded_from_official_totals": true
     }
-  }
+  },
+  "guesses": {}
 }
