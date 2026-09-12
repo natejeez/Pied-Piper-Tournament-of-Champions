@@ -1,0 +1,5 @@
+/* HMPP v2.4 — Test Voter reset controls */
+.dev-round-reset-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 28px;background:#2A2115;color:#fff;border-bottom:1px solid var(--gold)}
+.dev-round-reset-bar>div{display:grid;gap:2px}.dev-round-reset-bar strong{color:var(--gold);font-size:9px;letter-spacing:.12em}.dev-round-reset-bar span{font-size:11px;color:#E6E0D5}.dev-round-reset-bar button{flex:0 0 auto;min-height:36px;padding:8px 12px;border:1px solid var(--gold);border-radius:7px;background:#000;color:#fff;font-weight:900;cursor:pointer}.dev-round-reset-bar button:hover:not(:disabled){background:#242424}.dev-round-reset-bar button:disabled{opacity:.6;cursor:wait}
+.match.submitted.needs-guesses .guess-select:not(:disabled){pointer-events:auto!important;position:relative;z-index:4;cursor:pointer}
+@media(max-width:720px){.dev-round-reset-bar{align-items:stretch;flex-direction:column;padding:10px 16px}.dev-round-reset-bar button{width:100%}}
