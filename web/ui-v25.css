@@ -1,0 +1,92 @@
+/* HMPP v2.5 — focused matchup guessing state */
+.song .vote-btn.ready{
+  background:#245B78!important;
+  border-color:#347A9E!important;
+  color:#fff!important;
+}
+.song .vote-btn.ready:hover{
+  background:#1D4A63!important;
+  border-color:#68BCE3!important;
+}
+.song .listen-btn{
+  background:#4B5560!important;
+  border-color:#646F7B!important;
+  color:#fff!important;
+}
+.song .listen-btn:hover{
+  background:#3E4750!important;
+  border-color:var(--gold)!important;
+}
+.song .listen-btn[aria-expanded="true"]{
+  background:#7B6037!important;
+  border-color:#CFB991!important;
+  color:#fff!important;
+}
+
+.match.matchup-pending{
+  background:#F7F4EC!important;
+  border-top-color:#FFD84D!important;
+}
+.match.matchup-pending .song.pending-vote-choice{
+  background:#D6AE27!important;
+  border:3px solid #FFF15A!important;
+  box-shadow:0 0 0 2px rgba(255,241,90,.28), 0 8px 18px rgba(92,67,0,.15);
+  color:#111!important;
+}
+.match.matchup-pending .song.pending-vote-choice .title,
+.match.matchup-pending .song.pending-vote-choice .artist,
+.match.matchup-pending .song.pending-vote-choice .guess-prompt{
+  color:#111!important;
+}
+.match.matchup-pending .song.pending-vote-choice .vote-btn{
+  background:#5C4600!important;
+  border-color:#FFF15A!important;
+  color:#fff!important;
+}
+.match.matchup-pending .song.pending-vote-other{
+  background:#8C2F32!important;
+  border:2px solid #E16A6E!important;
+  color:#fff!important;
+}
+.match.matchup-pending .song.pending-vote-other .title,
+.match.matchup-pending .song.pending-vote-other .artist,
+.match.matchup-pending .song.pending-vote-other .guess-prompt{
+  color:#fff!important;
+}
+.match.matchup-pending .song.pending-vote-other .dev-song-id{
+  background:#F9E4DE!important;
+  color:#6F2528!important;
+  border-color:#F0A8A8!important;
+}
+.match.matchup-pending .song.pending-vote-other .vote-btn{
+  background:#5E1F22!important;
+  border-color:#E16A6E!important;
+  color:#fff!important;
+}
+
+.match.matchup-pending .listen-btn,
+.match.matchup-pending .player-slot,
+.match.matchup-pending .player-shell{
+  display:none!important;
+}
+.match.matchup-pending .listened-pill{
+  opacity:.72;
+  font-size:9px;
+}
+
+.matchup-submit-btn:not(:disabled){
+  background:#E3C88E!important;
+  border:1px solid #B58D47!important;
+  color:#523D1D!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+}
+.matchup-submit-btn:hover:not(:disabled){
+  background:#D7B873!important;
+  border-color:#8E6F3E!important;
+  color:#34240D!important;
+}
+.matchup-submit-btn:disabled{
+  background:#F6EBD5!important;
+  border:1px solid #D6C6A7!important;
+  color:#9B8765!important;
+}
