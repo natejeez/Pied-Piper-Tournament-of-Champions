@@ -6,47 +6,7 @@
   "excluded_from_official_totals": true,
   "guess_pool": "test",
   "excluded_from_official_guess_stats": true,
-  "updated_at": "2026-09-12T07:40:53.588Z",
-  "votes": {
-    "PI01": {
-      "vote_submission_id": "TESTVOTE-030aff7c-fca3-43a8-9ee6-baca0b5bc8d9",
-      "matchup_submission_id": "TESTMATCHUP-7be9ada8-7fa7-4979-bf71-c2509055cf89",
-      "match_id": "PI01",
-      "round": "play-in",
-      "song_id": "SONG26-016",
-      "submitted_at": "2026-09-12T07:33:58.510Z",
-      "vote_pool": "test",
-      "excluded_from_official_totals": true
-    }
-  },
-  "guesses": {
-    "SONG26-019": {
-      "guess_submission_id": "TESTGUESS-485e320e-4e39-4a4b-8e81-c36d86ac684d",
-      "guess_batch_id": "TESTMATCHUP-7be9ada8-7fa7-4979-bf71-c2509055cf89",
-      "matchup_submission_id": "TESTMATCHUP-7be9ada8-7fa7-4979-bf71-c2509055cf89",
-      "match_id": "PI01",
-      "round": "play-in",
-      "song_id": "SONG26-019",
-      "guessed_participant_id": "juh",
-      "match_vote_song_id_at_submission": "SONG26-016",
-      "match_vote_submission_id": "TESTVOTE-030aff7c-fca3-43a8-9ee6-baca0b5bc8d9",
-      "submitted_at": "2026-09-12T07:33:58.510Z",
-      "guess_pool": "test",
-      "excluded_from_official_guess_stats": true
-    },
-    "SONG26-016": {
-      "guess_submission_id": "TESTGUESS-724894ea-7bbd-4de0-bbc3-649e36e3c17d",
-      "guess_batch_id": "TESTMATCHUP-7be9ada8-7fa7-4979-bf71-c2509055cf89",
-      "matchup_submission_id": "TESTMATCHUP-7be9ada8-7fa7-4979-bf71-c2509055cf89",
-      "match_id": "PI01",
-      "round": "play-in",
-      "song_id": "SONG26-016",
-      "guessed_participant_id": "nate-gees",
-      "match_vote_song_id_at_submission": "SONG26-016",
-      "match_vote_submission_id": "TESTVOTE-030aff7c-fca3-43a8-9ee6-baca0b5bc8d9",
-      "submitted_at": "2026-09-12T07:33:58.510Z",
-      "guess_pool": "test",
-      "excluded_from_official_guess_stats": true
-    }
-  }
+  "updated_at": "2026-09-12T07:44:14.771Z",
+  "votes": {},
+  "guesses": {}
 }
