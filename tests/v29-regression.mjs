@@ -4,7 +4,8 @@ const ui = fs.readFileSync(new URL('../web/ui-v29.js', import.meta.url), 'utf8')
 const reset = fs.readFileSync(new URL('../web/dev-reset-v29.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../web/ui-v29.css', import.meta.url), 'utf8');
 const worker = fs.readFileSync(new URL('../src/worker-v29.js', import.meta.url), 'utf8');
-for (const token of ['draftKey','restoreDrafts','saveDraftFromMatch','renderSubmittedGuesses','submitted-guess-value','pointerdown','auxclick']) assert.ok(ui.includes(token), `missing ${token}`);
+for (const token of ['draftKey','restoreDrafts','saveDraft','ensureDraftListening','renderGuesses','submitted-guess-value','pointerdown','auxclick']) assert.ok(ui.includes(token), `missing ${token}`);
+assert.match(ui,/ensureDraftListening\(match\);[\s\S]*btn\.click\(\)/,'draft restore must re-establish listening before restoring the pending vote');
 assert.ok(!ui.includes('location.reload(), 0'), 'logout should not force an immediate reload');
 assert.match(reset,/setInterval\(\(\) =>/);
 assert.match(reset,/installedFor/);

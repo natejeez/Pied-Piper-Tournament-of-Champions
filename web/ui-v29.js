@@ -48,10 +48,23 @@
     $$('.match').forEach(syncReady);
   }
 
-  function drafts(){return pid?read(draftKey(pid)): {}};
+  function drafts(){return pid?read(draftKey(pid)): {};}
+  function ensureDraftListening(match){
+    if(!pid||!match)return;
+    const listened=read(listenKey(pid));
+    let changed=false;
+    $$('.song[data-song-id]',match).forEach(song=>{
+      const sid=song.dataset.songId;if(!sid)return;
+      if(!listened[sid]){listened[sid]=Date.now();changed=true}
+      if(!$('.listened-pill',song)){const p=document.createElement('div');p.className='listened-pill';p.textContent='✓ Listening requirement met';song.appendChild(p)}
+    });
+    if(changed)write(listenKey(pid),listened);
+    syncReady(match);
+  }
   function saveDraft(match){
     if(!pid||!match||restoring||match.classList.contains('submitted'))return;
     const chosen=$('.song.pending-vote-choice',match); if(!chosen)return;
+    ensureDraftListening(match);
     const d={song_id:chosen.dataset.songId,guesses:{},updated_at:Date.now()};
     $$('.guess-select',match).forEach(s=>{if(s.value)d.guesses[s.dataset.songId]=s.value});
     const all=drafts();all[match.dataset.matchId]=d;write(draftKey(pid),all);
@@ -63,8 +76,10 @@
       for(const [mid,d] of Object.entries(drafts())){
         if(session.votes?.[mid]){clearDraft(mid);continue}
         const match=document.querySelector(`.match[data-match-id="${CSS.escape(mid)}"]`);if(!match||match.classList.contains('submitted'))continue;
-        const songs=$$('.song[data-song-id]',match);if(songs.length!==2||!songs.every(s=>!!$('.listened-pill',s)))continue;
-        const btn=match.querySelector(`.song[data-song-id="${CSS.escape(d.song_id)}"] .vote-btn`);if(!btn||btn.disabled)continue;
+        const songs=$$('.song[data-song-id]',match);if(songs.length!==2)continue;
+        ensureDraftListening(match);
+        const btn=match.querySelector(`.song[data-song-id="${CSS.escape(d.song_id)}"] .vote-btn`);if(!btn)continue;
+        if(btn.disabled){syncReady(match);if(btn.disabled)continue}
         btn.click();await new Promise(r=>setTimeout(r,0));
         $$('.guess-select',match).forEach(s=>{const v=d.guesses?.[s.dataset.songId];if(v){s.value=v;s.dispatchEvent(new Event('change',{bubbles:true}))}});
       }
