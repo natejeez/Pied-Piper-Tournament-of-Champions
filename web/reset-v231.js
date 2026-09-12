@@ -1,6 +1,7 @@
 (() => {
   const $=(s,root=document)=>root.querySelector(s);
   const $$=(s,root=document)=>[...root.querySelectorAll(s)];
+  const LISTEN_RESET_MARKER='hmpp-v231-listening-reset-done';
 
   async function api(path,opts={}){
     const r=await fetch(path,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(opts.headers||{})},...opts});
@@ -22,6 +23,17 @@
       .dev-admin-note{grid-column:1/-1;color:#d8c7a4;font-size:10px;line-height:1.4;margin-top:2px}
       @media(max-width:720px){.dev-reset-panel{margin-left:16px;margin-right:16px;padding:12px 14px;align-items:flex-start;flex-direction:column}.dev-reset-btn{width:100%}}
     `;document.head.appendChild(style);
+  }
+
+  function ensureOneTimeListeningReset(){
+    if(!$('#devModeBanner'))return false;
+    try{
+      if(localStorage.getItem(LISTEN_RESET_MARKER)==='1')return false;
+      localStorage.removeItem('hmpp-listened-test-voter');
+      localStorage.setItem(LISTEN_RESET_MARKER,'1');
+      if($$('.listened-pill').length){location.reload();return true}
+    }catch{}
+    return false;
   }
 
   function installResetPanel(){
@@ -65,7 +77,7 @@
     $$('button[data-admin-action]',panel).forEach(btn=>{if(btn.disabled&&incomplete)btn.title='Locked until all 72 official Play-In votes are complete.';else btn.removeAttribute('title')});
   }
 
-  function sync(){installResetPanel();explainAdminButtons();updateResetPanel()}
+  function sync(){if(ensureOneTimeListeningReset())return;installResetPanel();explainAdminButtons();updateResetPanel()}
 
   function init(){
     installStyles();sync();
