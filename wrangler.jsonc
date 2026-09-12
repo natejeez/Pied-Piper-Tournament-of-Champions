@@ -1,12 +1,25 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "pied-piper-tournament-of-champions-v2-test",
-  "main": "src/worker-v26.js",
+  "main": "src/worker-v27.js",
   "compatibility_date": "2026-08-31",
   "workers_dev": true,
   "preview_urls": true,
-  "assets": {"directory":"./web","binding":"ASSETS","run_worker_first":true},
-  "durable_objects":{"bindings":[{"name":"PARTICIPANT_VOTES","class_name":"ParticipantVoteStore"}]},
-  "migrations":[{"tag":"v1","new_sqlite_classes":["ParticipantVoteStore"]}],
-  "vars":{"GITHUB_REPO":"natejeez/Pied-Piper-Tournament-of-Champions","GITHUB_BRANCH":"feature/v2-auth-voting"}
+  "assets": {
+    "directory": "./web",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "PARTICIPANT_VOTES", "class_name": "ParticipantVoteStore" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["ParticipantVoteStore"] }
+  ],
+  "vars": {
+    "GITHUB_REPO": "natejeez/Pied-Piper-Tournament-of-Champions",
+    "GITHUB_BRANCH": "feature/v2-auth-voting"
+  }
 }
