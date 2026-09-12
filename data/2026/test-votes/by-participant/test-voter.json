@@ -1,0 +1,12 @@
+{
+  "schema_version": 4,
+  "tournament": "HMPP-2026",
+  "participant_id": "test-voter",
+  "vote_pool": "test",
+  "excluded_from_official_totals": true,
+  "guess_pool": "test",
+  "excluded_from_official_guess_stats": true,
+  "updated_at": "2026-09-12T07:24:58.171Z",
+  "votes": {},
+  "guesses": {}
+}
