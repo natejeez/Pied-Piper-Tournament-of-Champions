@@ -1,0 +1,45 @@
+/* HMPP v2.6 — performance-safe matchup focus + clearer action hierarchy */
+.song .listen-btn{background:#3F4A56!important;color:#fff!important;border-color:#566473!important}
+.song .listen-btn:hover{background:#35404B!important;border-color:#7E8A97!important}
+.song .vote-btn.ready{background:#171717!important;color:#fff!important;border-color:#171717!important}
+.song .vote-btn.ready:hover{background:#2A2A2A!important;border-color:#DAAA00!important}
+
+.match.matchup-pending .listen-btn,
+.match.matchup-pending .player-slot,
+.match.matchup-pending .listened-pill,
+.match.matchup-pending .vote-btn{display:none!important}
+
+.matchup-pending .song.pending-vote-choice{
+  background:#D6A900!important;
+  border:3px solid #FFE600!important;
+  color:#15120A!important;
+  box-shadow:0 0 0 2px rgba(255,230,0,.18),0 8px 20px rgba(0,0,0,.12)
+}
+.matchup-pending .song.pending-vote-choice .artist,
+.matchup-pending .song.pending-vote-choice .guess-prompt{color:#3A3000!important}
+
+.matchup-pending .song.pending-vote-other{
+  background:#8C2626!important;
+  border:2px solid #D44A4A!important;
+  color:#FFF8F8!important
+}
+.matchup-pending .song.pending-vote-other .artist,
+.matchup-pending .song.pending-vote-other .guess-prompt{color:#FFE7E7!important}
+.matchup-pending .guess-select{background:#fff!important;color:#111!important;border-color:#8E6F3E!important}
+
+.matchup-submit-btn{
+  background:#CDB68A!important;
+  color:#241D12!important;
+  border:1px solid #8E6F3E!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35)
+}
+.matchup-submit-btn:hover:not(:disabled){background:#BFA36F!important;border-color:#6E552C!important}
+.matchup-submit-btn:disabled{background:#E8E0D1!important;color:#94866D!important;border-color:#D3C4A9!important}
+
+.dev-round-reset-bar.v26{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 28px;background:#2A2115;color:#fff;border-bottom:1px solid var(--gold)}
+.dev-round-reset-bar.v26[hidden]{display:none!important}
+.reset-copy{display:grid;gap:2px}.reset-copy strong{color:var(--gold);font-size:9px;letter-spacing:.12em}.reset-copy span{font-size:11px;color:#E6E0D5}
+.reset-controls{display:flex;align-items:end;gap:8px}.reset-controls select,.reset-controls button{min-height:36px;border-radius:7px;font:inherit;font-weight:800}
+.reset-controls select{background:#fff;color:#111;border:1px solid #BBA57B;padding:6px 9px}.reset-controls label{display:grid;gap:2px}.reset-controls label span{font-size:9px;color:#D8C9AE}
+.reset-controls button{padding:7px 12px;border:1px solid var(--gold);background:#000;color:#fff;cursor:pointer}.reset-controls button:disabled{opacity:.6;cursor:wait}
+@media(max-width:850px){.dev-round-reset-bar.v26{align-items:stretch;flex-direction:column;padding:10px 16px}.reset-controls{align-items:stretch;flex-direction:column}.reset-controls button,.reset-controls select{width:100%}}
