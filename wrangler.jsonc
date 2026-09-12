@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "pied-piper-tournament-of-champions-v2-test",
-  "main": "src/worker-v28.js",
+  "main": "src/worker-v29.js",
   "compatibility_date": "2026-08-31",
   "workers_dev": true,
   "preview_urls": true,

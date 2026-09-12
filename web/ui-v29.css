@@ -1,0 +1,13 @@
+/* HMPP v2.9 — stable auth boot, draft persistence, readable submitted guesses */
+html.hmpp-boot-pending body{visibility:hidden!important}
+.matchup-pending .song.pending-vote-choice::after{top:60px!important}
+.submitted-guess{margin-top:10px;padding-top:8px;border-top:1px solid rgba(142,111,62,.18)}
+.submitted-guess-label{color:var(--aged);font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+.submitted-guess-value{margin-top:4px;color:var(--ink);font-weight:800}
+.dev-auth-readiness{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:8px 28px;background:#181818;color:#fff;border-bottom:1px solid rgba(207,185,145,.45);font-size:11px}
+.dev-auth-readiness strong{color:var(--gold);text-transform:uppercase;letter-spacing:.08em;font-size:9px}
+.dev-auth-readiness.ready .auth-state{color:#9BE3AF}.dev-auth-readiness.not-ready .auth-state{color:#FFD18A}
+.dev-round-reset-bar.v29{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 28px;background:#2A2115;color:#fff;border-bottom:1px solid var(--gold)}
+.dev-round-reset-bar.v29[hidden]{display:none!important}
+.dev-round-reset-bar.v29 .reset-copy{display:grid;gap:2px}.dev-round-reset-bar.v29 .reset-copy strong{color:var(--gold);font-size:9px;letter-spacing:.12em}.dev-round-reset-bar.v29 .reset-copy span{font-size:11px;color:#E6E0D5}.dev-round-reset-bar.v29 .reset-controls{display:flex;align-items:end;gap:8px}.dev-round-reset-bar.v29 .reset-controls select,.dev-round-reset-bar.v29 .reset-controls button{min-height:36px;border-radius:7px;font:inherit;font-weight:800}.dev-round-reset-bar.v29 .reset-controls select{background:#fff;color:#111;border:1px solid #BBA57B;padding:6px 9px}.dev-round-reset-bar.v29 .reset-controls label{display:grid;gap:2px}.dev-round-reset-bar.v29 .reset-controls label span{font-size:9px;color:#D8C9AE}.dev-round-reset-bar.v29 .reset-controls button{padding:7px 12px;border:1px solid var(--gold);background:#000;color:#fff;cursor:pointer}.dev-round-reset-bar.v29 .reset-controls button:disabled{opacity:.6;cursor:wait}.dev-round-reset-bar.v29 [hidden]{display:none!important}.reset-status{min-height:14px;font-size:10px;color:#D8C9AE}.reset-status.success{color:#9BE3AF}.reset-status.error{color:#FFAAAA}
+@media(max-width:850px){.dev-auth-readiness{align-items:flex-start;flex-direction:column;padding:8px 16px}.dev-round-reset-bar.v29{align-items:stretch;flex-direction:column;padding:10px 16px}.dev-round-reset-bar.v29 .reset-controls{align-items:stretch;flex-direction:column}.dev-round-reset-bar.v29 .reset-controls button,.dev-round-reset-bar.v29 .reset-controls select{width:100%}}

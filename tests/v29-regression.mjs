@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const ui = fs.readFileSync(new URL('../web/ui-v29.js', import.meta.url), 'utf8');
+const reset = fs.readFileSync(new URL('../web/dev-reset-v29.js', import.meta.url), 'utf8');
+const css = fs.readFileSync(new URL('../web/ui-v29.css', import.meta.url), 'utf8');
+const worker = fs.readFileSync(new URL('../src/worker-v29.js', import.meta.url), 'utf8');
+for (const token of ['draftKey','restoreDrafts','saveDraftFromMatch','renderSubmittedGuesses','submitted-guess-value','pointerdown','auxclick']) assert.ok(ui.includes(token), `missing ${token}`);
+assert.ok(!ui.includes('location.reload(), 0'), 'logout should not force an immediate reload');
+assert.match(reset,/setInterval\(\(\) =>/);
+assert.match(reset,/installedFor/);
+assert.match(reset,/devAuthReadiness/);
+assert.match(reset,/scope === 'user'/);
+assert.match(css,/hmpp-boot-pending/);
+assert.match(css,/pending-vote-choice::after\{top:60px/);
+assert.match(worker,/hmpp-boot-pending/);
+assert.match(worker,/x-hmpp-build', 'v2\.9/);
+console.log('v2.9 regression: PASS');
