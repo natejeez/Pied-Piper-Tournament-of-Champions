@@ -11,6 +11,7 @@
 
   function selectedRound(){return $('.header-round.active')?.dataset.round||'play-in'}
   function roundLabel(round){return round==='round-of-64'?'Round of 64':'Play-In'}
+  function setText(el,value){if(el&&el.textContent!==value)el.textContent=value}
 
   function installStyles(){
     if($('#v231ResetStyles'))return;
@@ -39,14 +40,14 @@
   function updateResetPanel(){
     const panel=$('#devResetPanel');if(!panel)return;
     const round=selectedRound(),label=roundLabel(round);
-    $('#devResetText',panel).textContent=`Clear only Test Voter's saved vote + Daddy guesses for ${label}. Official participant data is untouched.`;
-    $('#devResetBtn',panel).textContent=`Reset Test Voting · ${label}`;
+    setText($('#devResetText',panel),`Clear only Test Voter's saved vote + Daddy guesses for ${label}. Official participant data is untouched.`);
+    const b=$('#devResetBtn',panel);if(b&&!b.disabled)setText(b,`Reset Test Voting · ${label}`);
   }
 
   async function resetRound(){
     const round=selectedRound(),label=roundLabel(round);
     if(!confirm(`Reset Test Voter voting for ${label}?\n\nThis deletes Test Voter's saved song votes and submitter guesses for this round. Official participant votes are not affected.`))return;
-    const b=$('#devResetBtn');b.disabled=true;b.textContent='Resetting…';
+    const b=$('#devResetBtn');b.disabled=true;setText(b,'Resetting…');
     try{
       await api('/api/admin/reset-test-round',{method:'POST',body:JSON.stringify({round})});
       try{localStorage.removeItem('hmpp-listened-test-voter')}catch{}
@@ -60,7 +61,7 @@
     if(!note){note=document.createElement('div');note.className='dev-admin-note';$('.dev-admin-actions',panel)?.appendChild(note)}
     const status=$('#devAdminStatus')?.textContent||'';
     const incomplete=/Official Play-In voting:\s*\d+\s*\/\s*72 votes/i.test(status);
-    note.textContent=incomplete?'These publication controls unlock only after all 72 official Play-In votes are complete. Test Voter does not count toward 72.':'';
+    setText(note,incomplete?'These publication controls unlock only after all 72 official Play-In votes are complete. Test Voter does not count toward 72.':'');
     $$('button[data-admin-action]',panel).forEach(btn=>{if(btn.disabled&&incomplete)btn.title='Locked until all 72 official Play-In votes are complete.';else btn.removeAttribute('title')});
   }
 
@@ -68,7 +69,7 @@
 
   function init(){
     installStyles();sync();
-    const observer=new MutationObserver(()=>queueMicrotask(sync));observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+    const observer=new MutationObserver(()=>setTimeout(sync,0));observer.observe(document.body,{subtree:true,childList:true});
     $$('.header-round').forEach(b=>b.addEventListener('click',()=>setTimeout(sync,0)));
     setInterval(sync,1000);
   }
