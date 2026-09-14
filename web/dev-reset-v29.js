@@ -139,10 +139,23 @@
   });
 
   function boot() {
-    void ensureInstalled();
     const account = $('#accountBtn');
-    if (account) new MutationObserver(() => setTimeout(() => void ensureInstalled(), 50)).observe(account, { childList:true, subtree:true, characterData:true });
-    setInterval(() => { if (!$('#devRoundResetBar') || installedFor !== 'test-voter') void ensureInstalled(); }, 1500);
+    if (!account) return;
+    let pendingCheck = null;
+    const syncFromAccount = () => {
+      if (pendingCheck) clearTimeout(pendingCheck);
+      pendingCheck = setTimeout(() => {
+        pendingCheck = null;
+        if (account.textContent.trim() === 'Log in') {
+          session = null;
+          removeControls();
+          return;
+        }
+        void ensureInstalled();
+      }, 50);
+    };
+    new MutationObserver(syncFromAccount).observe(account, { childList:true, subtree:true, characterData:true });
+    if (account.textContent.trim() !== 'Log in') syncFromAccount();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
