@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const worker = fs.readFileSync(new URL('../src/worker-v210.js', import.meta.url), 'utf8');
+const wrangler = JSON.parse(fs.readFileSync(new URL('../wrangler.jsonc', import.meta.url), 'utf8'));
+for (const marker of ['query-helpers','select','submit','collapse','observer']) assert.ok(worker.includes(marker), `missing patch marker ${marker}`);
+assert.match(worker,/root\?\.querySelectorAll\?\[\.\.\.root\.querySelectorAll\(s\)\]:\[\]/);
+assert.ok(!worker.includes("observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true"));
+assert.match(worker,/new MutationObserver\(syncAccount\)\.observe\(account/);
+assert.match(worker,/let saved=false/);
+assert.match(worker,/post-submit UI refresh failed/);
+assert.match(worker,/Array\.isArray\(data\.guesses\)\?data\.guesses:Object\.values/);
+assert.match(worker,/Missing patches/);
+assert.equal(wrangler.name,'pied-piper-tournament-of-champions-v2-test');
+assert.equal(wrangler.main,'src/worker-v210.js');
+assert.equal(wrangler.vars.GITHUB_BRANCH,'feature/v2-auth-voting');
+console.log('v2.10 staging regression: PASS');
