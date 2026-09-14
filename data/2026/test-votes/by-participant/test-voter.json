@@ -6,7 +6,47 @@
   "excluded_from_official_totals": true,
   "guess_pool": "test",
   "excluded_from_official_guess_stats": true,
-  "updated_at": "2026-09-14T06:13:17.897Z",
-  "votes": {},
-  "guesses": {}
+  "updated_at": "2026-09-14T06:35:04.110Z",
+  "votes": {
+    "PI03": {
+      "vote_submission_id": "TESTVOTE-66bd1ec2-b1d1-43a4-87ff-f00dccf1e026",
+      "matchup_submission_id": "TESTMATCHUP-c474aea1-fb0e-4373-a3e5-1ef38e70e957",
+      "match_id": "PI03",
+      "round": "play-in",
+      "song_id": "SONG26-052",
+      "submitted_at": "2026-09-14T06:32:13.575Z",
+      "vote_pool": "test",
+      "excluded_from_official_totals": true
+    }
+  },
+  "guesses": {
+    "SONG26-052": {
+      "guess_submission_id": "TESTGUESS-e7338c64-82b9-4768-95af-58042e4ccc43",
+      "guess_batch_id": "TESTMATCHUP-c474aea1-fb0e-4373-a3e5-1ef38e70e957",
+      "matchup_submission_id": "TESTMATCHUP-c474aea1-fb0e-4373-a3e5-1ef38e70e957",
+      "match_id": "PI03",
+      "round": "play-in",
+      "song_id": "SONG26-052",
+      "guessed_participant_id": "chuck",
+      "match_vote_song_id_at_submission": "SONG26-052",
+      "match_vote_submission_id": "TESTVOTE-66bd1ec2-b1d1-43a4-87ff-f00dccf1e026",
+      "submitted_at": "2026-09-14T06:32:13.575Z",
+      "guess_pool": "test",
+      "excluded_from_official_guess_stats": true
+    },
+    "SONG26-031": {
+      "guess_submission_id": "TESTGUESS-cc0018e3-8616-4124-ac62-83cd0d05ddd2",
+      "guess_batch_id": "TESTMATCHUP-c474aea1-fb0e-4373-a3e5-1ef38e70e957",
+      "matchup_submission_id": "TESTMATCHUP-c474aea1-fb0e-4373-a3e5-1ef38e70e957",
+      "match_id": "PI03",
+      "round": "play-in",
+      "song_id": "SONG26-031",
+      "guessed_participant_id": "egg",
+      "match_vote_song_id_at_submission": "SONG26-052",
+      "match_vote_submission_id": "TESTVOTE-66bd1ec2-b1d1-43a4-87ff-f00dccf1e026",
+      "submitted_at": "2026-09-14T06:32:13.575Z",
+      "guess_pool": "test",
+      "excluded_from_official_guess_stats": true
+    }
+  }
 }
