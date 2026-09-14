@@ -1,50 +1,48 @@
-# HMPP 2026 v2 — Voting Architecture
+# HMPP 2026 v2.9 — Architecture
 
 ## Request path
 
 ```text
 browser
-  -> Cloudflare Worker session/API
-      -> participant authentication (email hash secret)
+  -> Cloudflare Worker
+      -> session layer
       -> ParticipantVoteStore Durable Object
-          -> immediate authoritative vote persistence
-          -> five-minute debounce alarm
-              -> GitHub vote snapshot
+          -> authoritative participant vote/guess state
+          -> debounced GitHub snapshot
+      -> tournament admin Durable Object
+          -> publication state and events
 ```
 
-Logout calls `flush` synchronously before the session cookie is cleared.
+The Durable Object is authoritative at request time. GitHub is the audit/export mirror.
 
-## Vote identity
+## Listening gate
+Both songs in a matchup must satisfy listening before song-selection buttons unlock. Supported completion paths are Spotify external launch, YouTube external launch, and embedded YouTube PLAYING state. Browser listening state is participant-scoped convenience state, not tournament authority.
 
-Each persisted vote carries:
+## Atomic matchup submission
+The durable write occurs only when the participant submits the complete matchup. The request contains match ID, round, selected song ID, and exactly two submitter guesses.
 
-```json
-{
-  "match_id": "PI01",
-  "round": "play-in",
-  "song_id": "SONG26-019",
-  "submitted_at": "ISO-8601 timestamp"
-}
-```
+The Worker validates the matchup and creates one vote plus two guess records linked by a shared `matchup_submission_id`. Repeated identical submission is idempotent; a submitted matchup cannot be changed without an authorized reset.
 
-The participant is represented by the enclosing participant vote-store/file. This supports participant-level statistics later without placing participant ownership on public song cards.
-
-## Server validation
-
-The Worker contains the locked match/song map for the rounds currently present. It rejects:
-
-- unknown match IDs;
-- a round that does not match the match record;
-- a song that is not one of the two active songs in the match;
-- voting in a matchup that still contains a play-in placeholder;
-- changing an already-submitted vote.
-
-Repeated submission of the same vote is idempotent.
+## Draft state
+Before final submission, selected song and dropdown guesses are saved in participant-scoped browser storage. Drafts can restore after refresh/login and are discarded from authoritative logic once a server-side submission exists. A draft is never counted as a vote.
 
 ## Git mirror
+Official participant snapshots:
+`data/2026/votes/by-participant/<participant-id>.json`
 
-Git is an audit/export mirror, not the request-time database. The Durable Object remains authoritative between Git mirror writes. This is necessary to satisfy both immediate vote durability and the requested five-minute Git debounce.
+Test Voter snapshot:
+`data/2026/test-votes/by-participant/test-voter.json`
 
-## Test-vote isolation
+Logout forces a Git mirror before the session is closed. If that sync fails, logout is aborted.
 
-`test-voter` is a non-official identity used for acceptance testing. The authenticated session carries `is_test`, its Durable Object stores that flag, and Git mirrors are routed to `data/2026/test-votes/` instead of the official vote folder. Test records are explicitly tagged `excluded_from_official_totals: true`.
+## Reset semantics
+Test Voter has admin-only reset scopes: Test Only, selected User, and All Users. Reset removes the selected round's current vote and guess records from targeted Durable Object(s). It does not create replacement records. If a participant votes again, new submission IDs are generated. Git snapshots are rewritten only for changed accounts; Git history remains the audit trail.
+
+Browser-local listening for a remote participant cannot be erased by the server.
+
+## Publication architecture
+Tournament publication state is separate from participant vote stores. Test Voter can preview aggregate results and next-round matchups only when official completeness rules are satisfied.
+
+Play-In completeness requires 72 official votes. Test Voter is excluded. Ties block advancement. The eight Play-In winners are inserted into locked Round-of-64 target slots. Round of 64 remains hidden from normal participants until explicitly published.
+
+Later-round publication must not be generalized until authoritative Round-of-32 and later slot mappings are present in tournament data.

@@ -1,92 +1,64 @@
-# HMPP 2026 v2 — Deployment Notes
+# HMPP 2026 v2.9 — Deployment Notes
 
-## What changed
+## Environments
 
-This version keeps the existing Spotify/YouTube media mapping and adds authenticated, participant-linked voting.
+### Production
+- Branch: `main`
+- Worker: `pied-piper-tournament-of-champions`
+- Git mirror branch: `main`
+- Entrypoint: `src/worker-v29.js`
 
-- Spotify counts as listened only when the voter clicks **Open in Spotify**.
-- YouTube counts as listened when the embedded player reports a `PLAYING` state.
-- Both songs in a matchup must satisfy the listening gate before either vote button activates.
-- A vote requires explicit Submit confirmation.
-- Confirmed votes are immutable per participant/matchup and are stored immediately in a Cloudflare Durable Object.
-- The Durable Object resets a five-minute alarm after each vote. When the alarm fires, that participant's vote snapshot is mirrored to GitHub.
-- Logging out forces an immediate GitHub mirror before the session is closed.
-- The browser keeps only listening-completion UI state; it is not the authoritative vote store.
+### Staging
+- Branch: `feature/v2-auth-voting`
+- Worker: `pied-piper-tournament-of-champions-v2-test`
+- Git mirror branch: `feature/v2-auth-voting`
 
-## Repository files
-
-```text
-src/worker.js
-wrangler.jsonc
-web/index.html
-web/versions/hmpp_v2.index.html
-web/data/2026/media.json
-web/data/2026/matches.json
-web/data/2026/participants/public.json
-```
-
-Vote snapshots are created at runtime under:
-
-```text
-data/2026/votes/by-participant/<participant_id>.json
-```
-
-No email addresses are written to those vote files.
+Keep production and staging Durable Object state separate.
 
 ## Required Cloudflare secrets
+The Worker requires three runtime secrets:
+- `SESSION_SECRET`
+- `PARTICIPANT_AUTH_JSON`
+- `GITHUB_TOKEN`
 
-Set these with Wrangler. Do not commit their values to Git.
+Do not commit their values to Git.
 
-```bash
-npx wrangler secret put SESSION_SECRET
-npx wrangler secret put PARTICIPANT_AUTH_JSON
-npx wrangler secret put GITHUB_TOKEN
-```
+`SESSION_SECRET` should be a strong random value used to sign sessions.
 
-`SESSION_SECRET` should be a long random value.
+`PARTICIPANT_AUTH_JSON` must contain one verifier entry for all 9 official participants plus Test Voter. The public participant directory remains `web/data/2026/participants/public.json` and contains names/IDs only.
 
-`PARTICIPANT_AUTH_JSON` contains only SHA-256 hashes of normalized participant emails. A ready-to-paste secret file was generated separately from the GitHub-ready package as `HMPP_PARTICIPANT_AUTH_SECRET.json`; do **not** add that file to the repository.
+`GITHUB_TOKEN` should be a fine-grained GitHub token scoped only to `natejeez/Pied-Piper-Tournament-of-Champions` with repository Contents read/write permission. Metadata read access is implicit.
 
-`GITHUB_TOKEN` needs permission to read/write repository contents for the HMPP repository. Prefer a fine-grained token scoped only to this repository.
+## Runtime persistence
+Submitted matchup data is written immediately to a participant Durable Object. One atomic matchup submission contains:
+- one song vote;
+- two submitter guesses;
+- a shared `matchup_submission_id`.
 
-## Public participant list
+GitHub is an audit/export mirror, not the request-time authority. The Worker debounces routine Git mirrors and logout forces an immediate flush. Logout is refused if the forced mirror fails.
 
-The first-login dropdown is sourced from the Git-tracked file:
+Official snapshots:
+`data/2026/votes/by-participant/<participant-id>.json`
 
-```text
-web/data/2026/participants/public.json
-```
+Test Voter snapshot:
+`data/2026/test-votes/by-participant/test-voter.json`
 
-This file contains display names and stable participant IDs only. It intentionally contains no emails and no participant-to-song ownership.
+Admin publication state is mirrored separately.
 
-## Important authentication note
+## Listening and draft state
+Listening completion and unsubmitted matchup drafts are browser-local and participant-scoped. They are convenience state only. Submitted votes/guesses always come from the server-side participant store.
 
-Using a participant's email address as a password is convenient but is not strong authentication. This implementation honors the requested flow while keeping the email verifier server-side as a one-way hash. For a future tournament, replace this with a one-time code or magic-link login.
+A reset of another participant cannot remotely erase that participant's browser-local listening cache. It does remove the selected round's server-side vote/guess records.
 
-## Deploy
+## Deployment procedure
+1. Make and validate changes on staging first.
+2. Verify participant login, listening, atomic submit, refresh restore, logout/login, Test Voter isolation, reset behavior, and publication gating.
+3. Prepare one consolidated release commit where practical.
+4. For production, ensure `wrangler.jsonc` targets the production Worker and `GITHUB_BRANCH` is `main`.
+5. Confirm all three production secrets are set.
+6. Merge/promote to `main`.
+7. Wait for the Cloudflare Worker build to report success.
+8. Run a production smoke test with Test Voter and one official participant.
 
-1. Archive the current production `web/index.html` if it is not already archived.
-2. Copy this package into the repository root.
-3. Set the three required secrets.
-4. Commit on the feature branch.
-5. Run or allow the Cloudflare Git build.
-6. Test login, listening gates, vote cancellation, vote submission, refresh, five-minute mirror, logout flush, and cross-device restore.
-7. Promote only after the smoke test passes.
-
-Suggested commit:
-
-```text
-Deploy HMPP v2 authenticated listening-gated voting
-```
-
-## Built-in test account
-
-Public participant list includes `Test Voter` (`test-voter`). Its login email is `hmpp-test@example.com`; the private auth secret contains SHA-256 `cbdb1ce947fbdf44bbf67e349af5344aad0941346c999e88b3ba41c004721784`.
-
-Test votes are hard-separated from official vote mirrors:
-
-```text
-data/2026/test-votes/by-participant/test-voter.json
-```
-
-Each test vote receives a `TESTVOTE-...` `vote_submission_id`, `vote_pool: "test"`, and `excluded_from_official_totals: true`. The official mirror path is never used by the test account.
+## Current publication gate
+Result and Round-of-64 publication controls must remain unavailable until 72 official Play-In votes are present. Test Voter is excluded. Advancement must remain blocked when any Play-In is tied.

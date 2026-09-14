@@ -1,22 +1,39 @@
 # HMPP 2026 — Production Release v2.9
 
-## Release decision
-Promote the authenticated voting build to `main` and the production Cloudflare Worker after staging acceptance of participant voting, submitter guessing, resets, login readiness, listening behavior, and publication gating.
+## Release status
+v2.9 is deployed to production from `main` on Cloudflare Worker `pied-piper-tournament-of-champions`.
 
-Full publication actions remain intentionally gated until all 9 official participants complete all 8 Play-In matchups (72 official Play-In votes). The controls have been verified to remain unavailable before completion.
+Production promotion followed staging acceptance of participant login, listening, editable song selection, submitter guessing, atomic matchup submission, submitted-state restoration, Test Voter isolation, scoped resets, and publication gating.
 
-## Final production fixes
-- Pending matchup drafts now restore on the first refresh. A saved draft itself is proof that both listening requirements had previously been satisfied, so draft hydration re-establishes those two listening states before restoring the selected song and participant guesses.
-- Production `wrangler.jsonc` targets `pied-piper-tournament-of-champions` and mirrors Git state to `main`.
-- Staging-only official/test vote snapshots used during QA are cleared from the production release snapshot.
+## Final release behavior
+- External Spotify and YouTube launches satisfy listening; embedded YouTube PLAYING also satisfies listening.
+- Both songs must satisfy listening before voting unlocks.
+- Selected song and both submitter guesses are submitted together as one atomic matchup transaction.
+- Submitted vote and guesses restore after refresh/login.
+- Unsubmitted matchup drafts restore per participant/browser and remain non-authoritative.
+- Test Voter receives QA/admin controls and is excluded from official totals.
+- Reset scopes are Test Only, selected User, and All Users.
+- Publication controls remain disabled until all nine official participants complete all eight Play-In matchups.
 
-## Accepted deferred item
-A brief initial-layout flash is substantially reduced but still observable in some refresh/logout paths. It is accepted for this release because it does not expose another participant's authenticated state or alter voting data.
+## Publication gate
+72 official Play-In votes are required before results or Round-of-64 advancement can be previewed/published. Test Voter is excluded. Ties must block advancement.
 
-## Production runtime requirements
-The production Worker requires these Cloudflare secrets:
-- `SESSION_SECRET`
-- `PARTICIPANT_AUTH_JSON`
-- `GITHUB_TOKEN`
+Once complete, validate:
+1. private result preview;
+2. public result reveal;
+3. private Round-of-64 preview with locked winner-slot placement;
+4. public Round-of-64 publication.
 
-The auth JSON must cover all 10 selectable identities (9 official participants plus Test Voter).
+## Production configuration
+- Git branch/mirror: `main`
+- Worker: `pied-piper-tournament-of-champions`
+- Worker entrypoint: `src/worker-v29.js`
+- required runtime secrets: `SESSION_SECRET`, `PARTICIPANT_AUTH_JSON`, `GITHUB_TOKEN`
+
+The GitHub token should be repository-scoped and have Contents read/write permission. Runtime secret values are not committed.
+
+## Accepted deferred polish
+A brief initial-layout flash is still observable in some refresh/logout paths. It is accepted because it does not alter voting data or expose another participant's authenticated state.
+
+## Next milestone
+Wait for 72/72 official Play-In submissions and complete the deferred publication acceptance test before generalizing advancement to later rounds.

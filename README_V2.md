@@ -1,31 +1,39 @@
-# HMPP 2026 — GitHub-ready v2
+# HMPP 2026 — Production v2.9
 
-This package upgrades the hosted HMPP bracket from listening-only media cards to authenticated, listening-gated voting while preserving the existing 72-song Spotify/YouTube media mapping.
+Harry Men Pied Piper Tournament of Champions is live on the authenticated v2.9 voting stack.
 
-## Key files
+## Current production
+- Git branch: `main`
+- Cloudflare Worker: `pied-piper-tournament-of-champions`
+- Runtime: Cloudflare Worker + Durable Objects + static assets
+- Git mirror: `main`
+- Tournament: 9 official participants, 72 songs, 8 Play-In matchups, 64-song main bracket
+- Test identity is excluded from official totals.
 
-- `web/index.html` — live Cloudflare asset
-- `web/versions/hmpp_v2.index.html` — archive copy of the same approved frontend
-- `src/worker.js` — login/session/vote API and Git mirror logic
-- `wrangler.jsonc` — Cloudflare Worker + static assets + Durable Object configuration
-- `web/data/2026/participants/public.json` — Git-tracked participant dropdown names only
-- `web/data/2026/media.json` — public media manifest
-- `web/data/2026/matches.json` — public locked match map
-- `docs/V2_DEPLOYMENT_NOTES.md` — required secrets and release procedure
-- `docs/V2_ARCHITECTURE.md` — persistence/auth design
-- `docs/V2_UI_UX_REVIEW.md` — five UI/UX improvements implemented
-- `docs/V2_PORTABILITY_TEST_REPORT.md` — automated test results and hosted smoke test
+## Participant workflow
+1. Log in.
+2. Listen to both songs in a matchup.
+3. Select a song; the choice can be changed until final submission.
+4. Guess which Harry Man submitted each song.
+5. Submit one song vote and two submitter guesses atomically.
+6. Submitted state is durable and restored from the participant Durable Object. GitHub is the audit/export mirror.
 
-## Security boundary
+Unsubmitted drafts are browser-local per participant and restore after refresh/login. They are never authoritative tournament records.
 
-Participant emails are **not** present in any public HTML or JSON. Login compares a SHA-256 email verifier stored in a Cloudflare secret. The separate `HMPP_PARTICIPANT_AUTH_SECRET.json` supplied with this delivery is intentionally outside the GitHub-ready folder and must not be committed.
+## Administration
+The test administrator identity receives QA and publication controls. Publication controls remain gated until all 9 official participants complete all 8 Play-In matchups: 72 official Play-In votes.
 
-## Vote durability
+## Canonical documentation
+- `docs/CURRENT_PROJECT_CONTEXT.md`
+- `docs/V2_ARCHITECTURE.md`
+- `docs/V2_DEPLOYMENT_NOTES.md`
+- `docs/NEXT_BUILD_PLAN.md`
+- `docs/frontend-feature-roadmap.md`
+- `docs/ANALYTICS_ROADMAP.md`
+- `docs/PRODUCTION_RELEASE_V2_9.md`
+- `docs/SOURCE_INDEX.md`
 
-A confirmed vote is written immediately to a per-participant Durable Object. The Durable Object resets a five-minute alarm and mirrors its vote snapshot to GitHub when that debounce period expires. Logout forces the mirror immediately and refuses to finish if the mirror fails.
+Version-specific documents under `docs/` are retained as historical implementation records and are not the current source of truth unless explicitly referenced.
 
-See `docs/V2_DEPLOYMENT_NOTES.md` before deploying.
-
-## Acceptance-test identity
-
-A `Test Voter` account is included for feature validation. It is visibly labeled TEST in the login/UI and its votes are isolated from official totals and Git vote files. See `docs/V2_LAUNCH_PLAN.md`.
+## Current release gate
+The participant-facing voting workflow is production-ready. The next live validation occurs only after all 72 official Play-In votes exist: verify result preview, result publication, automatic Play-In winner placement into Round of 64, and Round-of-64 publication.

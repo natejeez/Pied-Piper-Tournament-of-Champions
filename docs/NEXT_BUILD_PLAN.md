@@ -1,28 +1,32 @@
-# HMPP 2026 — CURRENT STAGING / NEXT STEP PLAN
+# HMPP 2026 — Next Build / Operations Plan
 
-**Current candidate:** v2.3 on `feature/v2-auth-voting`.
+## Current state
+Production v2.9 is live from `main` on the production Cloudflare Worker. Participant-facing voting and guessing are accepted. Publication controls are correctly disabled before official Play-In completion.
 
-## v2.3 under test
-- atomic matchup submission: one song vote + two submitter guesses submitted together;
-- no round-level Submit your Guesses workflow;
-- Test Voter developer mode with song IDs;
-- one-time Test Voter Round-1 (Round-of-64) reset;
-- official result aggregation excluding Test Voter;
-- Play-In result preview/publication;
-- Round-of-64 matchup preview/publication using the locked Play-In winner slot mapping;
-- publication state mirrored to `data/2026/admin/publication-state.json`.
+## Current live gate
+Do not publish Play-In results or Round of 64 until all 9 official participants have submitted all 8 Play-In matchups: 72 official Play-In votes.
 
-## Current admin controls
-On the Round-of-64 page, Test Voter receives four controls once Play-In results are complete:
-1. View results for previous round
-2. Show results for previous round
-3. View new matchups
-4. Publish New Matchups
+When 72/72 is reached, perform the deferred publication acceptance test:
+1. verify official completeness excludes Test Voter;
+2. preview all eight Play-In results privately;
+3. verify ties block advancement;
+4. if no ties, preview Round-of-64 matchups with each Play-In winner in the locked target slot;
+5. verify normal participants cannot see unpublished next-round matchups;
+6. publish previous-round results;
+7. publish Round of 64;
+8. confirm normal participants can see the new round after publication;
+9. confirm Play-In reset controls are hidden after publication.
 
-The controls remain disabled until all nine official participants have voted every Play-In matchup. New matchup preview/publication also requires no unresolved ties.
+## Next engineering work after publication validation
+- add authoritative Round-of-32 and later advancement mappings;
+- generalize the existing publication engine to those rounds;
+- implement analytics from `docs/ANALYTICS_ROADMAP.md`;
+- consider replacing email-verifier login with a stronger one-time-code or magic-link model in a future tournament;
+- optionally remove the remaining brief first-paint layout flash.
 
-## Important source boundary
-The repository currently provides authoritative slot wiring through Round of 64 only. Do not invent Round-of-32 or later advancement mappings. Extend publication controls to later rounds only after those mappings are added to the tournament data.
-
-## Production gate
-Do not deploy to production until v2.3 hosted acceptance passes. The test branch still targets the test Worker and feature Git branch.
+## Safety constraints
+- Do not expose participant ownership in public song cards.
+- Do not count Test Voter in official vote totals or guess analytics.
+- Do not invent later-round bracket wiring.
+- Keep Durable Objects authoritative and GitHub as audit/export mirror.
+- Preserve atomic matchup semantics: one song vote + two guesses.
