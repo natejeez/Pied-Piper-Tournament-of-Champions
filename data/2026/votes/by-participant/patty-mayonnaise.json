@@ -6,7 +6,7 @@
   "excluded_from_official_totals": false,
   "guess_pool": "official",
   "excluded_from_official_guess_stats": false,
-  "updated_at": "2026-09-14T21:11:36.661Z",
+  "updated_at": "2026-09-14T23:22:22.810Z",
   "votes": {
     "PI01": {
       "vote_submission_id": "VOTE-533c2288-171d-435b-a1ef-bc9189321e11",
@@ -25,6 +25,26 @@
       "round": "play-in",
       "song_id": "SONG26-001",
       "submitted_at": "2026-09-14T21:06:36.605Z",
+      "vote_pool": "official",
+      "excluded_from_official_totals": false
+    },
+    "PI06": {
+      "vote_submission_id": "VOTE-77f3752a-75e8-4660-8ecd-624580360c65",
+      "matchup_submission_id": "MATCHUP-6bf3b395-9a52-4ee7-9b53-1e685915f77c",
+      "match_id": "PI06",
+      "round": "play-in",
+      "song_id": "SONG26-028",
+      "submitted_at": "2026-09-14T23:16:46.111Z",
+      "vote_pool": "official",
+      "excluded_from_official_totals": false
+    },
+    "PI08": {
+      "vote_submission_id": "VOTE-2966f94b-761c-45b7-87a6-1c8543e46194",
+      "matchup_submission_id": "MATCHUP-abd53773-7ef2-4b7f-895a-0c7157817504",
+      "match_id": "PI08",
+      "round": "play-in",
+      "song_id": "SONG26-066",
+      "submitted_at": "2026-09-14T23:17:22.758Z",
       "vote_pool": "official",
       "excluded_from_official_totals": false
     }
@@ -83,6 +103,62 @@
       "match_vote_song_id_at_submission": "SONG26-001",
       "match_vote_submission_id": "VOTE-45edc1a1-b6f9-4b4e-85ef-ffcfa3789656",
       "submitted_at": "2026-09-14T21:06:36.605Z",
+      "guess_pool": "official",
+      "excluded_from_official_guess_stats": false
+    },
+    "SONG26-028": {
+      "guess_submission_id": "GUESS-5e4a21cb-7cca-43a0-ae97-ae854240afd6",
+      "guess_batch_id": "MATCHUP-6bf3b395-9a52-4ee7-9b53-1e685915f77c",
+      "matchup_submission_id": "MATCHUP-6bf3b395-9a52-4ee7-9b53-1e685915f77c",
+      "match_id": "PI06",
+      "round": "play-in",
+      "song_id": "SONG26-028",
+      "guessed_participant_id": "nate-gees",
+      "match_vote_song_id_at_submission": "SONG26-028",
+      "match_vote_submission_id": "VOTE-77f3752a-75e8-4660-8ecd-624580360c65",
+      "submitted_at": "2026-09-14T23:16:46.111Z",
+      "guess_pool": "official",
+      "excluded_from_official_guess_stats": false
+    },
+    "SONG26-062": {
+      "guess_submission_id": "GUESS-a1b46a01-654a-4618-ad1f-fbcec148a52d",
+      "guess_batch_id": "MATCHUP-6bf3b395-9a52-4ee7-9b53-1e685915f77c",
+      "matchup_submission_id": "MATCHUP-6bf3b395-9a52-4ee7-9b53-1e685915f77c",
+      "match_id": "PI06",
+      "round": "play-in",
+      "song_id": "SONG26-062",
+      "guessed_participant_id": "jj",
+      "match_vote_song_id_at_submission": "SONG26-028",
+      "match_vote_submission_id": "VOTE-77f3752a-75e8-4660-8ecd-624580360c65",
+      "submitted_at": "2026-09-14T23:16:46.111Z",
+      "guess_pool": "official",
+      "excluded_from_official_guess_stats": false
+    },
+    "SONG26-066": {
+      "guess_submission_id": "GUESS-3f1f881a-72b8-4628-8922-038950e49a4a",
+      "guess_batch_id": "MATCHUP-abd53773-7ef2-4b7f-895a-0c7157817504",
+      "matchup_submission_id": "MATCHUP-abd53773-7ef2-4b7f-895a-0c7157817504",
+      "match_id": "PI08",
+      "round": "play-in",
+      "song_id": "SONG26-066",
+      "guessed_participant_id": "patty-mayonnaise",
+      "match_vote_song_id_at_submission": "SONG26-066",
+      "match_vote_submission_id": "VOTE-2966f94b-761c-45b7-87a6-1c8543e46194",
+      "submitted_at": "2026-09-14T23:17:22.758Z",
+      "guess_pool": "official",
+      "excluded_from_official_guess_stats": false
+    },
+    "SONG26-003": {
+      "guess_submission_id": "GUESS-f91ea47c-e93d-49c4-91b1-a4260d3d244e",
+      "guess_batch_id": "MATCHUP-abd53773-7ef2-4b7f-895a-0c7157817504",
+      "matchup_submission_id": "MATCHUP-abd53773-7ef2-4b7f-895a-0c7157817504",
+      "match_id": "PI08",
+      "round": "play-in",
+      "song_id": "SONG26-003",
+      "guessed_participant_id": "egg",
+      "match_vote_song_id_at_submission": "SONG26-066",
+      "match_vote_submission_id": "VOTE-2966f94b-761c-45b7-87a6-1c8543e46194",
+      "submitted_at": "2026-09-14T23:17:22.758Z",
       "guess_pool": "official",
       "excluded_from_official_guess_stats": false
     }
