@@ -72,4 +72,4 @@ No calculation assumes eight matches, nine voters, or a Play-in round. A future 
 
 ## Preview
 
-Open `web/stats-prototype.html?round=play-in`. The page loads `web/data/2026/stats/play-in-sample.json` by default.
+Open `web/stats-prototype.html?round=play-in`. The page loads `web/data/2026/stats/play-in-sample.json` when hosted and automatically uses the identical embedded fixture when opened directly or when the JSON request is unavailable.
