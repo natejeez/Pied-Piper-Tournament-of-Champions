@@ -6,7 +6,7 @@
   "excluded_from_official_totals": false,
   "guess_pool": "official",
   "excluded_from_official_guess_stats": false,
-  "updated_at": "2026-09-16T06:04:23.890Z",
+  "updated_at": "2026-09-16T06:14:55.903Z",
   "votes": {
     "PI01": {
       "vote_submission_id": "VOTE-0c3a4e30-8e79-48ae-a9e9-bd23d5991f69",
@@ -45,6 +45,16 @@
       "round": "play-in",
       "song_id": "SONG26-051",
       "submitted_at": "2026-09-16T05:59:23.862Z",
+      "vote_pool": "official",
+      "excluded_from_official_totals": false
+    },
+    "PI05": {
+      "vote_submission_id": "VOTE-cd6afdfb-1312-4dd6-8c0a-a629946cdfac",
+      "matchup_submission_id": "MATCHUP-df769c65-fdef-4129-8b54-b1d4ae91d427",
+      "match_id": "PI05",
+      "round": "play-in",
+      "song_id": "SONG26-034",
+      "submitted_at": "2026-09-16T06:09:55.873Z",
       "vote_pool": "official",
       "excluded_from_official_totals": false
     }
@@ -159,6 +169,34 @@
       "match_vote_song_id_at_submission": "SONG26-051",
       "match_vote_submission_id": "VOTE-692eb01e-b47b-4eb1-9b35-487dd0b6cb69",
       "submitted_at": "2026-09-16T05:59:23.862Z",
+      "guess_pool": "official",
+      "excluded_from_official_guess_stats": false
+    },
+    "SONG26-069": {
+      "guess_submission_id": "GUESS-4d98453e-8fc3-4094-9d7c-6bff6ea6cd16",
+      "guess_batch_id": "MATCHUP-df769c65-fdef-4129-8b54-b1d4ae91d427",
+      "matchup_submission_id": "MATCHUP-df769c65-fdef-4129-8b54-b1d4ae91d427",
+      "match_id": "PI05",
+      "round": "play-in",
+      "song_id": "SONG26-069",
+      "guessed_participant_id": "chuck",
+      "match_vote_song_id_at_submission": "SONG26-034",
+      "match_vote_submission_id": "VOTE-cd6afdfb-1312-4dd6-8c0a-a629946cdfac",
+      "submitted_at": "2026-09-16T06:09:55.873Z",
+      "guess_pool": "official",
+      "excluded_from_official_guess_stats": false
+    },
+    "SONG26-034": {
+      "guess_submission_id": "GUESS-2e2658c1-b6cb-4080-a05f-5ab3db8e2b0b",
+      "guess_batch_id": "MATCHUP-df769c65-fdef-4129-8b54-b1d4ae91d427",
+      "matchup_submission_id": "MATCHUP-df769c65-fdef-4129-8b54-b1d4ae91d427",
+      "match_id": "PI05",
+      "round": "play-in",
+      "song_id": "SONG26-034",
+      "guessed_participant_id": "doc",
+      "match_vote_song_id_at_submission": "SONG26-034",
+      "match_vote_submission_id": "VOTE-cd6afdfb-1312-4dd6-8c0a-a629946cdfac",
+      "submitted_at": "2026-09-16T06:09:55.873Z",
       "guess_pool": "official",
       "excluded_from_official_guess_stats": false
     }
