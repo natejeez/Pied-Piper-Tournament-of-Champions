@@ -1,0 +1,1299 @@
+{
+  "schema_version": 1,
+  "sample_id": "HMPP-2026-PLAYIN-STATS-SAMPLE-V1",
+  "generated_at": "2026-09-16T00:00:00.000Z",
+  "generator_seed": 20260916,
+  "tournament_id": "HMPP-2026",
+  "round": {
+    "id": "play-in",
+    "label": "Play-in",
+    "sequence": 0,
+    "status": "closed"
+  },
+  "visibility": "test-only",
+  "excluded_from_official_totals": true,
+  "participants": [
+    {
+      "id": "hm-01",
+      "name": "Harry Man 01"
+    },
+    {
+      "id": "hm-02",
+      "name": "Harry Man 02"
+    },
+    {
+      "id": "hm-03",
+      "name": "Harry Man 03"
+    },
+    {
+      "id": "hm-04",
+      "name": "Harry Man 04"
+    },
+    {
+      "id": "hm-05",
+      "name": "Harry Man 05"
+    },
+    {
+      "id": "hm-06",
+      "name": "Harry Man 06"
+    },
+    {
+      "id": "hm-07",
+      "name": "Harry Man 07"
+    },
+    {
+      "id": "hm-08",
+      "name": "Harry Man 08"
+    },
+    {
+      "id": "hm-09",
+      "name": "Harry Man 09"
+    }
+  ],
+  "songs": [
+    {
+      "id": "SAMPLE-SONG-001",
+      "title": "Sample Track 01",
+      "artist": "Sample Artist 01",
+      "owner_id": "hm-03"
+    },
+    {
+      "id": "SAMPLE-SONG-002",
+      "title": "Sample Track 02",
+      "artist": "Sample Artist 02",
+      "owner_id": "hm-02"
+    },
+    {
+      "id": "SAMPLE-SONG-003",
+      "title": "Sample Track 03",
+      "artist": "Sample Artist 03",
+      "owner_id": "hm-06"
+    },
+    {
+      "id": "SAMPLE-SONG-004",
+      "title": "Sample Track 04",
+      "artist": "Sample Artist 04",
+      "owner_id": "hm-01"
+    },
+    {
+      "id": "SAMPLE-SONG-005",
+      "title": "Sample Track 05",
+      "artist": "Sample Artist 05",
+      "owner_id": "hm-07"
+    },
+    {
+      "id": "SAMPLE-SONG-006",
+      "title": "Sample Track 06",
+      "artist": "Sample Artist 06",
+      "owner_id": "hm-04"
+    },
+    {
+      "id": "SAMPLE-SONG-007",
+      "title": "Sample Track 07",
+      "artist": "Sample Artist 07",
+      "owner_id": "hm-07"
+    },
+    {
+      "id": "SAMPLE-SONG-008",
+      "title": "Sample Track 08",
+      "artist": "Sample Artist 08",
+      "owner_id": "hm-08"
+    },
+    {
+      "id": "SAMPLE-SONG-009",
+      "title": "Sample Track 09",
+      "artist": "Sample Artist 09",
+      "owner_id": "hm-09"
+    },
+    {
+      "id": "SAMPLE-SONG-010",
+      "title": "Sample Track 10",
+      "artist": "Sample Artist 10",
+      "owner_id": "hm-05"
+    },
+    {
+      "id": "SAMPLE-SONG-011",
+      "title": "Sample Track 11",
+      "artist": "Sample Artist 11",
+      "owner_id": "hm-04"
+    },
+    {
+      "id": "SAMPLE-SONG-012",
+      "title": "Sample Track 12",
+      "artist": "Sample Artist 12",
+      "owner_id": "hm-08"
+    },
+    {
+      "id": "SAMPLE-SONG-013",
+      "title": "Sample Track 13",
+      "artist": "Sample Artist 13",
+      "owner_id": "hm-06"
+    },
+    {
+      "id": "SAMPLE-SONG-014",
+      "title": "Sample Track 14",
+      "artist": "Sample Artist 14",
+      "owner_id": "hm-03"
+    },
+    {
+      "id": "SAMPLE-SONG-015",
+      "title": "Sample Track 15",
+      "artist": "Sample Artist 15",
+      "owner_id": "hm-09"
+    },
+    {
+      "id": "SAMPLE-SONG-016",
+      "title": "Sample Track 16",
+      "artist": "Sample Artist 16",
+      "owner_id": "hm-01"
+    }
+  ],
+  "matches": [
+    {
+      "id": "PI01",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-001",
+        "SAMPLE-SONG-002"
+      ]
+    },
+    {
+      "id": "PI02",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-003",
+        "SAMPLE-SONG-004"
+      ]
+    },
+    {
+      "id": "PI03",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-005",
+        "SAMPLE-SONG-006"
+      ]
+    },
+    {
+      "id": "PI04",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-007",
+        "SAMPLE-SONG-008"
+      ]
+    },
+    {
+      "id": "PI05",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-009",
+        "SAMPLE-SONG-010"
+      ]
+    },
+    {
+      "id": "PI06",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-011",
+        "SAMPLE-SONG-012"
+      ]
+    },
+    {
+      "id": "PI07",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-013",
+        "SAMPLE-SONG-014"
+      ]
+    },
+    {
+      "id": "PI08",
+      "round": "play-in",
+      "song_ids": [
+        "SAMPLE-SONG-015",
+        "SAMPLE-SONG-016"
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-003",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-006",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-008",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-010",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-05"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-012",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-013",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-01",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-016",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-08"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-004",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-05"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-005",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-008",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-009",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-05"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-05"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-012",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-014",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-05"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-02",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-015",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-002",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-02"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-004",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-005",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-008",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-009",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-01"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-012",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-014",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-03",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-015",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-03"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-003",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-005",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-007",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-010",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-05"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-012",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-014",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-04",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-015",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-02"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-003",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-05"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-005",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-008",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-06"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-010",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-011",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-013",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-05",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-015",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-03"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-003",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-006",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-007",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-009",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-02"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-05"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-012",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-013",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-06",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-015",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-004",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-005",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-008",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-05"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-009",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-012",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-014",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-07",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-016",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-05"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-001",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-02"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-003",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-006",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-008",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-07"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-009",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-02"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-04"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-011",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-014",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-03"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-08",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-015",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI01",
+      "selected_song_id": "SAMPLE-SONG-002",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-001",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-002",
+          "guessed_participant_id": "hm-07"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI02",
+      "selected_song_id": "SAMPLE-SONG-003",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-003",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-004",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI03",
+      "selected_song_id": "SAMPLE-SONG-006",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-005",
+          "guessed_participant_id": "hm-03"
+        },
+        {
+          "song_id": "SAMPLE-SONG-006",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI04",
+      "selected_song_id": "SAMPLE-SONG-007",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-007",
+          "guessed_participant_id": "hm-05"
+        },
+        {
+          "song_id": "SAMPLE-SONG-008",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI05",
+      "selected_song_id": "SAMPLE-SONG-009",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-009",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-010",
+          "guessed_participant_id": "hm-08"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI06",
+      "selected_song_id": "SAMPLE-SONG-011",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-011",
+          "guessed_participant_id": "hm-04"
+        },
+        {
+          "song_id": "SAMPLE-SONG-012",
+          "guessed_participant_id": "hm-09"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI07",
+      "selected_song_id": "SAMPLE-SONG-013",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-013",
+          "guessed_participant_id": "hm-06"
+        },
+        {
+          "song_id": "SAMPLE-SONG-014",
+          "guessed_participant_id": "hm-03"
+        }
+      ]
+    },
+    {
+      "voter_id": "hm-09",
+      "match_id": "PI08",
+      "selected_song_id": "SAMPLE-SONG-016",
+      "guesses": [
+        {
+          "song_id": "SAMPLE-SONG-015",
+          "guessed_participant_id": "hm-09"
+        },
+        {
+          "song_id": "SAMPLE-SONG-016",
+          "guessed_participant_id": "hm-01"
+        }
+      ]
+    }
+  ]
+}

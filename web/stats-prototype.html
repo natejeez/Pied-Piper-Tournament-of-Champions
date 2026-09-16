@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HMPP '26 — Round Statistics Prototype</title>
+  <style>
+    :root{
+      --black:#000;--ink:#171717;--gold:#CFB991;--gold-strong:#B89A62;
+      --paper:#F5F2ED;--surface:#FFF;--muted:#6A665F;--line:#D8D2C8;
+      --soft:#ECE7DF;--success:#2F6B4F;--danger:#9A3E34;
+      --shadow:0 16px 42px rgba(0,0,0,.08);--radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,select{font:inherit}
+    .topbar{min-height:68px;background:var(--black);color:#fff;border-bottom:4px solid var(--gold);display:flex;align-items:center;gap:28px;padding:0 clamp(18px,4vw,56px)}
+    .brand{font-size:24px;font-weight:950;letter-spacing:-.04em}.brand i{color:var(--gold);font-style:normal}
+    .topbar nav{display:flex;gap:10px;margin-left:auto}.topbar a{color:#D5D5D5;text-decoration:none;padding:10px 12px;border-radius:8px;font-weight:700}.topbar a.active{background:#232323;color:var(--gold)}
+    .test-pill{border:1px solid var(--gold);color:var(--gold);padding:6px 9px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em}
+    main{width:min(1240px,calc(100% - 32px));margin:0 auto;padding:44px 0 72px}
+    .eyebrow{color:#6A572F;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;margin-bottom:26px}
+    h1{font-size:clamp(38px,6vw,72px);line-height:.98;letter-spacing:-.055em;margin:9px 0 13px;max-width:780px}
+    .lede{font-size:17px;color:var(--muted);max-width:700px;margin:0}
+    .round-control{min-width:230px}.round-control label{display:block;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}.round-control select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 12px;font-weight:800}
+    .statusline{display:flex;gap:10px;align-items:center;margin:20px 0 26px;color:var(--muted);font-size:13px}.dot{width:8px;height:8px;background:var(--success);border-radius:50%;box-shadow:0 0 0 5px rgba(47,107,79,.12)}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .kpi{background:var(--black);color:#fff;padding:20px;border-radius:14px;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;inset:auto -25px -50px auto;width:100px;height:100px;border:18px solid rgba(207,185,145,.14);border-radius:50%}
+    .kpi .label{color:#C8C8C8;font-size:11px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.kpi .value{font-size:34px;font-weight:950;line-height:1.1;margin:8px 0 3px}.kpi .note{color:var(--gold);font-size:12px;font-weight:750}
+    .candidate{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);margin-top:18px;overflow:hidden}
+    .candidate-head{display:flex;justify-content:space-between;gap:20px;align-items:start;padding:23px 24px 18px;border-bottom:1px solid var(--line)}
+    .candidate-mark{font-size:11px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:#765F35}.candidate h2{margin:4px 0 2px;font-size:24px;letter-spacing:-.025em}.candidate-head p{margin:0;color:var(--muted);max-width:710px}.verdict{flex:0 0 auto;border-radius:999px;padding:6px 10px;background:#E6F0EA;color:var(--success);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+    .chart-pad{padding:24px}
+    .match-list{display:grid;gap:18px}.match-row{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:center}.match-id{font-weight:950;font-size:13px;color:#68552F;background:var(--soft);border-radius:8px;padding:8px;text-align:center}
+    .names,.counts{display:flex;justify-content:space-between;gap:16px}.names{font-weight:850;margin-bottom:7px}.names span:last-child,.counts span:last-child{text-align:right}.names small{display:block;color:var(--muted);font-weight:650}.counts{font-size:12px;color:var(--muted);margin-top:6px}.winner{color:#735B2D}.bar{height:18px;border-radius:999px;background:#E4DED4;overflow:hidden;display:flex;border:1px solid #D3CCC0}.bar-a{background:var(--gold)}.bar-b{background:#292929}.bar span{min-width:2px}
+    .two-col{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.75fr);gap:18px;margin-top:18px}.two-col .candidate{margin-top:0}
+    .drama-list{display:grid;gap:12px}.drama-row{display:grid;grid-template-columns:58px minmax(0,1fr) 82px;gap:12px;align-items:center}.drama-track{height:11px;background:var(--soft);border-radius:999px;overflow:hidden}.drama-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-strong));border-radius:inherit}.drama-score{text-align:right;font-weight:900}.drama-score small{display:block;font-weight:600;color:var(--muted)}
+    .leader-list{display:grid;gap:13px}.leader-row{display:grid;grid-template-columns:26px minmax(0,1fr) 54px;gap:10px;align-items:center}.rank{font-weight:950;color:#735B2D}.leader-name{display:flex;justify-content:space-between;font-weight:800;margin-bottom:5px}.leader-track{height:9px;background:var(--soft);border-radius:999px;overflow:hidden}.leader-fill{height:100%;background:var(--black);border-right:5px solid var(--gold)}.leader-score{text-align:right;font-weight:950}
+    .deep-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.deep-card{background:#F9F7F3;border:1px solid var(--line);border-radius:13px;padding:16px}.deep-card h3{font-size:16px;margin:0 0 3px}.deep-card p{color:var(--muted);font-size:12px;margin:0 0 14px}.guess-strip{display:flex;height:12px;border-radius:999px;overflow:hidden;background:#ddd}.guess-strip span{min-width:2px}.truth{margin-top:9px;display:flex;justify-content:space-between;font-size:12px}.truth b{color:#6A572F}
+    .swatch-0{background:#000}.swatch-1{background:#CFB991}.swatch-2{background:#6F6A63}.swatch-3{background:#A67C52}.swatch-4{background:#4D5A65}.swatch-5{background:#8A6F73}.swatch-6{background:#7E8061}.swatch-7{background:#A14D3E}.swatch-8{background:#446B61}
+    .callout{background:var(--black);color:#fff;border-left:6px solid var(--gold);padding:18px 20px;margin-top:18px;border-radius:0 12px 12px 0}.callout strong{color:var(--gold)}
+    .error{padding:30px;color:var(--danger);font-weight:800}
+    footer{color:var(--muted);font-size:12px;margin-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    @media(max-width:880px){.hero{grid-template-columns:1fr}.round-control{width:100%}.kpis{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.deep-grid{grid-template-columns:1fr}.topbar nav{display:none}}
+    @media(max-width:560px){main{width:min(100% - 20px,1240px);padding-top:28px}.kpis{grid-template-columns:1fr 1fr}.kpi{padding:15px}.kpi .value{font-size:27px}.candidate-head{display:block;padding:18px}.verdict{display:inline-block;margin-top:12px}.chart-pad{padding:18px}.match-row{grid-template-columns:1fr}.match-id{width:max-content}.names{font-size:13px}.topbar{padding:0 14px;gap:12px}.test-pill{margin-left:auto}.drama-row{grid-template-columns:48px minmax(0,1fr) 64px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">HMPP <i>'26</i></div>
+    <nav aria-label="Primary"><a href="./index.html">Bracket</a><a href="#">Rules</a><a class="active" href="#">Stats</a><a href="#">About</a></nav>
+    <span class="test-pill">TEST DATA</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div><div class="eyebrow">Harry Men Pied Piper · Round report</div><h1 id="pageTitle">Play-in by the numbers.</h1><p class="lede">A round-level story: what won, which matchups were closest, and who read the Harry Men best.</p></div>
+      <div class="round-control"><label for="roundSelect">Round</label><select id="roundSelect"><option value="play-in">Play-in · sample</option><option disabled>Round of 64 · awaiting data</option><option disabled>Round of 32 · awaiting data</option></select></div>
+    </section>
+    <div class="statusline"><span class="dot"></span><span id="statusText">Loading deterministic test fixture…</span></div>
+    <section class="kpis" id="kpis" aria-label="Round summary"></section>
+
+    <section class="candidate" aria-labelledby="voteSplitTitle">
+      <div class="candidate-head"><div><div class="candidate-mark">Candidate A · Primary story</div><h2 id="voteSplitTitle">Every matchup at a glance</h2><p>Directly labeled split bars preserve the head-to-head structure and scale cleanly from eight to thirty-two matches.</p></div><span class="verdict">Recommended</span></div>
+      <div class="chart-pad"><div class="match-list" id="matchList"></div></div>
+    </section>
+
+    <div class="two-col">
+      <section class="candidate" aria-labelledby="dramaTitle">
+        <div class="candidate-head"><div><div class="candidate-mark">Candidate B · Narrative ranking</div><h2 id="dramaTitle">Drama index</h2><p>Ranks close calls above blowouts. A 100 score means the smallest possible margin.</p></div></div>
+        <div class="chart-pad"><div class="drama-list" id="dramaList"></div></div>
+      </section>
+      <section class="candidate" aria-labelledby="leaderTitle">
+        <div class="candidate-head"><div><div class="candidate-mark">Candidate C · Game layer</div><h2 id="leaderTitle">Harry Man leaderboard</h2><p>Round guessing accuracy, ranked by correct owner picks.</p></div><span class="verdict">Keep</span></div>
+        <div class="chart-pad"><div class="leader-list" id="leaderList"></div></div>
+      </section>
+    </div>
+
+    <section class="candidate" aria-labelledby="deepTitle">
+      <div class="candidate-head"><div><div class="candidate-mark">Candidate D · Deep dive</div><h2 id="deepTitle">Who did everyone think submitted it?</h2><p>Each strip shows the distribution of guesses for a song. Useful after reveals, but too dense to lead the page.</p></div><span class="verdict" style="background:#F3ECE0;color:#765F35">Expandable</span></div>
+      <div class="chart-pad"><div class="deep-grid" id="deepGrid"></div></div>
+    </section>
+
+    <div class="callout"><strong>Production insertion point:</strong> keep this renderer unchanged and replace the sample URL with a closed-round stats endpoint. Match count, voter count, participant roster, labels, winners, margins, and guessing totals are all derived from the response.</div>
+    <footer><span id="fixtureNote"></span><span>No individual vote choices are displayed.</span></footer>
+  </main>
+  <script>
+    const DATA_BY_ROUND = {'play-in':'./data/2026/stats/play-in-sample.json'};
+    const $ = selector => document.querySelector(selector);
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const pct = value => `${Math.round(value * 100)}%`;
+
+    function aggregate(data){
+      const songById = new Map(data.songs.map(song => [song.id, song]));
+      const participantById = new Map(data.participants.map(p => [p.id, p]));
+      const ballotsByMatch = new Map(data.matches.map(match => [match.id, []]));
+      data.ballots.forEach(ballot => ballotsByMatch.get(ballot.match_id)?.push(ballot));
+
+      const matchResults = data.matches.map(match => {
+        const ballots = ballotsByMatch.get(match.id) || [];
+        const counts = Object.fromEntries(match.song_ids.map(id => [id, 0]));
+        ballots.forEach(ballot => { if (ballot.selected_song_id in counts) counts[ballot.selected_song_id]++; });
+        const sorted = match.song_ids.slice().sort((a,b) => counts[b] - counts[a]);
+        const margin = Math.abs(counts[sorted[0]] - counts[sorted[1]]);
+        return {...match, ballots:ballots.length, counts, winner_id:sorted[0], margin, drama:ballots.length ? 1 - margin / ballots.length : 0};
+      });
+
+      const guessStats = data.participants.map(participant => {
+        const ballots = data.ballots.filter(ballot => ballot.voter_id === participant.id);
+        const guesses = ballots.flatMap(ballot => ballot.guesses || []);
+        const correct = guesses.filter(guess => songById.get(guess.song_id)?.owner_id === guess.guessed_participant_id).length;
+        return {...participant, correct, total:guesses.length, accuracy:guesses.length ? correct / guesses.length : 0};
+      }).sort((a,b) => b.accuracy - a.accuracy || b.correct - a.correct || a.name.localeCompare(b.name));
+
+      const songGuesses = data.songs.map(song => {
+        const guesses = data.ballots.flatMap(ballot => ballot.guesses || []).filter(guess => guess.song_id === song.id);
+        const counts = Object.fromEntries(data.participants.map(p => [p.id, 0]));
+        guesses.forEach(guess => { if (guess.guessed_participant_id in counts) counts[guess.guessed_participant_id]++; });
+        const correct = counts[song.owner_id] || 0;
+        return {...song, guesses:guesses.length, counts, correct, recognition:guesses.length ? correct / guesses.length : 0};
+      }).sort((a,b) => b.recognition - a.recognition || a.title.localeCompare(b.title));
+
+      return {songById, participantById, matchResults, guessStats, songGuesses};
+    }
+
+    function render(data){
+      const stats = aggregate(data);
+      const totalBallots = data.ballots.length;
+      const closest = stats.matchResults.slice().sort((a,b) => a.margin - b.margin)[0];
+      const biggest = stats.matchResults.slice().sort((a,b) => b.margin - a.margin)[0];
+      const overallCorrect = stats.guessStats.reduce((sum,p) => sum + p.correct, 0);
+      const overallGuesses = stats.guessStats.reduce((sum,p) => sum + p.total, 0);
+      $('#pageTitle').textContent = `${data.round.label} by the numbers.`;
+      $('#statusText').textContent = `${data.round.label} closed · ${data.participants.length} of ${data.participants.length} voters complete · sample fixture`;
+      $('#fixtureNote').textContent = `${data.sample_id} · seed ${data.generator_seed} · excluded from official totals`;
+      $('#kpis').innerHTML = [
+        ['Ballots', totalBallots, `${data.participants.length} voters × ${data.matches.length} matches`],
+        ['Closest', `${closest.margin} vote`, closest.id],
+        ['Largest margin', `${biggest.margin} votes`, biggest.id],
+        ['Guess accuracy', pct(overallCorrect / overallGuesses), `${overallCorrect} of ${overallGuesses} correct`]
+      ].map(([label,value,note]) => `<article class="kpi"><div class="label">${esc(label)}</div><div class="value">${esc(value)}</div><div class="note">${esc(note)}</div></article>`).join('');
+
+      $('#matchList').innerHTML = stats.matchResults.map(result => {
+        const [aId,bId] = result.song_ids, a = stats.songById.get(aId), b = stats.songById.get(bId);
+        const aCount=result.counts[aId], bCount=result.counts[bId], total=Math.max(1,aCount+bCount);
+        return `<article class="match-row"><div class="match-id">${esc(result.id)}</div><div><div class="names"><span class="${result.winner_id===aId?'winner':''}">${esc(a.title)}<small>${esc(a.artist)}</small></span><span class="${result.winner_id===bId?'winner':''}">${esc(b.title)}<small>${esc(b.artist)}</small></span></div><div class="bar" role="img" aria-label="${esc(a.title)} ${aCount} votes; ${esc(b.title)} ${bCount} votes"><span class="bar-a" style="width:${aCount/total*100}%"></span><span class="bar-b" style="width:${bCount/total*100}%"></span></div><div class="counts"><span><b>${aCount}</b> · ${pct(aCount/total)}</span><span>${pct(bCount/total)} · <b>${bCount}</b></span></div></div></article>`;
+      }).join('');
+
+      $('#dramaList').innerHTML = stats.matchResults.slice().sort((a,b)=>b.drama-a.drama).map(result => `<div class="drama-row"><b>${esc(result.id)}</b><div class="drama-track"><div class="drama-fill" style="width:${result.drama*100}%"></div></div><div class="drama-score">${Math.round(result.drama*100)}<small>${result.margin}-vote margin</small></div></div>`).join('');
+
+      $('#leaderList').innerHTML = stats.guessStats.map((person,index) => `<div class="leader-row"><div class="rank">${index+1}</div><div><div class="leader-name"><span>${esc(person.name)}</span><small>${person.correct}/${person.total}</small></div><div class="leader-track"><div class="leader-fill" style="width:${person.accuracy*100}%"></div></div></div><div class="leader-score">${pct(person.accuracy)}</div></div>`).join('');
+
+      const participantIndex = new Map(data.participants.map((p,i)=>[p.id,i]));
+      $('#deepGrid').innerHTML = stats.songGuesses.map(song => {
+        const owner = stats.participantById.get(song.owner_id);
+        const strips = data.participants.map(p => `<span class="swatch-${participantIndex.get(p.id)}" style="width:${(song.counts[p.id]||0)/Math.max(1,song.guesses)*100}%" title="${esc(p.name)}: ${song.counts[p.id]||0}"></span>`).join('');
+        const top = data.participants.slice().sort((a,b)=>(song.counts[b.id]||0)-(song.counts[a.id]||0))[0];
+        return `<article class="deep-card"><h3>${esc(song.title)}</h3><p>${esc(song.artist)}</p><div class="guess-strip" role="img" aria-label="Guess distribution for ${esc(song.title)}">${strips}</div><div class="truth"><span>Most guessed: <b>${esc(top.name)}</b></span><span>${song.correct}/${song.guesses} found <b>${esc(owner.name)}</b></span></div></article>`;
+      }).join('');
+    }
+
+    async function load(){
+      const round = new URLSearchParams(location.search).get('round') || 'play-in';
+      const url = DATA_BY_ROUND[round];
+      if(!url) throw new Error(`No sample fixture is configured for ${round}.`);
+      const response = await fetch(url,{cache:'no-store'});
+      if(!response.ok) throw new Error(`Could not load ${url} (${response.status}).`);
+      const data = await response.json();
+      if(!data.excluded_from_official_totals || data.visibility !== 'test-only') throw new Error('Fixture safety flags are missing.');
+      render(data);
+    }
+    load().catch(error => { $('#statusText').textContent='Prototype could not load'; $('#kpis').outerHTML=`<div class="candidate error">${esc(error.message)} Serve the web folder over HTTP rather than opening this file directly.</div>`; });
+  </script>
+</body>
+</html>
