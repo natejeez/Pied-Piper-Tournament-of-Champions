@@ -49,15 +49,22 @@ async function flushWithRetry(env,participantId,isTest){
   return false;
 }
 
-function updateLogoutCopy(response){
+async function updateLogoutUx(response){
   if(!response.ok||!(response.headers.get('content-type')||'').includes('text/html'))return response;
-  const transformed=new HTMLRewriter().on('#logoutModal p',{
-    element(el){el.setInnerContent('Your submitted votes are already saved. Audit backup synchronization continues automatically after logout.');}
-  }).transform(response);
-  const headers=new Headers(transformed.headers);
+  let html=await response.text();
+  html=html.replace(
+    'Your submitted votes will be synced before you are logged out.',
+    'Your submitted votes are already saved. Audit backup synchronization continues automatically after logout.'
+  );
+  html=html.replace("b.textContent='Syncing…'","b.textContent='Logging out…'");
+  html=html.replace(
+    "alert('Could not safely sync votes before logout. Please try again.')",
+    "alert('Could not log out. Please check your connection and try again.')"
+  );
+  const headers=new Headers(response.headers);
   headers.set('cache-control','no-store');
   headers.set('x-hmpp-logout-ui','durable-first-v31');
-  return new Response(transformed.body,{status:transformed.status,headers});
+  return new Response(html,{status:response.status,headers});
 }
 
 export default {
@@ -80,7 +87,7 @@ export default {
     }
 
     const response=await workerV3.fetch(request,env,ctx);
-    if(!url.pathname.startsWith('/api/')&&(url.pathname==='/'||url.pathname==='/index.html'))return updateLogoutCopy(response);
+    if(!url.pathname.startsWith('/api/')&&(url.pathname==='/'||url.pathname==='/index.html'))return updateLogoutUx(response);
     return response;
   }
 };
