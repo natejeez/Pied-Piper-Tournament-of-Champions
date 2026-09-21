@@ -49,6 +49,17 @@ async function flushWithRetry(env,participantId,isTest){
   return false;
 }
 
+function updateLogoutCopy(response){
+  if(!response.ok||!(response.headers.get('content-type')||'').includes('text/html'))return response;
+  const transformed=new HTMLRewriter().on('#logoutModal p',{
+    element(el){el.setInnerContent('Your submitted votes are already saved. Audit backup synchronization continues automatically after logout.');}
+  }).transform(response);
+  const headers=new Headers(transformed.headers);
+  headers.set('cache-control','no-store');
+  headers.set('x-hmpp-logout-ui','durable-first-v31');
+  return new Response(transformed.body,{status:transformed.status,headers});
+}
+
 export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
@@ -68,7 +79,9 @@ export default {
       },200,{'set-cookie':clearCookie(),'x-hmpp-logout':'nonblocking-v31'});
     }
 
-    return workerV3.fetch(request,env,ctx);
+    const response=await workerV3.fetch(request,env,ctx);
+    if(!url.pathname.startsWith('/api/')&&(url.pathname==='/'||url.pathname==='/index.html'))return updateLogoutCopy(response);
+    return response;
   }
 };
 
