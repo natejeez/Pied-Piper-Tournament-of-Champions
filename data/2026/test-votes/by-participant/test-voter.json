@@ -6,7 +6,7 @@
   "excluded_from_official_totals": true,
   "guess_pool": "test",
   "excluded_from_official_guess_stats": true,
-  "updated_at": "2026-09-22T09:39:25.907Z",
+  "updated_at": "2026-09-22T09:51:08.476Z",
   "votes": {
     "PI02": {
       "vote_submission_id": "TESTVOTE-cac0226e-7eb2-4c6e-ab44-7b4ef818bc6b",
@@ -85,6 +85,16 @@
       "round": "play-in",
       "song_id": "SONG26-066",
       "submitted_at": "2026-09-22T02:55:55.363Z",
+      "vote_pool": "test",
+      "excluded_from_official_totals": true
+    },
+    "M002": {
+      "vote_submission_id": "TESTVOTE-55ebf778-caad-4423-8213-752f0689029f",
+      "matchup_submission_id": "TESTMATCHUP-56c4bb04-3463-4ba7-9474-87435b73e893",
+      "match_id": "M002",
+      "round": "round-of-64",
+      "song_id": "SONG26-050",
+      "submitted_at": "2026-09-22T09:46:08.447Z",
       "vote_pool": "test",
       "excluded_from_official_totals": true
     }
@@ -311,6 +321,34 @@
       "match_vote_song_id_at_submission": "SONG26-066",
       "match_vote_submission_id": "TESTVOTE-a2813de6-ea32-465e-8433-6c7b622992aa",
       "submitted_at": "2026-09-22T02:55:55.363Z",
+      "guess_pool": "test",
+      "excluded_from_official_guess_stats": true
+    },
+    "SONG26-004": {
+      "guess_submission_id": "TESTGUESS-a9f080d2-b039-4c38-a6b7-adf521d442bb",
+      "guess_batch_id": "TESTMATCHUP-56c4bb04-3463-4ba7-9474-87435b73e893",
+      "matchup_submission_id": "TESTMATCHUP-56c4bb04-3463-4ba7-9474-87435b73e893",
+      "match_id": "M002",
+      "round": "round-of-64",
+      "song_id": "SONG26-004",
+      "guessed_participant_id": "jj",
+      "match_vote_song_id_at_submission": "SONG26-050",
+      "match_vote_submission_id": "TESTVOTE-55ebf778-caad-4423-8213-752f0689029f",
+      "submitted_at": "2026-09-22T09:46:08.447Z",
+      "guess_pool": "test",
+      "excluded_from_official_guess_stats": true
+    },
+    "SONG26-050": {
+      "guess_submission_id": "TESTGUESS-0c2a513d-7063-4e2d-b217-833ac23cbc8b",
+      "guess_batch_id": "TESTMATCHUP-56c4bb04-3463-4ba7-9474-87435b73e893",
+      "matchup_submission_id": "TESTMATCHUP-56c4bb04-3463-4ba7-9474-87435b73e893",
+      "match_id": "M002",
+      "round": "round-of-64",
+      "song_id": "SONG26-050",
+      "guessed_participant_id": "troll",
+      "match_vote_song_id_at_submission": "SONG26-050",
+      "match_vote_submission_id": "TESTVOTE-55ebf778-caad-4423-8213-752f0689029f",
+      "submitted_at": "2026-09-22T09:46:08.447Z",
       "guess_pool": "test",
       "excluded_from_official_guess_stats": true
     }
