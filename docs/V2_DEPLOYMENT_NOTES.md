@@ -1,4 +1,4 @@
-# HMPP 2026 v2.9 — Deployment Notes
+# HMPP 2026 v2.14 — Deployment Notes
 
 ## Environments
 
@@ -6,14 +6,15 @@
 - Branch: `main`
 - Worker: `pied-piper-tournament-of-champions`
 - Git mirror branch: `main`
-- Entrypoint: `src/worker-v29.js`
+- Candidate entrypoint: `src/worker-v214-prod.js`
 
-### Staging
-- Branch: `feature/v2-auth-voting`
-- Worker: `pied-piper-tournament-of-champions-v2-test`
-- Git mirror branch: `feature/v2-auth-voting`
+### Stabilization branch
+- Branch: `feature/stabilize-ballot-logout`
+- Purpose: validate durable-first, non-blocking logout before promotion to `main`
 
-Keep production and staging Durable Object state separate.
+Existing V2 experimental/staging branches are reference history and should not be merged wholesale into production.
+
+Keep production and test Durable Object state separate.
 
 ## Required Cloudflare secrets
 The Worker requires three runtime secrets:
@@ -35,7 +36,9 @@ Submitted matchup data is written immediately to a participant Durable Object. O
 - two submitter guesses;
 - a shared `matchup_submission_id`.
 
-GitHub is an audit/export mirror, not the request-time authority. The Worker debounces routine Git mirrors and logout forces an immediate flush. Logout is refused if the forced mirror fails.
+GitHub is an audit/export mirror, not the request-time authority or participant logout gate.
+
+A successful matchup submission schedules the normal five-minute Git mirror alarm. Logout also starts an immediate best-effort mirror, but the session closes without waiting for GitHub. If that immediate mirror fails, the Durable Object ballot remains authoritative and the existing alarm remains scheduled because the `flush` action deletes the alarm only on successful mirror completion.
 
 Official snapshots:
 `data/2026/votes/by-participant/<participant-id>.json`
@@ -50,15 +53,44 @@ Listening completion and unsubmitted matchup drafts are browser-local and partic
 
 A reset of another participant cannot remotely erase that participant's browser-local listening cache. It does remove the selected round's server-side vote/guess records.
 
-## Deployment procedure
-1. Make and validate changes on staging first.
-2. Verify participant login, listening, atomic submit, refresh restore, logout/login, Test Voter isolation, reset behavior, and publication gating.
-3. Prepare one consolidated release commit where practical.
-4. For production, ensure `wrangler.jsonc` targets the production Worker and `GITHUB_BRANCH` is `main`.
+## Pre-merge automated gate
+Pull requests to `main` run `.github/workflows/pre-merge.yml`.
+
+The v2.14 candidate gate runs:
+- JavaScript syntax checks for the current base Worker, v2.13 production wrapper, v2.14 candidate wrapper, and `web/guessing.js`;
+- `tests/v27-participant-regression.mjs`;
+- `tests/v28-participant-regression.mjs`;
+- `tests/v29-regression.mjs`;
+- `tests/v213-production-regression.mjs`;
+- `tests/v214-ballot-logout-regression.mjs`.
+
+A failing required check blocks merge.
+
+## Hosted staging acceptance
+Before v2.14 can merge/promote:
+1. log in with an approved test identity;
+2. complete both listening requirements for one matchup;
+3. choose one song and both Harry Man guesses;
+4. submit once and verify the matchup locks;
+5. refresh and verify the submitted vote plus both guesses restore;
+6. log out normally and verify logout completes;
+7. log back in or use a second browser and verify the ballot restores;
+8. verify the Git mirror is eventually updated;
+9. deliberately exercise a mirror-failure condition in the staging environment;
+10. verify logout still completes while the Durable Object ballot remains restorable;
+11. restore mirror access and verify the audit snapshot can catch up without changing the ballot.
+
+## Production promotion
+1. Confirm the exact candidate commit SHA.
+2. Confirm the pre-merge workflow is green.
+3. Confirm hosted staging acceptance is complete.
+4. Confirm `wrangler.jsonc` points to `src/worker-v214-prod.js` and `GITHUB_BRANCH` is `main`.
 5. Confirm all three production secrets are set.
-6. Merge/promote to `main`.
-7. Wait for the Cloudflare Worker build to report success.
-8. Run a production smoke test with Test Voter and one official participant.
+6. Confirm the rollback target is the current v2.13 production state.
+7. Merge the approved pull request to `main`.
+8. Wait for the Cloudflare Worker build to report success.
+9. Run the critical production smoke test with Test Voter and one approved official-participant path where practical.
+10. Verify no test data entered official vote paths.
 
 ## Current publication gate
 Result and Round-of-64 publication controls must remain unavailable until 72 official Play-In votes are present. Test Voter is excluded. Advancement must remain blocked when any Play-In is tied.
