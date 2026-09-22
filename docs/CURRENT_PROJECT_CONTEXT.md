@@ -1,17 +1,19 @@
 # HMPP 2026 — Current Project Context
 
 ## Status
-HMPP 2026 is in production on v2.9. The authenticated participant workflow has passed hosted testing for login, listening gates, song selection, submitter guessing, atomic matchup submission, submitted-state restoration, Test Voter isolation, scoped resets, and pre-completion publication gating.
+HMPP 2026 production currently runs the authenticated v2 stack. The v2.14 candidate preserves the existing atomic matchup submission workflow and changes logout so that Durable Object persistence remains authoritative even when the GitHub audit mirror is temporarily unavailable.
+
+The v2.14 candidate has passed the repository pre-merge syntax/regression workflow. Hosted staging acceptance is still required before merge to `main`.
 
 ## Production runtime
 - Branch: `main`
 - Worker: `pied-piper-tournament-of-champions`
 - Git mirror branch: `main`
 - Static app: `web/index.html`
-- Production entrypoint: `src/worker-v29.js`
+- Candidate production entrypoint: `src/worker-v214-prod.js`
 - Durable Object class: `ParticipantVoteStore`
 
-Staging remains available on `feature/v2-auth-voting` / `pied-piper-tournament-of-champions-v2-test` for future work.
+The v2.14 feature branch is `feature/stabilize-ballot-logout`. Existing V2 experimental branches remain historical/reference sources and are not the basis for this stabilization merge.
 
 ## Tournament constants
 - 9 official participants
@@ -38,7 +40,9 @@ Test Voter snapshot:
 
 Each submitted matchup links one vote and two guesses through a shared `matchup_submission_id`. Test records are explicitly separated and excluded from official statistics.
 
-GitHub is the audit/export mirror. The Durable Object is authoritative at request time. Logout forces a Git flush and aborts logout if the sync fails.
+The Durable Object is authoritative at request time. GitHub is the audit/export mirror.
+
+A successful matchup submission schedules the normal Git mirror alarm. Logout now starts an immediate best-effort mirror and clears the participant session without waiting for GitHub. If the immediate mirror fails, the saved Durable Object ballot remains valid and the existing alarm remains available for later mirror retry because `flush` deletes the alarm only after a successful mirror.
 
 ## Test Voter admin workflow
 Test Voter receives:
@@ -61,8 +65,20 @@ Once complete, the intended order is:
 
 Round-of-64 slot wiring is authoritative. Do not invent Round-of-32 or later mappings until those mappings are added to tournament data.
 
-## Known accepted behavior
-A brief first-paint/layout flash can still occur during some refresh/logout paths. It was accepted for v2.9 because it does not expose another participant's authenticated state and does not alter data.
+## Known V2 lessons carried forward
+The useful V2 behaviors are being ported selectively rather than merging the V2 branch wholesale.
+
+Do not carry forward:
+- layered V31-V37-style Worker patch chains as the final architecture;
+- core correctness implemented through runtime source-string patching;
+- competing published-result renderers;
+- broad DOM MutationObserver repair loops;
+- simulated ballots stored in normal participant ballot state.
+
+Round-scoped guess identity is specifically required before later-round voting is generalized. The Play-In compatibility key may remain song-based, but reused songs in later rounds must not collide with prior-round guesses.
 
 ## Immediate next operational milestone
-Wait for all nine official participants to complete all eight Play-Ins, then validate the publication workflow against live complete results. After that, extend later-round bracket wiring and analytics.
+1. complete hosted staging acceptance for v2.14 ballot/logout stabilization;
+2. merge v2.14 only after the merge gate passes;
+3. port the approved compact published-results card as a separate feature/PR;
+4. validate the resulting `main` as the stable base before creating the future V4 branch.
