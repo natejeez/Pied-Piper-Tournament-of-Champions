@@ -95,8 +95,11 @@ export default {
         const sr=await storeCall(env,session.sub,'guesses',{guesses:clean,is_test:session.is_test===true}); const data=await sr.json(); return jsonResponse(data,sr.status);
       }
       if(url.pathname==='/api/logout' && request.method==='POST') {
-        const sr=await storeCall(env,session.sub,'flush',{is_test:session.is_test===true}); if(!sr.ok) return jsonResponse({error:'Vote sync failed. Logout was cancelled so no data is lost.'},503);
-        return jsonResponse({ok:true},200,{'set-cookie':clearCookie()});
+        const mirror=storeCall(env,session.sub,'flush',{is_test:session.is_test===true})
+          .then(async sr=>{if(!sr.ok)console.error('Logout Git mirror failed; durable ballot remains authoritative and the existing alarm remains scheduled.',await sr.text())})
+          .catch(err=>console.error('Logout Git mirror request failed; durable ballot remains authoritative and the existing alarm remains scheduled.',err));
+        ctx?.waitUntil?.(mirror);
+        return jsonResponse({ok:true,mirror_sync:'scheduled'},200,{'set-cookie':clearCookie()});
       }
       return jsonResponse({error:'Not found.'},404);
     } catch(err) { console.error(err); return jsonResponse({error:'Server error.'},500); }
