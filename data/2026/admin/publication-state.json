@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "tournament": "HMPP-2026",
+  "results_visible": {
+    "play-in": true
+  },
+  "published_rounds": {
+    "play-in": true
+  },
+  "published_results": {
+    "play-in": [
+      {
+        "match_id": "PI01",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-019",
+            "votes": 5
+          },
+          {
+            "song_id": "SONG26-016",
+            "votes": 4
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-019"
+      },
+      {
+        "match_id": "PI02",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-042",
+            "votes": 2
+          },
+          {
+            "song_id": "SONG26-001",
+            "votes": 7
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-001"
+      },
+      {
+        "match_id": "PI03",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-052",
+            "votes": 3
+          },
+          {
+            "song_id": "SONG26-031",
+            "votes": 6
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-031"
+      },
+      {
+        "match_id": "PI04",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-051",
+            "votes": 4
+          },
+          {
+            "song_id": "SONG26-057",
+            "votes": 5
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-057"
+      },
+      {
+        "match_id": "PI05",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-069",
+            "votes": 4
+          },
+          {
+            "song_id": "SONG26-034",
+            "votes": 5
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-034"
+      },
+      {
+        "match_id": "PI06",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-028",
+            "votes": 5
+          },
+          {
+            "song_id": "SONG26-062",
+            "votes": 4
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-028"
+      },
+      {
+        "match_id": "PI07",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-044",
+            "votes": 5
+          },
+          {
+            "song_id": "SONG26-020",
+            "votes": 4
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-044"
+      },
+      {
+        "match_id": "PI08",
+        "round": "play-in",
+        "songs": [
+          {
+            "song_id": "SONG26-066",
+            "votes": 4
+          },
+          {
+            "song_id": "SONG26-003",
+            "votes": 5
+          }
+        ],
+        "total_votes": 9,
+        "complete": true,
+        "tied": false,
+        "winner_song_id": "SONG26-003"
+      }
+    ]
+  },
+  "published_matchups": {},
+  "events": [
+    {
+      "event_id": "EVENT-6c1939a1-3f6b-4adf-abf1-22979198b5c8",
+      "type": "results_published",
+      "round": "play-in",
+      "published_at": "2026-09-22T07:10:52.576Z",
+      "published_by": "test-voter"
+    }
+  ]
+}
