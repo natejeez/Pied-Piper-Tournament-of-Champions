@@ -1,0 +1,1 @@
+V2.32 implementation began from feature/v2-auth-voting commit 1235b98efc22a02db081962e1e3a052822c196c3 on 2026-09-22.
