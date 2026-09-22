@@ -1,0 +1,42 @@
+name: HMPP Pre-Merge Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    name: Syntax and regression suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Syntax checks
+        run: |
+          node --check src/worker.js
+          node --check src/worker-v213-prod.js
+          node --check src/worker-v214-prod.js
+          node --check web/guessing.js
+
+      - name: Current production regressions
+        run: |
+          node tests/v27-participant-regression.mjs
+          node tests/v28-participant-regression.mjs
+          node tests/v29-regression.mjs
+          node tests/v213-production-regression.mjs
+
+      - name: Candidate ballot/logout regression
+        run: node tests/v214-ballot-logout-regression.mjs
