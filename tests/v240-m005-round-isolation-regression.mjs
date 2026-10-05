@@ -2,11 +2,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const worker = fs.readFileSync(new URL('../src/worker-v41.js', import.meta.url), 'utf8');
+const parentWorker = fs.readFileSync(new URL('../src/worker-v40.js', import.meta.url), 'utf8');
 
 assert.match(worker, /function guessFor\\(round,songId\\)/);
 assert.match(worker, /exact\.round===round&&exact\.song_id===songId&&\(!matchId \|\| exact\.match_id===matchId\)/);
 assert.match(worker, /const saved=guessFor\(match\.dataset\.round,sid,match\.dataset\.matchId\)/);
-assert.match(worker, /card\.dataset\.round=m\.round\|\|'round-of-64'/);
+assert.match(parentWorker, /card\.dataset\.round=m\.round\|\|'round-of-64'/);
 
 // Regression model: M005's SONG26-031 had a prior Play-In guess from PI03.
 // That record must never satisfy the Round-of-64 lookup.
