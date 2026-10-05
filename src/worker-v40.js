@@ -63,9 +63,13 @@ export default {
       const headers = new Headers(response.headers);
       headers.set('content-type', 'application/javascript; charset=utf-8');
       headers.set('cache-control', 'no-store');
-      headers.set('x-hmpp-build', 'v2.40-test');
+      headers.set('x-hmpp-build', 'v2.40-round-isolation');
       headers.set('x-hmpp-voting-owner', 'modal-atomic-matchup');
-      return new Response(source,{status:response.status,headers});
+      headers.set('x-hmpp-client-fixes', 'round-scoped-guess-key');
+      return new Response(source, {
+        status: response.status,
+        headers
+      });
     }
 
     return workerV39.fetch(request, env, ctx);
