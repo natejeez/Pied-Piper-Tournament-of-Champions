@@ -28,7 +28,7 @@ function patchM005Client(source) {
     updateMatchSubmit(match);
   }
 `;
-    source = source.slice(start) + replacement + source.slice(end);
+    source = source.slice(0,start) + replacement + source.slice(end);
   }
   source = source.replace(
     'const guessesComplete=songs.every(s=>!!sessionState.guesses?.[s.dataset.songId]);',
