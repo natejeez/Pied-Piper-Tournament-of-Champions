@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const worker = fs.readFileSync(new URL('../src/worker-v40.js', import.meta.url), 'utf8');
+const worker = fs.readFileSync(new URL('../src/worker-v41.js', import.meta.url), 'utf8');
 
 assert.match(worker, /function guessFor\\(round,songId\\)/);
 assert.match(worker, /exact\.round===round&&exact\.song_id===songId&&\(!matchId \|\| exact\.match_id===matchId\)/);
@@ -53,4 +53,4 @@ assert.equal(
   'A different R64 matchup must not inherit M005\'s guess'
 );
 
-console.log('v2.40 M005 round-isolation regression: PASS');
+console.log('v2.41 M005 round-isolation regression: PASS');
