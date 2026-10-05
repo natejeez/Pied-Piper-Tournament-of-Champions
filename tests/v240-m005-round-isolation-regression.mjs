@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const worker = fs.readFileSync(new URL('../src/worker-v41.js', import.meta.url), 'utf8');
+const worker = fs.readFileSync(new URL('../src/worker-v42.js', import.meta.url), 'utf8');
 const parentWorker = fs.readFileSync(new URL('../src/worker-v40.js', import.meta.url), 'utf8');
 
 assert.match(worker, /function guessFor\\(round,songId\\)/);
@@ -54,4 +54,10 @@ assert.equal(
   'A different R64 matchup must not inherit M005\'s guess'
 );
 
-console.log('v2.41 M005 round-isolation regression: PASS');
+console.log('v2.42 M005 round-isolation regression: PASS');
+
+
+assert.match(worker, /select\.value=saved\?\.guessed_participant_id\|\|''/);
+assert.match(worker, /select\.disabled=!!saved/);
+assert.match(worker, /hmppRoundGuessFor\(sessionState,match\.dataset\.round\|\|selectedRound\(\),s\.dataset\.songId\)/);
+console.log('v2.42 stale-select guard: PASS');
