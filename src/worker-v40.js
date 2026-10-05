@@ -3,12 +3,10 @@ import workerV39, { ParticipantVoteStore as V39ParticipantVoteStore } from './wo
 const STAGING_HOST = 'pied-piper-tournament-of-champions-v2-test';
 
 function patchGuessingSource(source) {
-  // The V2 round-scope fix must be enforced at the final served client layer.
-  // Historical Play-In guesses remain in session state for audit/history, but
-  // R64 controls may only resolve guesses whose record belongs to R64.
   if (!source.includes('function hmppRoundGuessKey')) {
-    const marker = '(() => {';
-    const helper = `(() => {
+    source = source.replace(
+      '(() => {',
+      `(() => {
   function hmppRoundGuessKey(round, songId) {
     return round === 'play-in' ? songId : round + ':' + songId;
   }
@@ -17,40 +15,35 @@ function patchGuessingSource(source) {
     const key = hmppRoundGuessKey(round, songId);
     const exact = state.guesses?.[key];
     if (exact && exact.round === round && exact.song_id === songId) return exact;
-    return Object.values(state.guesses || {}).find(g =>
-      g?.round === round && g?.song_id === songId
-    ) || null;
-  }
-`;
-    if (source.startsWith(marker)) source = marker + helper.slice(marker.length);
+    return Object.values(state.guesses || {}).find(g => g?.round === round && g?.song_id === songId) || null;
+  }`
+    );
   }
 
   source = source.replace(
-    /sessionState\\.guesses\\[g\\.song_id\\]=g/g,
-    'sessionState.guesses[hmppRoundGuessKey(match.dataset.round,g.song_id)]=g'
+    'function renderGuessControls(match,voteSongId,{legacy=false}={}){',
+    'function renderGuessControls(match,voteSongId,{legacy=false}={}){'
   );
   source = source.replace(
-    /sessionState\\?\\.guesses\\?\\.\\[s\\.dataset\\.songId\\]/g,
-    'hmppRoundGuessFor(sessionState,match.dataset.round,s.dataset.songId)'
+    'const songs=matchSongs(match); if(songs.length!==2||!participants.length)return;',
+    'const songs=matchSongs(match); if(songs.length!==2||!participants.length)return; const round=match.dataset.round||selectedRound();'
   );
   source = source.replace(
-    /const saved=sessionState\\?\\.guesses\\?\\.\\[sid\\];/g,
-    'const saved=hmppRoundGuessFor(sessionState,match.dataset.round,sid);'
+    'const sid=song.dataset.songId; const saved=sessionState?.guesses?.[sid];',
+    'const sid=song.dataset.songId; const saved=hmppRoundGuessFor(sessionState,round,sid);'
   );
-
-  // Make the round explicit on dynamically resolved R64 match containers.
   source = source.replace(
-    /card\\.dataset\\.resolved='true';/g,
+    '(data.guesses||[]).forEach(g=>sessionState.guesses[g.song_id]=g);',
+    '(data.guesses||[]).forEach(g=>sessionState.guesses[hmppRoundGuessKey(match.dataset.round||selectedRound(),g.song_id)]=g);'
+  );
+  source = source.replace(
+    'const guessesComplete=songs.every(s=>!!sessionState.guesses?.[s.dataset.songId]);',
+    'const guessesComplete=songs.every(s=>!!hmppRoundGuessFor(sessionState,match.dataset.round||selectedRound(),s.dataset.songId));'
+  );
+  source = source.replace(
+    "card.dataset.resolved='true';",
     "card.dataset.round=m.round||'round-of-64';card.dataset.resolved='true';"
   );
-
-  // Also protect any existing round-aware helper from accepting a malformed
-  // legacy record whose key happens to collide with the current song ID.
-  source = source.replace(
-    /function guessFor\\(round,songId\\)\\{[^}]*Object\\.values\\(sessionState\\?\\.guesses\\|\\|\\{\\}\\)\\.find\\(g=>g\\?\\.round===round&&g\\?\\.song_id===songId\\)\\|\\|null\\}/g,
-    "function guessFor(round,songId){return hmppRoundGuessFor(sessionState,round,songId)}"
-  );
-
   return source;
 }
 
