@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { ParticipantVoteStore } from '../src/worker-v24.js';
+import { ParticipantVoteStore } from '../src/worker-v40.js';
 
 class MemoryStorage {
   constructor(){ this.map=new Map(); this.alarm=null; }
@@ -82,3 +82,27 @@ assert.match(css,/\.match\.matchup-pending \.vote-btn\{display:block!important\}
 assert.match(css,/\[hidden\]\{display:none!important\}/);
 
 console.log('v2.7 participant regression: PASS');
+
+const worker = fs.readFileSync(new URL('../src/worker-v40.js', import.meta.url), 'utf8');
+assert.match(worker, /hmppRoundGuessKey/);
+assert.match(worker, /round-of-64/);
+assert.match(worker, /card\.dataset\.round=m\.round\|\|'round-of-64'/);
+assert.match(worker, /hmppRoundGuessFor\(sessionState,round,sid\)/);
+assert.match(worker, /hmppRoundGuessKey\(match\.dataset\.round\|\|selectedRound\(\),g\.song_id\)/);
+
+// Regression model: a Play-In guess for a reused song ID must not resolve for R64.
+const fixture = {
+  guesses: {
+    'SONG26-072': { round: 'play-in', song_id: 'SONG26-072', guessed_participant_id: 'danny-mcgees' },
+    'round-of-64:SONG26-072': { round: 'round-of-64', song_id: 'SONG26-072', guessed_participant_id: 'juh' }
+  }
+};
+function roundGuessFor(state, round, songId) {
+  const key = round === 'play-in' ? songId : round + ':' + songId;
+  const exact = state.guesses?.[key];
+  if (exact && exact.round === round && exact.song_id === songId) return exact;
+  return Object.values(state.guesses || {}).find(g => g?.round === round && g?.song_id === songId) || null;
+}
+assert.equal(roundGuessFor(fixture,'round-of-64','SONG26-072').guessed_participant_id,'juh');
+delete fixture.guesses['round-of-64:SONG26-072'];
+assert.equal(roundGuessFor(fixture,'round-of-64','SONG26-072'),null,'Play-In guess must not bleed into R64');
