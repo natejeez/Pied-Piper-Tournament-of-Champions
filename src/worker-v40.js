@@ -15,26 +15,17 @@ function patchGuessingSource(source) {
     const key = hmppRoundGuessKey(round, songId);
     const exact = state.guesses?.[key];
     if (exact && exact.round === round && exact.song_id === songId) return exact;
-    return Object.values(state.guesses || {}).find(g => g?.round === round && g?.song_id === songId) || null;
-  }`
+    return Object.values(state.guesses || {}).find(g =>
+      g?.round === round && g?.song_id === songId
+    ) || null;
+  }
+`
     );
   }
 
-  // Replace the older v2.36 guessFor helper as well as any legacy saved-guess
-  // lookup. A prior-round record is never a valid saved guess for this match.
   source = source.replace(
-    /function guessFor\\(round,songId\\)\\{[\\s\\S]*?\\n  \\}/,
-    `function guessFor(round,songId,matchId){
-    if (!round || !songId) return null;
-    const key=round==='play-in'?songId:round+':'+songId;
-    const exact=sessionState?.guesses?.[key];
-    if (exact && exact.round===round && exact.song_id===songId && (!matchId || exact.match_id===matchId)) return exact;
-    return null;
-  }`
-  );
-  source = source.replace(
-    'const saved=guessFor(match.dataset.round,sid);',
-    'const saved=guessFor(match.dataset.round,sid,match.dataset.matchId);'
+    'function renderGuessControls(match,voteSongId,{legacy=false}={}){',
+    'function renderGuessControls(match,voteSongId,{legacy=false}={}){'
   );
   source = source.replace(
     'const songs=matchSongs(match); if(songs.length!==2||!participants.length)return;',
@@ -72,12 +63,9 @@ export default {
       const headers = new Headers(response.headers);
       headers.set('content-type', 'application/javascript; charset=utf-8');
       headers.set('cache-control', 'no-store');
-      headers.set('x-hmpp-build', 'v2.40-round-isolation');
-
-      return new Response(source, {
-        status: response.status,
-        headers
-      });
+      headers.set('x-hmpp-build', 'v2.40-test');
+      headers.set('x-hmpp-voting-owner', 'modal-atomic-matchup');
+      return new Response(source,{status:response.status,headers});
     }
 
     return workerV39.fetch(request, env, ctx);
