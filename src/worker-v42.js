@@ -8,7 +8,7 @@ function patchM005Client(source) {
   const start = source.indexOf(startMarker);
   const end = source.indexOf(endMarker, start + startMarker.length);
   if (start >= 0 && end >= 0) {
-    const replacement = `  function renderGuessControls(match,voteSongId,{legacy=false}={}){
+    const replacement = `  function renderGuessControls(match,voteSongId,{legacy=false}={}){\n
     if(!match)return;
     const songs=matchSongs(match); if(songs.length!==2||!participants.length)return;
     const round=match.dataset.round||selectedRound();
@@ -18,7 +18,7 @@ function patchM005Client(source) {
       const saved=typeof hmppRoundGuessFor==='function' ? hmppRoundGuessFor(sessionState,round,sid) : null;
       if(!$('.guess-prompt',song)){const p=document.createElement('div');p.className='guess-prompt';p.textContent='Which Harry Man Submitted...';$('.title',song)?.insertAdjacentElement('beforebegin',p)}
       let select=$('.guess-select',song);
-      if(!select){select=document.createElement('select');select.className='guess-select';select.dataset.songId=sid;select.setAttribute('aria-label',`Guess who submitted ${song.dataset.title}`);select.innerHTML=guessOptions('');select.addEventListener('change',()=>updateMatchSubmit(match));$('.artist',song)?.insertAdjacentElement('afterend',select)}
+      if(!select){select=document.createElement('select');select.className='guess-select';select.dataset.songId=sid;select.setAttribute('aria-label','Guess who submitted ' + song.dataset.title);select.innerHTML=guessOptions('');select.addEventListener('change',()=>updateMatchSubmit(match));$('.artist',song)?.insertAdjacentElement('afterend',select)}
       select.value=saved?.guessed_participant_id||'';
       select.disabled=!!saved;
       select.setAttribute('aria-disabled',saved?'true':'false');
@@ -47,8 +47,8 @@ function patchGuessingSource(source) {
     // so Play-In records can never satisfy an R64 lookup, even if wrappers above
     // it are changed or bypassed later.
     source = source.replace(
-      /function guessFor\(round,songId\)\{[\s\S]*?\n  \}/,
-      `function guessFor(round,songId,matchId){
+      /function guessFor\\(round,songId\\)\\{[\\s\\S]*?\n  \\/\\}/,
+      `function guessFor(round,songId,matchId){\n
     if (!round || !songId) return null;
     const key=round==='play-in'?songId:round+':'+songId;
     const exact=sessionState?.guesses?.[key];
