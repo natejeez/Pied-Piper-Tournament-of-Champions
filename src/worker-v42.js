@@ -8,7 +8,8 @@ function patchM005Client(source) {
   const start = source.indexOf(startMarker);
   const end = source.indexOf(endMarker, start + startMarker.length);
   if (start >= 0 && end >= 0) {
-    const replacement = `  function renderGuessControls(match,voteSongId,{legacy=false}={}){\n
+    const replacement = `  function renderGuessControls(match,voteSongId,{legacy=false}={}){
+
     if(!match)return;
     const songs=matchSongs(match); if(songs.length!==2||!participants.length)return;
     const round=match.dataset.round||selectedRound();
@@ -27,7 +28,7 @@ function patchM005Client(source) {
     updateMatchSubmit(match);
   }
 `;
-    source = source.slice(0,start) + replacement + source.slice(end);
+    source = source.slice(start) + replacement + source.slice(end);
   }
   source = source.replace(
     'const guessesComplete=songs.every(s=>!!sessionState.guesses?.[s.dataset.songId]);',
@@ -47,8 +48,8 @@ function patchGuessingSource(source) {
     // so Play-In records can never satisfy an R64 lookup, even if wrappers above
     // it are changed or bypassed later.
     source = source.replace(
-      /function guessFor\\(round,songId\\)\\{[\\s\\S]*?\n  \\/\\}/,
-      `function guessFor(round,songId,matchId){\n
+      /function guessFor\(round,songId\)\{[\s\S]*?\n  \}/,
+      `function guessFor(round,songId,matchId){
     if (!round || !songId) return null;
     const key=round==='play-in'?songId:round+':'+songId;
     const exact=sessionState?.guesses?.[key];
