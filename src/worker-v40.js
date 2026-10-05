@@ -20,9 +20,21 @@ function patchGuessingSource(source) {
     );
   }
 
+  // Replace the older v2.36 guessFor helper as well as any legacy saved-guess
+  // lookup. A prior-round record is never a valid saved guess for this match.
   source = source.replace(
-    'function renderGuessControls(match,voteSongId,{legacy=false}={}){',
-    'function renderGuessControls(match,voteSongId,{legacy=false}={}){'
+    /function guessFor\\(round,songId\\)\\{[\\s\\S]*?\\n  \\}/,
+    `function guessFor(round,songId,matchId){
+    if (!round || !songId) return null;
+    const key=round==='play-in'?songId:round+':'+songId;
+    const exact=sessionState?.guesses?.[key];
+    if (exact && exact.round===round && exact.song_id===songId && (!matchId || exact.match_id===matchId)) return exact;
+    return null;
+  }`
+  );
+  source = source.replace(
+    'const saved=guessFor(match.dataset.round,sid);',
+    'const saved=guessFor(match.dataset.round,sid,match.dataset.matchId);'
   );
   source = source.replace(
     'const songs=matchSongs(match); if(songs.length!==2||!participants.length)return;',
