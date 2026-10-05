@@ -1,5 +1,5 @@
 (() => {
-  const $=(s,r=document)=>r.querySelector(s);
+  const $=(s,r=document)=>(r||document).querySelector(s);
   const $$=(s,r=document)=>[...r.querySelectorAll(s)];
   let session=null;
   const viewKey=round=>`hmpp:v32:view:${round}`;
