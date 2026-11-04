@@ -1,12 +1,12 @@
-# HMPP 2026 — Production v2.9
+# HMPP 2026 — Production
 
-Harry Men Pied Piper Tournament of Champions is live on the authenticated v2.9 voting stack.
+Harry Men Pied Piper Tournament of Champions runs on the authenticated Cloudflare Worker.
 
 ## Current production
 - Git branch: `main`
 - Cloudflare Worker: `pied-piper-tournament-of-champions`
-- Runtime: Cloudflare Worker + Durable Objects + static assets
-- Git mirror: `main`
+- Runtime: Cloudflare Worker + Durable Objects + static assets; D1 is the target authority for vote/guess records
+- Storage cutover: pending Cloudflare D1 provisioning and live-state migration
 - Tournament: 9 official participants, 72 songs, 8 Play-In matchups, 64-song main bracket
 - Test identity is excluded from official totals.
 
@@ -16,7 +16,7 @@ Harry Men Pied Piper Tournament of Champions is live on the authenticated v2.9 v
 3. Select a song; the choice can be changed until final submission.
 4. Guess which Harry Man submitted each song.
 5. Submit one song vote and two submitter guesses atomically.
-6. Submitted state is durable and restored from the participant Durable Object. GitHub is the audit/export mirror.
+6. Vote and both guesses are stored together and restored from server state. GitHub is not a runtime data store or mirror.
 
 Unsubmitted drafts are browser-local per participant and restore after refresh/login. They are never authoritative tournament records.
 
@@ -35,5 +35,8 @@ The test administrator identity receives QA and publication controls. Publicatio
 
 Version-specific documents under `docs/` are retained as historical implementation records and are not the current source of truth unless explicitly referenced.
 
+## Data privacy and migration
+Participant/admin data and vote snapshots are excluded from Git tracking. Historical public commits may still contain previously committed data; deleting it from the current tree does not erase public history. See `docs/D1_MIGRATION.md` for the staged D1 rollout and migration procedure. No R2 backup is configured.
+
 ## Current release gate
-The participant-facing voting workflow is production-ready. The next live validation occurs only after all 72 official Play-In votes exist: verify result preview, result publication, automatic Play-In winner placement into Round of 64, and Round-of-64 publication.
+Production remains on the existing Durable Object vote store until a D1 database is provisioned, live state is reconciled, and the controlled cutover is completed. Do not enable D1 by changing the backend flag before following `docs/D1_MIGRATION.md`.

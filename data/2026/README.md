@@ -15,11 +15,13 @@ The 2026 submission intake is organized as an immutable administrative record pl
 
 ## Administrative files
 
-`admin/participants.csv` contains the participant roster and private email addresses.
+Administrative participant records contain private email addresses and must not be committed to the public repository. They are excluded by `.gitignore`.
 
-`admin/submissions/P26-01.csv` through `P26-09.csv` contain the normalized submission records. Splitting by participant makes audit/review safer while preserving globally unique submission IDs.
+`admin/submissions/P26-01.csv` through `P26-09.csv` contain participant submission records and must remain in private storage. They are excluded by `.gitignore`.
 
 `admin/duplicate-review.md` contains the current duplicate/version review state and unresolved metadata issues.
+
+Vote snapshots are migration inputs only and are excluded from Git. Live participant vote/guess state must be read from the active Worker data store; repository snapshots may be incomplete or stale.
 
 ## Important
 

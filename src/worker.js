@@ -1,3 +1,5 @@
+import { readParticipantState } from './vote-database.js';
+
 const MATCHES = {"PI01":{"round":"play-in","songs":["SONG26-019","SONG26-016"]},"PI02":{"round":"play-in","songs":["SONG26-042","SONG26-001"]},"PI03":{"round":"play-in","songs":["SONG26-052","SONG26-031"]},"PI04":{"round":"play-in","songs":["SONG26-051","SONG26-057"]},"PI05":{"round":"play-in","songs":["SONG26-069","SONG26-034"]},"PI06":{"round":"play-in","songs":["SONG26-028","SONG26-062"]},"PI07":{"round":"play-in","songs":["SONG26-044","SONG26-020"]},"PI08":{"round":"play-in","songs":["SONG26-066","SONG26-003"]},"M001":{"round":"round-of-64","songs":["SONG26-046","SONG26-061"]},"M002":{"round":"round-of-64","songs":["SONG26-004","SONG26-050"]},"M003":{"round":"round-of-64","songs":["SONG26-055"]},"M004":{"round":"round-of-64","songs":["SONG26-068","SONG26-021"]},"M005":{"round":"round-of-64","songs":["SONG26-072"]},"M006":{"round":"round-of-64","songs":["SONG26-022","SONG26-029"]},"M007":{"round":"round-of-64","songs":["SONG26-007","SONG26-032"]},"M008":{"round":"round-of-64","songs":["SONG26-065","SONG26-010"]},"M009":{"round":"round-of-64","songs":["SONG26-071","SONG26-013"]},"M010":{"round":"round-of-64","songs":["SONG26-009","SONG26-059"]},"M011":{"round":"round-of-64","songs":["SONG26-011","SONG26-056"]},"M012":{"round":"round-of-64","songs":["SONG26-067","SONG26-008"]},"M013":{"round":"round-of-64","songs":["SONG26-033"]},"M014":{"round":"round-of-64","songs":["SONG26-037"]},"M015":{"round":"round-of-64","songs":["SONG26-025","SONG26-045"]},"M016":{"round":"round-of-64","songs":["SONG26-027","SONG26-039"]},"M017":{"round":"round-of-64","songs":["SONG26-012","SONG26-058"]},"M018":{"round":"round-of-64","songs":["SONG26-018","SONG26-040"]},"M019":{"round":"round-of-64","songs":["SONG26-038"]},"M020":{"round":"round-of-64","songs":["SONG26-070","SONG26-048"]},"M021":{"round":"round-of-64","songs":["SONG26-053","SONG26-005"]},"M022":{"round":"round-of-64","songs":["SONG26-036","SONG26-041"]},"M023":{"round":"round-of-64","songs":["SONG26-060","SONG26-023"]},"M024":{"round":"round-of-64","songs":["SONG26-017"]},"M025":{"round":"round-of-64","songs":["SONG26-043","SONG26-024"]},"M026":{"round":"round-of-64","songs":["SONG26-006"]},"M027":{"round":"round-of-64","songs":["SONG26-047","SONG26-015"]},"M028":{"round":"round-of-64","songs":["SONG26-054","SONG26-002"]},"M029":{"round":"round-of-64","songs":["SONG26-026","SONG26-035"]},"M030":{"round":"round-of-64","songs":["SONG26-063","SONG26-049"]},"M031":{"round":"round-of-64","songs":["SONG26-014","SONG26-030"]},"M032":{"round":"round-of-64","songs":["SONG26-064"]}};
 const SESSION_COOKIE = 'hmpp_session';
 const FIVE_MINUTES = 5 * 60 * 1000;
@@ -37,6 +39,13 @@ async function storeCall(env, participantId, action, payload={}) {
   const stub=getStore(env,participantId);
   return stub.fetch('https://vote-store.internal/'+action,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({participant_id:participantId,...payload})});
 }
+function usesD1(env) { return env.VOTE_STORAGE_BACKEND === 'd1'; }
+async function participantState(env, participantId, isTest) {
+  if (usesD1(env)) return readParticipantState(env, participantId);
+  const response = await storeCall(env, participantId, 'state', { is_test:isTest });
+  if (!response.ok) throw new Error('Participant vote state is unavailable.');
+  return response.json();
+}
 
 export default {
   async fetch(request, env, ctx) {
@@ -62,40 +71,30 @@ export default {
         if(actual.toLowerCase()!==String(expected).toLowerCase()) return jsonResponse({error:'That email does not match the selected participant.'},401);
         const payload={sub:participant_id,name:p.name,is_test:isTestParticipant(p),exp:Date.now()+7*24*60*60*1000};
         const token=await makeSession(env.SESSION_SECRET,payload);
-        const sr=await storeCall(env,participant_id,'state',{is_test:isTestParticipant(p)}); const state=await sr.json();
+        const state=await participantState(env,participant_id,isTestParticipant(p));
         return jsonResponse({session:{participant_id,name:p.name,is_test:isTestParticipant(p),votes:state.votes||{},guesses:state.guesses||{}}},200,{'set-cookie':sessionCookie(token)});
       }
       const session=await readSession(request,env);
       if(!session) return jsonResponse({error:'Authentication required.'},401);
       if(url.pathname==='/api/session' && request.method==='GET') {
-        const sr=await storeCall(env,session.sub,'state',{is_test:session.is_test===true}); const state=await sr.json();
+        const state=await participantState(env,session.sub,session.is_test===true);
         return jsonResponse({session:{participant_id:session.sub,name:session.name,is_test:session.is_test===true,votes:state.votes||{},guesses:state.guesses||{}}});
       }
       if(url.pathname==='/api/votes' && request.method==='POST') {
-        const body=await request.json(); const allowed=MATCHES[body.match_id];
-        if(!allowed || allowed.round!==body.round || allowed.songs.length!==2 || !allowed.songs.includes(body.song_id)) return jsonResponse({error:'This vote does not match an active tournament matchup.'},400);
-        const sr=await storeCall(env,session.sub,'vote',{match_id:body.match_id,round:body.round,song_id:body.song_id,is_test:session.is_test===true});
-        const data=await sr.json(); return jsonResponse(data,sr.status);
+        return jsonResponse({error:'Submit the song choice and both submitter guesses together.'},409);
       }
       if(url.pathname==='/api/guesses' && request.method==='GET') {
-        const sr=await storeCall(env,session.sub,'state',{is_test:session.is_test===true}); const state=await sr.json();
+        const state=await participantState(env,session.sub,session.is_test===true);
         return jsonResponse({guesses:state.guesses||{}});
       }
       if(url.pathname==='/api/guesses' && request.method==='POST') {
-        const body=await request.json(); const guesses=Array.isArray(body.guesses)?body.guesses:[];
-        if(!guesses.length || guesses.length>64) return jsonResponse({error:'Submit at least one valid guess.'},400);
-        const participants=(await participantList(env)).filter(p=>!p.is_test); const validParticipants=new Set(participants.map(p=>p.id));
-        const clean=[]; const seenSongs=new Set();
-        for(const g of guesses){ const allowed=MATCHES[g.match_id];
-          if(!allowed || allowed.round!==g.round || allowed.songs.length!==2 || !allowed.songs.includes(g.song_id)) return jsonResponse({error:'A guess does not match an active tournament song.'},400);
-          if(!validParticipants.has(g.guessed_participant_id)) return jsonResponse({error:'Choose a valid Harry Man for every guess.'},400);
-          if(seenSongs.has(g.song_id)) return jsonResponse({error:'Each song can only appear once in a guess submission.'},400);
-          seenSongs.add(g.song_id); clean.push({match_id:g.match_id,round:g.round,song_id:g.song_id,guessed_participant_id:g.guessed_participant_id});
-        }
-        const sr=await storeCall(env,session.sub,'guesses',{guesses:clean,is_test:session.is_test===true}); const data=await sr.json(); return jsonResponse(data,sr.status);
+        return jsonResponse({error:'Submit both guesses together with the song choice.'},409);
       }
       if(url.pathname==='/api/logout' && request.method==='POST') {
-        const sr=await storeCall(env,session.sub,'flush',{is_test:session.is_test===true}); if(!sr.ok) return jsonResponse({error:'Vote sync failed. Logout was cancelled so no data is lost.'},503);
+        if(!usesD1(env)) {
+          const sr=await storeCall(env,session.sub,'flush',{is_test:session.is_test===true});
+          if(!sr.ok) return jsonResponse({error:'Vote sync failed. Logout was cancelled so no data is lost.'},503);
+        }
         return jsonResponse({ok:true},200,{'set-cookie':clearCookie()});
       }
       return jsonResponse({error:'Not found.'},404);
@@ -130,11 +129,7 @@ export class ParticipantVoteStore {
   }
   async alarm() { await this.flushGit(); }
   async flushGit() {
-    const votes=(await this.state.storage.get('votes'))||{}; const guesses=(await this.state.storage.get('guesses'))||{}; const participantId=(await this.state.storage.get('participant_id')) || 'participant';
-    const isTest=(await this.state.storage.get('is_test'))===true;
-    const payload={schema_version:3,tournament:'HMPP-2026',participant_id:participantId,vote_pool:isTest?'test':'official',excluded_from_official_totals:isTest,guess_pool:isTest?'test':'official',excluded_from_official_guess_stats:isTest,updated_at:new Date().toISOString(),votes,guesses};
-    const path=isTest?`data/2026/test-votes/by-participant/${participantId}.json`:`data/2026/votes/by-participant/${participantId}.json`;
-    await writeGitJson(this.env,path,payload,`${isTest?'Sync HMPP TEST votes':'Sync HMPP votes'}: ${participantId}`);
+    return;
   }
 }
 

@@ -18,9 +18,11 @@
   "migrations": [
     { "tag": "v1", "new_sqlite_classes": ["ParticipantVoteStore"] }
   ],
+  // The ID placeholder is informational; D1 still requires a real d1_databases binding.
   "vars": {
-    "GITHUB_REPO": "natejeez/Pied-Piper-Tournament-of-Champions",
-    "GITHUB_BRANCH": "main"
+    "VOTE_STORAGE_BACKEND": "durable-objects",
+    "VOTE_WRITES_PAUSED": "false",
+    "VOTES_DATABASE_ID": "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
   },
   "observability": {
     "logs": {

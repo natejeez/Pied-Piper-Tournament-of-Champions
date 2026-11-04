@@ -1,4 +1,5 @@
 import workerV24, { ParticipantVoteStore as V24ParticipantVoteStore } from './worker-v24.js';
+import { resetParticipantRound } from './vote-database.js';
 
 function json(data, status = 200, headers = {}) {
   return new Response(JSON.stringify(data), {
@@ -90,6 +91,9 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === '/api/admin/reset-round-data' && request.method === 'POST') {
+      if (env.VOTE_WRITES_PAUSED === 'true') {
+        return json({ error:'Administrative resets are disabled while voting data is being migrated.' }, 409);
+      }
       const { response, body: sessionPayload } = await sessionFor(request, env, ctx);
       if (!response.ok) return response;
       const session = sessionPayload?.session;
@@ -125,11 +129,13 @@ export default {
       for (const id of targets) {
         const isTest = id === 'test-voter';
         try {
+          if (env.VOTE_STORAGE_BACKEND === 'd1') {
+            summaries.push({ participant_id:id, ...await resetParticipantRound(env,id,round) });
+            continue;
+          }
           const reset = await store(env, id, 'reset-round', { round, is_test: isTest });
           const data = await reset.json().catch(() => ({}));
           if (!reset.ok) throw new Error(data.error || `Reset failed (${reset.status})`);
-          const flush = await store(env, id, 'flush', { is_test: isTest });
-          if (!flush.ok) throw new Error(`Reset succeeded but Git sync failed (${flush.status})`);
           summaries.push({ participant_id: id, votes_removed: data.votes_removed || 0, guesses_removed: data.guesses_removed || 0 });
         } catch (error) {
           failures.push({ participant_id: id, error: error.message });

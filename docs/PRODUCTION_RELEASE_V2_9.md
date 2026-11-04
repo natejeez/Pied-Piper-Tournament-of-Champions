@@ -25,12 +25,12 @@ Once complete, validate:
 4. public Round-of-64 publication.
 
 ## Production configuration
-- Git branch/mirror: `main`
+- Git branch: `main`
 - Worker: `pied-piper-tournament-of-champions`
-- Worker entrypoint: `src/worker-v29.js`
-- required runtime secrets: `SESSION_SECRET`, `PARTICIPANT_AUTH_JSON`, `GITHUB_TOKEN`
+- Configured Worker entrypoint: `src/worker-v213-prod.js`
+- required runtime secrets: `SESSION_SECRET`, `PARTICIPANT_AUTH_JSON`
 
-The GitHub token should be repository-scoped and have Contents read/write permission. Runtime secret values are not committed.
+This v2.9 release record predates the D1 remediation. GitHub vote mirroring is disabled in the current Worker code. Production vote storage remains Durable Objects until the gated D1 migration in `D1_MIGRATION.md` is completed. No R2 backup is configured.
 
 ## Accepted deferred polish
 A brief initial-layout flash is still observable in some refresh/logout paths. It is accepted because it does not alter voting data or expose another participant's authenticated state.

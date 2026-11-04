@@ -1,4 +1,5 @@
 import baseWorker, { ParticipantVoteStore as BaseParticipantVoteStore } from './worker.js';
+import { importParticipantState, readParticipantState, submitMatchup } from './vote-database.js';
 
 const MATCHES = {"PI01":{"round":"play-in","songs":["SONG26-019","SONG26-016"]},"PI02":{"round":"play-in","songs":["SONG26-042","SONG26-001"]},"PI03":{"round":"play-in","songs":["SONG26-052","SONG26-031"]},"PI04":{"round":"play-in","songs":["SONG26-051","SONG26-057"]},"PI05":{"round":"play-in","songs":["SONG26-069","SONG26-034"]},"PI06":{"round":"play-in","songs":["SONG26-028","SONG26-062"]},"PI07":{"round":"play-in","songs":["SONG26-044","SONG26-020"]},"PI08":{"round":"play-in","songs":["SONG26-066","SONG26-003"]},"M001":{"round":"round-of-64","songs":["SONG26-046","SONG26-061"]},"M002":{"round":"round-of-64","songs":["SONG26-004","SONG26-050"]},"M003":{"round":"round-of-64","songs":["SONG26-055"]},"M004":{"round":"round-of-64","songs":["SONG26-068","SONG26-021"]},"M005":{"round":"round-of-64","songs":["SONG26-072"]},"M006":{"round":"round-of-64","songs":["SONG26-022","SONG26-029"]},"M007":{"round":"round-of-64","songs":["SONG26-007","SONG26-032"]},"M008":{"round":"round-of-64","songs":["SONG26-065","SONG26-010"]},"M009":{"round":"round-of-64","songs":["SONG26-071","SONG26-013"]},"M010":{"round":"round-of-64","songs":["SONG26-009","SONG26-059"]},"M011":{"round":"round-of-64","songs":["SONG26-011","SONG26-056"]},"M012":{"round":"round-of-64","songs":["SONG26-067","SONG26-008"]},"M013":{"round":"round-of-64","songs":["SONG26-033"]},"M014":{"round":"round-of-64","songs":["SONG26-037"]},"M015":{"round":"round-of-64","songs":["SONG26-025","SONG26-045"]},"M016":{"round":"round-of-64","songs":["SONG26-027","SONG26-039"]},"M017":{"round":"round-of-64","songs":["SONG26-012","SONG26-058"]},"M018":{"round":"round-of-64","songs":["SONG26-018","SONG26-040"]},"M019":{"round":"round-of-64","songs":["SONG26-038"]},"M020":{"round":"round-of-64","songs":["SONG26-070","SONG26-048"]},"M021":{"round":"round-of-64","songs":["SONG26-053","SONG26-005"]},"M022":{"round":"round-of-64","songs":["SONG26-036","SONG26-041"]},"M023":{"round":"round-of-64","songs":["SONG26-060","SONG26-023"]},"M024":{"round":"round-of-64","songs":["SONG26-017"]},"M025":{"round":"round-of-64","songs":["SONG26-043","SONG26-024"]},"M026":{"round":"round-of-64","songs":["SONG26-006"]},"M027":{"round":"round-of-64","songs":["SONG26-047","SONG26-015"]},"M028":{"round":"round-of-64","songs":["SONG26-054","SONG26-002"]},"M029":{"round":"round-of-64","songs":["SONG26-026","SONG26-035"]},"M030":{"round":"round-of-64","songs":["SONG26-063","SONG26-049"]},"M031":{"round":"round-of-64","songs":["SONG26-014","SONG26-030"]},"M032":{"round":"round-of-64","songs":["SONG26-064"]}};
 const PLAYIN_TO_R64={PI01:'M003',PI02:'M013',PI03:'M005',PI04:'M026',PI05:'M032',PI06:'M014',PI07:'M019',PI08:'M024'};
@@ -22,12 +23,32 @@ function store(env,id,action,payload={}){const stub=env.PARTICIPANT_VOTES.get(en
 function defaultTournamentState(){return{schema_version:1,tournament:'HMPP-2026',results_visible:{},published_rounds:{'play-in':true},published_results:{},published_matchups:{},events:[]}}
 async function getTournamentState(env){const r=await store(env,ADMIN_STORE_ID,'admin-state');if(!r.ok)throw new Error('Tournament state unavailable');return (await r.json()).state||defaultTournamentState()}
 async function writeGitJson(env,path,data,message){if(!env.GITHUB_TOKEN||!env.GITHUB_REPO)throw new Error('GitHub mirror is not configured');const branch=env.GITHUB_BRANCH||'main',api=`https://api.github.com/repos/${env.GITHUB_REPO}/contents/${path}`,headers={'authorization':`Bearer ${env.GITHUB_TOKEN}`,'accept':'application/vnd.github+json','user-agent':'HMPP-2026-Worker','x-github-api-version':'2022-11-28'};let sha;const current=await fetch(api+'?ref='+encodeURIComponent(branch),{headers});if(current.ok)sha=(await current.json()).sha;else if(current.status!==404)throw new Error('GitHub read failed: '+current.status);const content=bytesToBase64(utf8(JSON.stringify(data,null,2)+'\n')),body={message,content,branch,...(sha?{sha}:{})};let put=await fetch(api,{method:'PUT',headers:{...headers,'content-type':'application/json'},body:JSON.stringify(body)});if(put.status===409){const latest=await fetch(api+'?ref='+encodeURIComponent(branch),{headers});if(latest.ok){body.sha=(await latest.json()).sha;put=await fetch(api,{method:'PUT',headers:{...headers,'content-type':'application/json'},body:JSON.stringify(body)})}}if(!put.ok)throw new Error('GitHub write failed: '+put.status+' '+await put.text());return put.json()}
-async function saveTournamentState(env,state,message){const r=await store(env,ADMIN_STORE_ID,'admin-set',{state});if(!r.ok)throw new Error('Tournament state could not be saved');await writeGitJson(env,'data/2026/admin/publication-state.json',state,message);return state}
+async function saveTournamentState(env,state){const r=await store(env,ADMIN_STORE_ID,'admin-set',{state});if(!r.ok)throw new Error('Tournament state could not be saved');return state}
 function baseMatches(round){return Object.entries(MATCHES).filter(([,m])=>m.round===round).map(([match_id,m])=>({match_id,round:m.round,songs:[...m.songs]}))}
 function buildR64(results){const winners=Object.fromEntries(results.map(r=>[r.match_id,r.winner_song_id])),reverse=Object.fromEntries(Object.entries(PLAYIN_TO_R64).map(([pi,m])=>[m,pi]));return baseMatches('round-of-64').map(m=>m.songs.length===2?m:{...m,songs:winners[reverse[m.match_id]]?[winners[reverse[m.match_id]],...m.songs]:[...m.songs],source_play_in:reverse[m.match_id]||null})}
 async function resolvedMatches(env,round,{preview=false}={}){if(round==='play-in')return baseMatches(round);if(round!=='round-of-64')return[];const state=await getTournamentState(env),pub=state.published_matchups?.[round];if(Array.isArray(pub)&&pub.length)return pub;if(preview){const prev=await aggregate(env,'play-in');if(prev.advancement_ready)return buildR64(prev.results)}return[]}
 async function effectiveMatch(env,matchId,{preview=false}={}){const base=MATCHES[matchId];if(!base)return null;if(base.songs.length===2)return{match_id:matchId,round:base.round,songs:[...base.songs]};const all=await resolvedMatches(env,base.round,{preview});return all.find(m=>m.match_id===matchId)||null}
-async function aggregate(env,round){const matches=round==='play-in'?baseMatches(round):await resolvedMatches(env,round),official=(await participants(env)).filter(p=>!isTest(p));if(!matches.length)return{round,supported:false,complete:false,advancement_ready:false,official_participants:official.length,expected_votes:0,received_votes:0,ties:[],results:[]};const states=await Promise.all(official.map(async p=>{const r=await store(env,p.id,'state',{is_test:false});return r.ok?{id:p.id,votes:(await r.json()).votes||{}}:{id:p.id,votes:{}}}));let received=0;const ties=[],results=[];for(const m of matches){const counts=Object.fromEntries(m.songs.map(s=>[s,0]));for(const st of states){const v=st.votes[m.match_id];if(v&&Object.prototype.hasOwnProperty.call(counts,v.song_id)){counts[v.song_id]++;received++}}const total=Object.values(counts).reduce((a,b)=>a+b,0),complete=total===official.length,ordered=Object.entries(counts).sort((a,b)=>b[1]-a[1]),tied=complete&&ordered.length>1&&ordered[0][1]===ordered[1][1];if(tied)ties.push(m.match_id);results.push({match_id:m.match_id,round,songs:m.songs.map(song_id=>({song_id,votes:counts[song_id]})),total_votes:total,complete,tied,winner_song_id:complete&&!tied?ordered[0][0]:null})}const complete=results.every(r=>r.complete);return{round,supported:true,complete,advancement_ready:complete&&ties.length===0,official_participants:official.length,expected_votes:official.length*matches.length,received_votes:received,ties,results}}
+async function aggregate(env,round){
+  const matches=round==='play-in'?baseMatches(round):await resolvedMatches(env,round);
+  const official=(await participants(env)).filter(participant=>!isTest(participant));
+  if(!matches.length)return{round,supported:false,complete:false,advancement_ready:false,official_participants:official.length,expected_votes:0,received_votes:0,ties:[],results:[]};
+  const states=await Promise.all(official.map(async participant=>{
+    if(env.VOTE_STORAGE_BACKEND==='d1')return{id:participant.id,...await readParticipantState(env,participant.id)};
+    const response=await store(env,participant.id,'state',{is_test:false});
+    if(!response.ok)throw new Error(`Vote state unavailable for participant ${participant.id}.`);
+    return{id:participant.id,...await response.json()};
+  }));
+  let received=0;const ties=[],results=[];
+  for(const match of matches){
+    const counts=Object.fromEntries(match.songs.map(song=>[song,0]));
+    for(const state of states){const vote=state.votes?.[match.match_id];if(vote&&Object.prototype.hasOwnProperty.call(counts,vote.song_id)){counts[vote.song_id]++;received++}}
+    const total=Object.values(counts).reduce((a,b)=>a+b,0),complete=total===official.length,ordered=Object.entries(counts).sort((a,b)=>b[1]-a[1]),tied=complete&&ordered.length>1&&ordered[0][1]===ordered[1][1];
+    if(tied)ties.push(match.match_id);
+    results.push({match_id:match.match_id,round,songs:match.songs.map(song_id=>({song_id,votes:counts[song_id]})),total_votes:total,complete,tied,winner_song_id:complete&&!tied?ordered[0][0]:null});
+  }
+  const complete=results.every(result=>result.complete);
+  return{round,supported:true,complete,advancement_ready:complete&&ties.length===0,official_participants:official.length,expected_votes:official.length*matches.length,received_votes:received,ties,results};
+}
 function publicState(state){const visible={};for(const [round,on] of Object.entries(state.results_visible||{}))if(on&&state.published_results?.[round])visible[round]=state.published_results[round];return{schema_version:state.schema_version||1,results_visible:state.results_visible||{},published_rounds:state.published_rounds||{'play-in':true},published_results:visible,published_matchups:state.published_matchups||{}}}
 
 export default {
@@ -41,6 +62,7 @@ export default {
       if(url.pathname==='/api/guesses'&&request.method==='POST')return json({error:'Standalone guess submission has been retired. Submit the entire matchup together.'},409);
       if(url.pathname==='/api/guesses'&&request.method==='GET')return baseWorker.fetch(request,env,ctx);
       if(url.pathname==='/api/matchup-submission'&&request.method==='POST'){
+        if(env.VOTE_WRITES_PAUSED==='true')return json({error:'Voting is temporarily paused for a data migration. Please try again later.'},503);
         const body=await request.json(),allowed=await effectiveMatch(env,body.match_id,{preview:session.is_test===true});
         if(!allowed||allowed.round!==body.round||allowed.songs.length!==2||!allowed.songs.includes(body.song_id))return json({error:'This submission does not match an active tournament matchup.'},400);
         if(body.round!=='play-in'&&session.is_test!==true){const state=await getTournamentState(env);if(state.published_rounds?.[body.round]!==true)return json({error:'This round has not been published yet.'},409)}
@@ -48,7 +70,30 @@ export default {
         const valid=new Set((await participants(env)).filter(p=>!isTest(p)).map(p=>p.id)),bySong=new Map();
         for(const g of incoming){if(!allowed.songs.includes(g.song_id)||bySong.has(g.song_id))return json({error:'Submit exactly one guess for each song in the matchup.'},400);if(!valid.has(g.guessed_participant_id))return json({error:'Choose a valid Harry Man for both songs.'},400);bySong.set(g.song_id,{song_id:g.song_id,guessed_participant_id:g.guessed_participant_id})}
         if(allowed.songs.some(s=>!bySong.has(s)))return json({error:'Choose who submitted both songs before submitting the matchup.'},400);
-        const r=await store(env,session.sub,'matchup-submit',{match_id:body.match_id,round:body.round,song_id:body.song_id,guesses:allowed.songs.map(s=>bySong.get(s)),is_test:session.is_test===true}),data=await r.json();return json(data,r.status);
+        const guesses=allowed.songs.map(song=>bySong.get(song));
+        if(env.VOTE_STORAGE_BACKEND==='d1'){
+          const result=await submitMatchup(env,{participantId:session.sub,isTest:session.is_test===true,matchId:body.match_id,round:body.round,songId:body.song_id,guesses});
+          return json(result.body,result.status);
+        }
+        const r=await store(env,session.sub,'matchup-submit',{match_id:body.match_id,round:body.round,song_id:body.song_id,guesses,is_test:session.is_test===true}),data=await r.json();return json(data,r.status);
+      }
+      if(url.pathname==='/api/admin/migrate-votes-to-d1'&&request.method==='POST'){
+        if(session.is_test!==true)return json({error:'Administrator access required.'},403);
+        if(env.VOTE_WRITES_PAUSED!=='true')return json({error:'Pause voting before starting the migration.'},409);
+        if(env.VOTE_STORAGE_BACKEND==='d1')return json({error:'Migration must run while Durable Objects remain the active backend.'},409);
+        let body={};try{body=await request.json()}catch{}
+        if(body.confirm!==true)return json({error:'Explicit migration confirmation is required.'},400);
+        const roster=await participants(env);
+        const targets=roster.filter(participant=>!isTest(participant));
+        const testParticipant=roster.find(isTest);
+        targets.push(testParticipant||{id:'test-voter',is_test:true});
+        let matchupsImported=0;
+        for(const participant of targets){
+          const response=await store(env,participant.id,'state',{is_test:isTest(participant)});
+          if(!response.ok)throw new Error(`Could not read live state for participant ${participant.id}.`);
+          matchupsImported+=await importParticipantState(env,participant.id,isTest(participant),await response.json());
+        }
+        return json({ok:true,participants_migrated:targets.length,matchups_imported:matchupsImported});
       }
       if(url.pathname==='/api/tournament-state'&&request.method==='GET'){const state=await getTournamentState(env);return json({state:publicState(state),is_admin:session.is_test===true})}
       if(url.pathname==='/api/admin/round'&&request.method==='GET'){
@@ -87,9 +132,6 @@ export class ParticipantVoteStore extends BaseParticipantVoteStore {
     return super.fetch(request);
   }
   async flushGit(){
-    const votes=(await this.state.storage.get('votes'))||{},guesses=(await this.state.storage.get('guesses'))||{},participantId=(await this.state.storage.get('participant_id'))||'participant',test=(await this.state.storage.get('is_test'))===true;
-    if(participantId===ADMIN_STORE_ID)return;
-    const payload={schema_version:4,tournament:'HMPP-2026',participant_id:participantId,vote_pool:test?'test':'official',excluded_from_official_totals:test,guess_pool:test?'test':'official',excluded_from_official_guess_stats:test,updated_at:new Date().toISOString(),votes,guesses};
-    const path=test?`data/2026/test-votes/by-participant/${participantId}.json`:`data/2026/votes/by-participant/${participantId}.json`;await writeGitJson(this.env,path,payload,`${test?'Sync HMPP TEST votes':'Sync HMPP votes'}: ${participantId}`);
+    return;
   }
 }

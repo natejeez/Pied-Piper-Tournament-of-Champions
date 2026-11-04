@@ -1,15 +1,15 @@
 # HMPP 2026 — Current Project Context
 
 ## Status
-HMPP 2026 is in production on v2.9. The authenticated participant workflow has passed hosted testing for login, listening gates, song selection, submitter guessing, atomic matchup submission, submitted-state restoration, Test Voter isolation, scoped resets, and pre-completion publication gating.
+HMPP 2026 is deployed on Cloudflare. The existing Durable Objects remain the vote source until the D1 database is provisioned and live state is migrated. The Worker no longer mirrors runtime vote or publication data to GitHub. See `D1_MIGRATION.md` for the gated cutover checklist.
 
 ## Production runtime
 - Branch: `main`
 - Worker: `pied-piper-tournament-of-champions`
-- Git mirror branch: `main`
 - Static app: `web/index.html`
-- Production entrypoint: `src/worker-v29.js`
+- Configured Worker entrypoint: `src/worker-v213-prod.js`
 - Durable Object class: `ParticipantVoteStore`
+- Target vote database: Cloudflare D1 binding `VOTES_DB` (not provisioned/configured yet)
 
 Staging remains available on `feature/v2-auth-voting` / `pied-piper-tournament-of-champions-v2-test` for future work.
 
@@ -30,15 +30,9 @@ After listening, the participant chooses a preferred song, guesses the submitter
 Submitted matchups restore from server state and display the participant's two submitter guesses as text. Unsubmitted selections and guesses are participant-scoped browser drafts; they restore after refresh/login but remain non-authoritative.
 
 ## Data model
-Official participant snapshots:
-`data/2026/votes/by-participant/<participant-id>.json`
+The target D1 schema stores one vote and its two guesses together in one matchup row with a unique `(participant_id, match_id)` key. Retries with identical choices are idempotent; competing choices for the same participant/match return a conflict. Production continues to read/write Durable Objects until the controlled migration and backend switch are complete.
 
-Test Voter snapshot:
-`data/2026/test-votes/by-participant/test-voter.json`
-
-Each submitted matchup links one vote and two guesses through a shared `matchup_submission_id`. Test records are explicitly separated and excluded from official statistics.
-
-GitHub is the audit/export mirror. The Durable Object is authoritative at request time. Logout forces a Git flush and aborts logout if the sync fails.
+Participant/admin source data and vote snapshots are ignored by Git. Existing Git history may still expose previously committed records; history cleanup and any participant notification require a coordinated response.
 
 ## Test Voter admin workflow
 Test Voter receives:
@@ -48,7 +42,7 @@ Test Voter receives:
 - result preview/publication controls;
 - next-round preview/publication controls.
 
-Reset scopes are Test Only, selected User, and All Users. A reset deletes the selected round's current vote/guess records from the targeted Durable Object(s). A later re-vote creates new submission IDs. Git history remains the audit trail.
+Reset scopes are Test Only, selected User, and All Users. During the D1 cutover these delete the selected participant/round matchup rows. A later re-vote creates new submission IDs.
 
 ## Publication state
 The Play-In publication workflow is intentionally locked until 72 official Play-In votes exist. Test Voter does not count.

@@ -7,7 +7,6 @@
   let pendingVotes=new Map();
   let previewedRounds=new Set();
   let adminRoundData=null;
-  let refreshTimer=null;
   let accountSnapshot='';
 
   const $=(s,root=document)=>root.querySelector(s);
@@ -100,8 +99,13 @@
   }
 
   function selectVote(btn){
-    const song=btn.closest('.song'),match=song?.closest('.match'); if(!song||!match||match.classList.contains('submitted'))return;
-    pendingVotes.set(match.dataset.matchId,song.dataset.songId); renderGuessControls(match,song.dataset.songId); updateMatchSubmit(match);
+    const song=btn?.closest?.('.song'),match=song?.closest?.('.match');
+    if(!song||!match||match.classList.contains('submitted'))return;
+    match.querySelectorAll('.player-slot').forEach(slot=>{slot.classList.remove('open');slot.replaceChildren()});
+    match.querySelectorAll('.listen-btn').forEach(button=>button.setAttribute('aria-expanded','false'));
+    pendingVotes.set(match.dataset.matchId,song.dataset.songId);
+    renderGuessControls(match,song.dataset.songId);
+    updateMatchSubmit(match);
   }
 
   function confirmMatchup(match){
@@ -117,13 +121,43 @@
   async function submitMatchup(match,voteSongId,selects){
     const payload={match_id:match.dataset.matchId,round:match.dataset.round,song_id:voteSongId,guesses:selects.map(s=>({song_id:s.dataset.songId,guessed_participant_id:s.value}))};
     const data=await api('/api/matchup-submission',{method:'POST',body:JSON.stringify(payload)});
-    sessionState=sessionState||{votes:{},guesses:{}};sessionState.votes=sessionState.votes||{};sessionState.guesses=sessionState.guesses||{};sessionState.votes[match.dataset.matchId]=data.vote;(data.guesses||[]).forEach(g=>sessionState.guesses[g.song_id]=g);pendingVotes.delete(match.dataset.matchId);
-    collapseMatch(match,voteSongId); await maybeShowRoundComplete();
+    if(!data?.vote)throw new Error('Matchup submission returned an incomplete response. Refresh before trying again.');
+    sessionState=sessionState||{votes:{},guesses:{}};
+    sessionState.votes=sessionState.votes||{};
+    sessionState.guesses=sessionState.guesses||{};
+    sessionState.votes[match.dataset.matchId]=data.vote;
+    const returnedGuesses=Array.isArray(data.guesses)?data.guesses:Object.values(data.guesses||{});
+    returnedGuesses.forEach(guess=>{if(guess?.song_id)sessionState.guesses[guess.song_id]=guess});
+    pendingVotes.delete(match.dataset.matchId);
+    try{
+      collapseMatch(match,voteSongId);
+      await maybeShowRoundComplete();
+    }catch(uiError){
+      console.error('Matchup saved, but post-submit UI refresh failed.',uiError);
+      try{await refreshSession()}catch{}
+    }
+    return data;
   }
 
   function collapseMatch(match,voteSongId){
+    if(!match)return;
     clearPendingUI(match); match.classList.add('submitted');
-    matchSongs(match).forEach(s=>{const picked=s.dataset.songId===voteSongId;s.classList.toggle('vote-winner',picked);s.classList.toggle('vote-loser',!picked);$('.winner-check',s)?.remove();const slot=$('.player-slot',s);if(slot){slot.classList.remove('open');slot.replaceChildren()}const l=$('.listen-btn',s);if(l)l.setAttribute('aria-expanded','false');if(picked){const c=document.createElement('span');c.className='winner-check';c.setAttribute('aria-label','Your selected song');c.title='Your selected song';c.textContent='✓';s.appendChild(c)}});
+    matchSongs(match).forEach(song=>{
+      const picked=song.dataset.songId===voteSongId;
+      song.classList.toggle('vote-winner',picked);song.classList.toggle('vote-loser',!picked);
+      $('.winner-check',song)?.remove();$$('.submitted-guess',song).forEach(item=>item.remove());
+      const slot=$('.player-slot',song);if(slot){slot.classList.remove('open');slot.replaceChildren()}
+      const listen=$('.listen-btn',song);if(listen)listen.setAttribute('aria-expanded','false');
+      if(picked){const check=document.createElement('span');check.className='winner-check';check.setAttribute('aria-label','Your selected song');check.title='Your selected song';check.textContent='✓';song.appendChild(check)}
+      const guess=sessionState?.guesses?.[song.dataset.songId];
+      if(guess){
+        const detail=document.createElement('div');detail.className='submitted-guess';
+        const label=document.createElement('div');label.className='submitted-guess-label';label.textContent='Which Harry Man Submitted...?';
+        const value=document.createElement('div');value.className='submitted-guess-value';
+        value.textContent=participants.find(participant=>participant.id===guess.guessed_participant_id)?.name||guess.guessed_participant_id||'';
+        detail.append(label,value);$('.artist',song)?.insertAdjacentElement('afterend',detail);
+      }
+    });
   }
 
   function renderSessionState(){
@@ -229,14 +263,21 @@
   }
 
   function observeApp(){
-    const observer=new MutationObserver(mutations=>{
-      let submittedChanged=false,accountChanged=false,listeningChanged=false;
-      for(const m of mutations){if(m.type==='attributes'&&m.target.classList?.contains('match'))submittedChanged=true;if(m.type==='childList'&&[...m.addedNodes].some(n=>n.nodeType===1&&(n.classList?.contains('listened-pill')||n.querySelector?.('.listened-pill'))))listeningChanged=true;if(m.target===document.body||m.target.closest?.('#accountBtn'))accountChanged=true;}
-      if(listeningChanged){clearTimeout(refreshTimer);refreshTimer=setTimeout(mirrorListening,30)}
-      if(submittedChanged&&sessionState)setTimeout(renderSessionState,30);
-      if(accountChanged){const t=$('#accountBtn')?.textContent||'';if(t!==accountSnapshot){accountSnapshot=t;if(t.trim()==='Log in'){sessionState=null;pendingVotes.clear();$$('.dev-song-id,#devModeBanner,#devAdminPanel').forEach(x=>x.remove())}else setTimeout(refreshSession,50)}}
-    });
-    observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});
+    const account=$('#accountBtn');
+    if(!account)return;
+    accountSnapshot=account.textContent||'';
+    const syncAccount=()=>{
+      const text=account.textContent||'';
+      if(text===accountSnapshot)return;
+      accountSnapshot=text;
+      if(text.trim()==='Log in'){
+        sessionState=null;pendingVotes.clear();
+        $$('.dev-song-id,#devModeBanner,#devAdminPanel').forEach(item=>item.remove());
+        return;
+      }
+      setTimeout(refreshSession,50);
+    };
+    new MutationObserver(syncAccount).observe(account,{childList:true,subtree:true,characterData:true});
   }
 
   document.addEventListener('click',e=>{
