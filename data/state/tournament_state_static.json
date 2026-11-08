@@ -1,0 +1,73 @@
+{
+  "_meta": {
+    "description": "Static tournament state snapshot for D1 migration testing - treats hardcoded values as if stored in D1",
+    "created": "2026-11-06T14:39:31Z",
+    "purpose": "Verify candidate generation logic works with 'D1-like' data without real database"
+  },
+  "play-ins": {
+    "PI01": {"slot_a_submission_id": "SUB26-019", "slot_b_submission_id": "SUB26-016", "status": "scheduled"},
+    "PI02": {"slot_a_submission_id": "SUB26-042", "slot_b_submission_id": "SUB26-001", "status": "scheduled"},
+    "PI03": {"slot_a_submission_id": "SUB26-052", "slot_b_submission_id": "SUB26-031", "status": "scheduled"},
+    "PI04": {"slot_a_submission_id": "SUB26-051", "slot_b_submission_id": "SUB26-057", "status": "scheduled"},
+    "PI05": {"slot_a_submission_id": "SUB26-069", "slot_b_submission_id": "SUB26-034", "status": "scheduled"},
+    "PI06": {"slot_a_submission_id": "SUB26-028", "slot_b_submission_id": "SUB26-062", "status": "scheduled"},
+    "PI07": {"slot_a_submission_id": "SUB26-044", "slot_b_submission_id": "SUB26-020", "status": "scheduled"},
+    "PI08": {"slot_a_submission_id": "SUB26-066", "slot_b_submission_id": "SUB26-003", "status": "scheduled"}
+  },
+  "round-of-64": {
+    "M001": {"slot_a": "SUB26-046", "slot_b": "SUB26-061", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M002": {"slot_a": "SUB26-004", "slot_b": "SUB26-050", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M003": {"slot_a": "PI01-WINNER", "slot_b": "SUB26-055", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M004": {"slot_a": "SUB26-068", "slot_b": "SUB26-021", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M005": {"slot_a": "PI03-WINNER", "slot_b": "SUB26-072", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M006": {"slot_a": "SUB26-022", "slot_b": "SUB26-029", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M007": {"slot_a": "SUB26-007", "slot_b": "SUB26-032", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M008": {"slot_a": "SUB26-065", "slot_b": "SUB26-010", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M009": {"slot_a": "SUB26-071", "slot_b": "SUB26-013", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M010": {"slot_a": "SUB26-009", "slot_b": "SUB26-059", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M011": {"slot_a": "SUB26-011", "slot_b": "SUB26-056", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M012": {"slot_a": "SUB26-067", "slot_b": "SUB26-008", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M013": {"slot_a": "PI02-WINNER", "slot_b": "SUB26-033", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M014": {"slot_a": "PI06-WINNER", "slot_b": "SUB26-037", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M015": {"slot_a": "SUB26-025", "slot_b": "SUB26-045", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M016": {"slot_a": "SUB26-027", "slot_b": "SUB26-039", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M017": {"slot_a": "SUB26-012", "slot_b": "SUB26-058", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M018": {"slot_a": "SUB26-018", "slot_b": "SUB26-040", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M019": {"slot_a": "PI07-WINNER", "slot_b": "SUB26-038", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M020": {"slot_a": "SUB26-070", "slot_b": "SUB26-048", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M021": {"slot_a": "SUB26-053", "slot_b": "SUB26-005", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M022": {"slot_a": "SUB26-036", "slot_b": "SUB26-041", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M023": {"slot_a": "SUB26-060", "slot_b": "SUB26-023", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M024": {"slot_a": "PI08-WINNER", "slot_b": "SUB26-017", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M025": {"slot_a": "SUB26-043", "slot_b": "SUB26-024", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M026": {"slot_a": "PI04-WINNER", "slot_b": "SUB26-006", "slot_a_type": "playin_winner", "slot_b_type": "direct"},
+    "M027": {"slot_a": "SUB26-047", "slot_b": "SUB26-015", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M028": {"slot_a": "SUB26-054", "slot_b": "SUB26-002", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M029": {"slot_a": "SUB26-026", "slot_b": "SUB26-035", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M030": {"slot_a": "SUB26-063", "slot_b": "SUB26-049", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M031": {"slot_a": "SUB26-014", "slot_b": "SUB26-030", "slot_a_type": "direct", "slot_b_type": "direct"},
+    "M032": {"slot_a": "PI05-WINNER", "slot_b": "SUB26-064", "slot_a_type": "playin_winner", "slot_b_type": "direct"}
+  },
+  "play-in-results": {
+    "_note": "Simulate completed Play-In matchups with winners resolved from hardcoded song IDs",
+    "PI01": {"winner": "SUB26-019", "loser": "SUB26-016", "round": "play-in"},
+    "PI02": {"winner": "SUB26-042", "loser": "SUB26-001", "round": "play-in"},
+    "PI03": {"winner": "SUB26-052", "loser": "SUB26-031", "round": "play-in"},
+    "PI04": {"winner": "SUB26-051", "loser": "SUB26-057", "round": "play-in"},
+    "PI05": {"winner": "SUB26-069", "loser": "SUB26-034", "round": "play-in"},
+    "PI06": {"winner": "SUB26-028", "loser": "SUB26-062", "round": "play-in"},
+    "PI07": {"winner": "SUB26-044", "loser": "SUB26-020", "round": "play-in"},
+    "PI08": {"winner": "SUB26-066", "loser": "SUB26-003", "round": "play-in"}
+  },
+  "hardcoded-song-mappings": {
+    "_note": "These are the song IDs that were hardcoded in worker-v29.js MATCHES object",
+    "PI01": ["SONG26-019", "SONG26-016"],
+    "PI02": ["SONG26-042", "SONG26-001"],
+    "PI03": ["SONG26-052", "SONG26-031"],
+    "PI04": ["SONG26-051", "SONG26-057"],
+    "PI05": ["SONG26-069", "SONG26-034"],
+    "PI06": ["SONG26-028", "SUB26-062"],
+    "PI07": ["SONG26-044", "SONG26-020"],
+    "PI08": ["SONG26-066", "SONG26-003"]
+  }
+}
